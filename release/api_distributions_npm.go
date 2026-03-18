@@ -30,10 +30,17 @@ type DistributionsNpmAPIDistributionsNpmNpmCreateRequest struct {
 	ApiService *DistributionsNpmAPIService
 	pulpDomain string
 	npmNpmDistribution *NpmNpmDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsNpmAPIDistributionsNpmNpmCreateRequest) NpmNpmDistribution(npmNpmDistribution NpmNpmDistribution) DistributionsNpmAPIDistributionsNpmNpmCreateRequest {
 	r.npmNpmDistribution = &npmNpmDistribution
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmCreateExecute(r Distribu
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/distributions/npm/npm/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmCreateExecute(r Distribu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.npmNpmDistribution
@@ -144,6 +154,13 @@ type DistributionsNpmAPIDistributionsNpmNpmDeleteRequest struct {
 	ctx context.Context
 	ApiService *DistributionsNpmAPIService
 	npmNpmDistributionHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r DistributionsNpmAPIDistributionsNpmNpmDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -184,7 +201,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmDeleteExecute(r Distribu
 
 	localVarPath := localBasePath + "/{npm_npm_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_distribution_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmDistributionHref, "npmNpmDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -206,6 +223,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmDeleteExecute(r Distribu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -248,6 +268,7 @@ type DistributionsNpmAPIDistributionsNpmNpmListRequest struct {
 	ctx context.Context
 	ApiService *DistributionsNpmAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	basePath *string
 	basePathContains *string
 	basePathIcontains *string
@@ -275,6 +296,12 @@ type DistributionsNpmAPIDistributionsNpmNpmListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmListRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where base_path matches value
@@ -477,7 +504,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmListExecute(r Distributi
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/distributions/npm/npm/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -597,6 +624,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmListExecute(r Distributi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -639,6 +669,7 @@ type DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest struct {
 	ApiService *DistributionsNpmAPIService
 	npmNpmDistributionHref string
 	patchednpmNpmDistribution *PatchednpmNpmDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) PatchednpmNpmDistribution(patchednpmNpmDistribution PatchednpmNpmDistribution) DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest {
@@ -646,14 +677,20 @@ func (r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) PatchednpmNp
 	return r
 }
 
-func (r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) Execute() (*NpmNpmDistributionResponse, *http.Response, error) {
 	return r.ApiService.DistributionsNpmNpmPartialUpdateExecute(r)
 }
 
 /*
 DistributionsNpmNpmPartialUpdate Update a npm distribution
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param npmNpmDistributionHref
@@ -668,13 +705,13 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmPartialUpdate(ctx contex
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DistributionsNpmAPIService) DistributionsNpmNpmPartialUpdateExecute(r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return NpmNpmDistributionResponse
+func (a *DistributionsNpmAPIService) DistributionsNpmNpmPartialUpdateExecute(r DistributionsNpmAPIDistributionsNpmNpmPartialUpdateRequest) (*NpmNpmDistributionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *NpmNpmDistributionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DistributionsNpmAPIService.DistributionsNpmNpmPartialUpdate")
@@ -684,7 +721,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmPartialUpdateExecute(r D
 
 	localVarPath := localBasePath + "/{npm_npm_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_distribution_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmDistributionHref, "npmNpmDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -709,6 +746,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmPartialUpdateExecute(r D
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchednpmNpmDistribution
@@ -753,8 +793,15 @@ type DistributionsNpmAPIDistributionsNpmNpmReadRequest struct {
 	ctx context.Context
 	ApiService *DistributionsNpmAPIService
 	npmNpmDistributionHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -807,7 +854,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmReadExecute(r Distributi
 
 	localVarPath := localBasePath + "/{npm_npm_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_distribution_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmDistributionHref, "npmNpmDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -852,6 +899,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmReadExecute(r Distributi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -894,10 +944,17 @@ type DistributionsNpmAPIDistributionsNpmNpmSetLabelRequest struct {
 	ApiService *DistributionsNpmAPIService
 	npmNpmDistributionHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsNpmAPIDistributionsNpmNpmSetLabelRequest) SetLabel(setLabel SetLabel) DistributionsNpmAPIDistributionsNpmNpmSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -939,7 +996,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmSetLabelExecute(r Distri
 
 	localVarPath := localBasePath + "/{npm_npm_distribution_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_distribution_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmDistributionHref, "npmNpmDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -964,6 +1021,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmSetLabelExecute(r Distri
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1009,10 +1069,17 @@ type DistributionsNpmAPIDistributionsNpmNpmUnsetLabelRequest struct {
 	ApiService *DistributionsNpmAPIService
 	npmNpmDistributionHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsNpmAPIDistributionsNpmNpmUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) DistributionsNpmAPIDistributionsNpmNpmUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1054,7 +1121,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmUnsetLabelExecute(r Dist
 
 	localVarPath := localBasePath + "/{npm_npm_distribution_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_distribution_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmDistributionHref, "npmNpmDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1079,6 +1146,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmUnsetLabelExecute(r Dist
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1124,6 +1194,7 @@ type DistributionsNpmAPIDistributionsNpmNpmUpdateRequest struct {
 	ApiService *DistributionsNpmAPIService
 	npmNpmDistributionHref string
 	npmNpmDistribution *NpmNpmDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) NpmNpmDistribution(npmNpmDistribution NpmNpmDistribution) DistributionsNpmAPIDistributionsNpmNpmUpdateRequest {
@@ -1131,14 +1202,20 @@ func (r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) NpmNpmDistribution(
 	return r
 }
 
-func (r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsNpmAPIDistributionsNpmNpmUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) Execute() (*NpmNpmDistributionResponse, *http.Response, error) {
 	return r.ApiService.DistributionsNpmNpmUpdateExecute(r)
 }
 
 /*
 DistributionsNpmNpmUpdate Update a npm distribution
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param npmNpmDistributionHref
@@ -1153,13 +1230,13 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmUpdate(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DistributionsNpmAPIService) DistributionsNpmNpmUpdateExecute(r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return NpmNpmDistributionResponse
+func (a *DistributionsNpmAPIService) DistributionsNpmNpmUpdateExecute(r DistributionsNpmAPIDistributionsNpmNpmUpdateRequest) (*NpmNpmDistributionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *NpmNpmDistributionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DistributionsNpmAPIService.DistributionsNpmNpmUpdate")
@@ -1169,7 +1246,7 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmUpdateExecute(r Distribu
 
 	localVarPath := localBasePath + "/{npm_npm_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_distribution_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmDistributionHref, "npmNpmDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1194,6 +1271,9 @@ func (a *DistributionsNpmAPIService) DistributionsNpmNpmUpdateExecute(r Distribu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.npmNpmDistribution

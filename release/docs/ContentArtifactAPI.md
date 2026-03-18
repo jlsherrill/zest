@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## ContentMavenArtifactCreate
 
-> MavenMavenArtifactResponse ContentMavenArtifactCreate(ctx, pulpDomain).MavenMavenArtifact(mavenMavenArtifact).Execute()
+> MavenMavenArtifactResponse ContentMavenArtifactCreate(ctx, pulpDomain).MavenMavenArtifact(mavenMavenArtifact).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a maven artifact
 
@@ -29,16 +29,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	mavenMavenArtifact := *openapiclient.NewMavenMavenArtifact("Artifact_example", "RelativePath_example") // MavenMavenArtifact | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactCreate(context.Background(), pulpDomain).MavenMavenArtifact(mavenMavenArtifact).Execute()
+	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactCreate(context.Background(), pulpDomain).MavenMavenArtifact(mavenMavenArtifact).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentArtifactAPI.ContentMavenArtifactCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -65,6 +66,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **mavenMavenArtifact** | [**MavenMavenArtifact**](MavenMavenArtifact.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## ContentMavenArtifactList
 
-> PaginatedmavenMavenArtifactResponseList ContentMavenArtifactList(ctx, pulpDomain).ArtifactId(artifactId).Filename(filename).GroupId(groupId).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedmavenMavenArtifactResponseList ContentMavenArtifactList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).ArtifactId(artifactId).Filename(filename).GroupId(groupId).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List maven artifacts
 
@@ -101,11 +103,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	artifactId := "artifactId_example" // string | Filter results where artifact_id matches value (optional)
 	filename := "filename_example" // string | Filter results where filename matches value (optional)
 	groupId := "groupId_example" // string | Filter results where group_id matches value (optional)
@@ -127,7 +130,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactList(context.Background(), pulpDomain).ArtifactId(artifactId).Filename(filename).GroupId(groupId).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).ArtifactId(artifactId).Filename(filename).GroupId(groupId).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentArtifactAPI.ContentMavenArtifactList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -153,6 +156,7 @@ Other parameters are passed through a pointer to a apiContentMavenArtifactListRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **artifactId** | **string** | Filter results where artifact_id matches value | 
  **filename** | **string** | Filter results where filename matches value | 
  **groupId** | **string** | Filter results where group_id matches value | 
@@ -192,7 +196,7 @@ Name | Type | Description  | Notes
 
 ## ContentMavenArtifactRead
 
-> MavenMavenArtifactResponse ContentMavenArtifactRead(ctx, mavenMavenArtifactHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MavenMavenArtifactResponse ContentMavenArtifactRead(ctx, mavenMavenArtifactHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a maven artifact
 
@@ -207,17 +211,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenArtifactHref := "mavenMavenArtifactHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactRead(context.Background(), mavenMavenArtifactHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactRead(context.Background(), mavenMavenArtifactHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentArtifactAPI.ContentMavenArtifactRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -243,6 +248,7 @@ Other parameters are passed through a pointer to a apiContentMavenArtifactReadRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -266,7 +272,7 @@ Name | Type | Description  | Notes
 
 ## ContentMavenArtifactSetLabel
 
-> SetLabelResponse ContentMavenArtifactSetLabel(ctx, mavenMavenArtifactHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentMavenArtifactSetLabel(ctx, mavenMavenArtifactHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -281,16 +287,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenArtifactHref := "mavenMavenArtifactHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactSetLabel(context.Background(), mavenMavenArtifactHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactSetLabel(context.Background(), mavenMavenArtifactHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentArtifactAPI.ContentMavenArtifactSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -317,6 +324,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -338,7 +346,7 @@ Name | Type | Description  | Notes
 
 ## ContentMavenArtifactUnsetLabel
 
-> UnsetLabelResponse ContentMavenArtifactUnsetLabel(ctx, mavenMavenArtifactHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentMavenArtifactUnsetLabel(ctx, mavenMavenArtifactHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -353,16 +361,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenArtifactHref := "mavenMavenArtifactHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactUnsetLabel(context.Background(), mavenMavenArtifactHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentArtifactAPI.ContentMavenArtifactUnsetLabel(context.Background(), mavenMavenArtifactHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentArtifactAPI.ContentMavenArtifactUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -389,6 +398,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

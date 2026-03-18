@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## ContentGemGemCreate
 
-> AsyncOperationResponse ContentGemGemCreate(ctx, pulpDomain).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Execute()
+> AsyncOperationResponse ContentGemGemCreate(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Execute()
 
 Create a gem content
 
@@ -29,11 +29,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	repository := "repository_example" // string | A URI of a repository the new content unit should be associated with. (optional)
 	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
 	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
@@ -41,7 +42,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentGemAPI.ContentGemGemCreate(context.Background(), pulpDomain).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Execute()
+	resp, r, err := apiClient.ContentGemAPI.ContentGemGemCreate(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentGemAPI.ContentGemGemCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -67,6 +68,7 @@ Other parameters are passed through a pointer to a apiContentGemGemCreateRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **repository** | **string** | A URI of a repository the new content unit should be associated with. | 
  **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
  **artifact** | **string** | Artifact file representing the physical content | 
@@ -92,7 +94,7 @@ Name | Type | Description  | Notes
 
 ## ContentGemGemList
 
-> PaginatedgemGemContentResponseList ContentGemGemList(ctx, pulpDomain).Checksum(checksum).Limit(limit).Name(name).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Prerelease(prerelease).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedgemGemContentResponseList ContentGemGemList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Checksum(checksum).Limit(limit).Name(name).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Prerelease(prerelease).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List gem contents
 
@@ -107,11 +109,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	checksum := "checksum_example" // string | Filter results where checksum matches value (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
@@ -133,7 +136,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentGemAPI.ContentGemGemList(context.Background(), pulpDomain).Checksum(checksum).Limit(limit).Name(name).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Prerelease(prerelease).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentGemAPI.ContentGemGemList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Checksum(checksum).Limit(limit).Name(name).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Prerelease(prerelease).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Version(version).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentGemAPI.ContentGemGemList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -159,6 +162,7 @@ Other parameters are passed through a pointer to a apiContentGemGemListRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **checksum** | **string** | Filter results where checksum matches value | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
@@ -198,7 +202,7 @@ Name | Type | Description  | Notes
 
 ## ContentGemGemRead
 
-> GemGemContentResponse ContentGemGemRead(ctx, gemGemContentHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> GemGemContentResponse ContentGemGemRead(ctx, gemGemContentHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a gem content
 
@@ -213,17 +217,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemContentHref := "gemGemContentHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentGemAPI.ContentGemGemRead(context.Background(), gemGemContentHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentGemAPI.ContentGemGemRead(context.Background(), gemGemContentHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentGemAPI.ContentGemGemRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -249,6 +254,7 @@ Other parameters are passed through a pointer to a apiContentGemGemReadRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -272,7 +278,7 @@ Name | Type | Description  | Notes
 
 ## ContentGemGemSetLabel
 
-> SetLabelResponse ContentGemGemSetLabel(ctx, gemGemContentHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentGemGemSetLabel(ctx, gemGemContentHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -287,16 +293,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemContentHref := "gemGemContentHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentGemAPI.ContentGemGemSetLabel(context.Background(), gemGemContentHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentGemAPI.ContentGemGemSetLabel(context.Background(), gemGemContentHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentGemAPI.ContentGemGemSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -323,6 +330,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -344,7 +352,7 @@ Name | Type | Description  | Notes
 
 ## ContentGemGemUnsetLabel
 
-> UnsetLabelResponse ContentGemGemUnsetLabel(ctx, gemGemContentHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentGemGemUnsetLabel(ctx, gemGemContentHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -359,16 +367,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemContentHref := "gemGemContentHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentGemAPI.ContentGemGemUnsetLabel(context.Background(), gemGemContentHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentGemAPI.ContentGemGemUnsetLabel(context.Background(), gemGemContentHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentGemAPI.ContentGemGemUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -395,6 +404,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

@@ -29,10 +29,17 @@ type ImportersPulpImportCheckAPIPulpImportCheckPostRequest struct {
 	ApiService *ImportersPulpImportCheckAPIService
 	pulpDomain string
 	pulpImportCheck *PulpImportCheck
+	xTaskDiagnostics *[]string
 }
 
 func (r ImportersPulpImportCheckAPIPulpImportCheckPostRequest) PulpImportCheck(pulpImportCheck PulpImportCheck) ImportersPulpImportCheckAPIPulpImportCheckPostRequest {
 	r.pulpImportCheck = &pulpImportCheck
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ImportersPulpImportCheckAPIPulpImportCheckPostRequest) XTaskDiagnostics(xTaskDiagnostics []string) ImportersPulpImportCheckAPIPulpImportCheckPostRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -74,7 +81,7 @@ func (a *ImportersPulpImportCheckAPIService) PulpImportCheckPostExecute(r Import
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/importers/core/pulp/import-check/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -99,6 +106,9 @@ func (a *ImportersPulpImportCheckAPIService) PulpImportCheckPostExecute(r Import
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.pulpImportCheck

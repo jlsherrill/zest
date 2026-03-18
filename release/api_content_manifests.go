@@ -29,6 +29,7 @@ type ContentManifestsAPIContentContainerManifestsListRequest struct {
 	ctx context.Context
 	ApiService *ContentManifestsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	digest *string
 	digestIn *[]string
 	isBootable *bool
@@ -48,6 +49,12 @@ type ContentManifestsAPIContentContainerManifestsListRequest struct {
 	repositoryVersionRemoved *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentManifestsAPIContentContainerManifestsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentManifestsAPIContentContainerManifestsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where digest matches value
@@ -202,7 +209,7 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsListExecute(r Cont
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/container/manifests/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -306,6 +313,9 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsListExecute(r Cont
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -347,8 +357,15 @@ type ContentManifestsAPIContentContainerManifestsReadRequest struct {
 	ctx context.Context
 	ApiService *ContentManifestsAPIService
 	containerManifestHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentManifestsAPIContentContainerManifestsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentManifestsAPIContentContainerManifestsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -401,7 +418,7 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsReadExecute(r Cont
 
 	localVarPath := localBasePath + "/{container_manifest_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_manifest_href"+"}", url.PathEscape(parameterValueToString(r.containerManifestHref, "containerManifestHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -446,6 +463,9 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsReadExecute(r Cont
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -488,10 +508,17 @@ type ContentManifestsAPIContentContainerManifestsSetLabelRequest struct {
 	ApiService *ContentManifestsAPIService
 	containerManifestHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentManifestsAPIContentContainerManifestsSetLabelRequest) SetLabel(setLabel SetLabel) ContentManifestsAPIContentContainerManifestsSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentManifestsAPIContentContainerManifestsSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentManifestsAPIContentContainerManifestsSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -533,7 +560,7 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsSetLabelExecute(r 
 
 	localVarPath := localBasePath + "/{container_manifest_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_manifest_href"+"}", url.PathEscape(parameterValueToString(r.containerManifestHref, "containerManifestHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -558,6 +585,9 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsSetLabelExecute(r 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -603,10 +633,17 @@ type ContentManifestsAPIContentContainerManifestsUnsetLabelRequest struct {
 	ApiService *ContentManifestsAPIService
 	containerManifestHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentManifestsAPIContentContainerManifestsUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentManifestsAPIContentContainerManifestsUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentManifestsAPIContentContainerManifestsUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentManifestsAPIContentContainerManifestsUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -648,7 +685,7 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsUnsetLabelExecute(
 
 	localVarPath := localBasePath + "/{container_manifest_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_manifest_href"+"}", url.PathEscape(parameterValueToString(r.containerManifestHref, "containerManifestHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -673,6 +710,9 @@ func (a *ContentManifestsAPIService) ContentContainerManifestsUnsetLabelExecute(
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

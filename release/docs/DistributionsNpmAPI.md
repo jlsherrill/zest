@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 ## DistributionsNpmNpmCreate
 
-> AsyncOperationResponse DistributionsNpmNpmCreate(ctx, pulpDomain).NpmNpmDistribution(npmNpmDistribution).Execute()
+> AsyncOperationResponse DistributionsNpmNpmCreate(ctx, pulpDomain).NpmNpmDistribution(npmNpmDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a npm distribution
 
@@ -32,16 +32,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	npmNpmDistribution := *openapiclient.NewNpmNpmDistribution("BasePath_example", "Name_example") // NpmNpmDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmCreate(context.Background(), pulpDomain).NpmNpmDistribution(npmNpmDistribution).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmCreate(context.Background(), pulpDomain).NpmNpmDistribution(npmNpmDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -68,6 +69,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **npmNpmDistribution** | [**NpmNpmDistribution**](NpmNpmDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -89,7 +91,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmDelete
 
-> AsyncOperationResponse DistributionsNpmNpmDelete(ctx, npmNpmDistributionHref).Execute()
+> AsyncOperationResponse DistributionsNpmNpmDelete(ctx, npmNpmDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a npm distribution
 
@@ -104,15 +106,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmDistributionHref := "npmNpmDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmDelete(context.Background(), npmNpmDistributionHref).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmDelete(context.Background(), npmNpmDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -138,6 +141,7 @@ Other parameters are passed through a pointer to a apiDistributionsNpmNpmDeleteR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -159,7 +163,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmList
 
-> PaginatednpmNpmDistributionResponseList DistributionsNpmNpmList(ctx, pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatednpmNpmDistributionResponseList DistributionsNpmNpmList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List npm distributions
 
@@ -174,11 +178,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	basePath := "basePath_example" // string | Filter results where base_path matches value (optional)
 	basePathContains := "basePathContains_example" // string | Filter results where base_path contains value (optional)
 	basePathIcontains := "basePathIcontains_example" // string | Filter results where base_path contains value (optional)
@@ -209,7 +214,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmList(context.Background(), pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -235,6 +240,7 @@ Other parameters are passed through a pointer to a apiDistributionsNpmNpmListReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **basePath** | **string** | Filter results where base_path matches value | 
  **basePathContains** | **string** | Filter results where base_path contains value | 
  **basePathIcontains** | **string** | Filter results where base_path contains value | 
@@ -283,7 +289,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmPartialUpdate
 
-> AsyncOperationResponse DistributionsNpmNpmPartialUpdate(ctx, npmNpmDistributionHref).PatchednpmNpmDistribution(patchednpmNpmDistribution).Execute()
+> NpmNpmDistributionResponse DistributionsNpmNpmPartialUpdate(ctx, npmNpmDistributionHref).PatchednpmNpmDistribution(patchednpmNpmDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a npm distribution
 
@@ -298,21 +304,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmDistributionHref := "npmNpmDistributionHref_example" // string | 
 	patchednpmNpmDistribution := *openapiclient.NewPatchednpmNpmDistribution() // PatchednpmNpmDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmPartialUpdate(context.Background(), npmNpmDistributionHref).PatchednpmNpmDistribution(patchednpmNpmDistribution).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmPartialUpdate(context.Background(), npmNpmDistributionHref).PatchednpmNpmDistribution(patchednpmNpmDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsNpmNpmPartialUpdate`: AsyncOperationResponse
+	// response from `DistributionsNpmNpmPartialUpdate`: NpmNpmDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsNpmAPI.DistributionsNpmNpmPartialUpdate`: %v\n", resp)
 }
 ```
@@ -334,10 +341,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchednpmNpmDistribution** | [**PatchednpmNpmDistribution**](PatchednpmNpmDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**NpmNpmDistributionResponse**](NpmNpmDistributionResponse.md)
 
 ### Authorization
 
@@ -355,7 +363,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmRead
 
-> NpmNpmDistributionResponse DistributionsNpmNpmRead(ctx, npmNpmDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> NpmNpmDistributionResponse DistributionsNpmNpmRead(ctx, npmNpmDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a npm distribution
 
@@ -370,17 +378,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmDistributionHref := "npmNpmDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmRead(context.Background(), npmNpmDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmRead(context.Background(), npmNpmDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -406,6 +415,7 @@ Other parameters are passed through a pointer to a apiDistributionsNpmNpmReadReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -429,7 +439,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmSetLabel
 
-> SetLabelResponse DistributionsNpmNpmSetLabel(ctx, npmNpmDistributionHref).SetLabel(setLabel).Execute()
+> SetLabelResponse DistributionsNpmNpmSetLabel(ctx, npmNpmDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -444,16 +454,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmDistributionHref := "npmNpmDistributionHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmSetLabel(context.Background(), npmNpmDistributionHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmSetLabel(context.Background(), npmNpmDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -480,6 +491,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -501,7 +513,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmUnsetLabel
 
-> UnsetLabelResponse DistributionsNpmNpmUnsetLabel(ctx, npmNpmDistributionHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse DistributionsNpmNpmUnsetLabel(ctx, npmNpmDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -516,16 +528,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmDistributionHref := "npmNpmDistributionHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmUnsetLabel(context.Background(), npmNpmDistributionHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmUnsetLabel(context.Background(), npmNpmDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -552,6 +565,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -573,7 +587,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsNpmNpmUpdate
 
-> AsyncOperationResponse DistributionsNpmNpmUpdate(ctx, npmNpmDistributionHref).NpmNpmDistribution(npmNpmDistribution).Execute()
+> NpmNpmDistributionResponse DistributionsNpmNpmUpdate(ctx, npmNpmDistributionHref).NpmNpmDistribution(npmNpmDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a npm distribution
 
@@ -588,21 +602,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmDistributionHref := "npmNpmDistributionHref_example" // string | 
 	npmNpmDistribution := *openapiclient.NewNpmNpmDistribution("BasePath_example", "Name_example") // NpmNpmDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmUpdate(context.Background(), npmNpmDistributionHref).NpmNpmDistribution(npmNpmDistribution).Execute()
+	resp, r, err := apiClient.DistributionsNpmAPI.DistributionsNpmNpmUpdate(context.Background(), npmNpmDistributionHref).NpmNpmDistribution(npmNpmDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsNpmAPI.DistributionsNpmNpmUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsNpmNpmUpdate`: AsyncOperationResponse
+	// response from `DistributionsNpmNpmUpdate`: NpmNpmDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsNpmAPI.DistributionsNpmNpmUpdate`: %v\n", resp)
 }
 ```
@@ -624,10 +639,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **npmNpmDistribution** | [**NpmNpmDistribution**](NpmNpmDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**NpmNpmDistributionResponse**](NpmNpmDistributionResponse.md)
 
 ### Authorization
 

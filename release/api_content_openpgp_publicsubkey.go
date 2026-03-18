@@ -29,6 +29,7 @@ type ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyListRequest stru
 	ctx context.Context
 	ApiService *ContentOpenpgpPublicsubkeyAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	fingerprint *string
 	limit *int32
 	offset *int32
@@ -44,6 +45,12 @@ type ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyListRequest stru
 	repositoryVersionRemoved *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where fingerprint matches value
@@ -174,7 +181,7 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeyLis
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/core/openpgp_publicsubkey/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -258,6 +265,9 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeyLis
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -299,8 +309,15 @@ type ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyReadRequest stru
 	ctx context.Context
 	ApiService *ContentOpenpgpPublicsubkeyAPIService
 	openPGPPublicSubkeyHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -353,7 +370,7 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeyRea
 
 	localVarPath := localBasePath + "/{open_p_g_p_public_subkey_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_public_subkey_href"+"}", url.PathEscape(parameterValueToString(r.openPGPPublicSubkeyHref, "openPGPPublicSubkeyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -398,6 +415,9 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeyRea
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -440,10 +460,17 @@ type ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeySetLabelRequest 
 	ApiService *ContentOpenpgpPublicsubkeyAPIService
 	openPGPPublicSubkeyHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeySetLabelRequest) SetLabel(setLabel SetLabel) ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeySetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeySetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeySetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -485,7 +512,7 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeySet
 
 	localVarPath := localBasePath + "/{open_p_g_p_public_subkey_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_public_subkey_href"+"}", url.PathEscape(parameterValueToString(r.openPGPPublicSubkeyHref, "openPGPPublicSubkeyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -510,6 +537,9 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeySet
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -555,10 +585,17 @@ type ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyUnsetLabelReques
 	ApiService *ContentOpenpgpPublicsubkeyAPIService
 	openPGPPublicSubkeyHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpPublicsubkeyAPIContentCoreOpenpgpPublicsubkeyUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -600,7 +637,7 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeyUns
 
 	localVarPath := localBasePath + "/{open_p_g_p_public_subkey_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_public_subkey_href"+"}", url.PathEscape(parameterValueToString(r.openPGPPublicSubkeyHref, "openPGPPublicSubkeyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -625,6 +662,9 @@ func (a *ContentOpenpgpPublicsubkeyAPIService) ContentCoreOpenpgpPublicsubkeyUns
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

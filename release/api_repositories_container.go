@@ -31,10 +31,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerAddRequest struct {
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	recursiveManage *RecursiveManage
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerAddRequest) RecursiveManage(recursiveManage RecursiveManage) RepositoriesContainerAPIRepositoriesContainerContainerAddRequest {
 	r.recursiveManage = &recursiveManage
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerAddRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerAddRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerAddExecu
 
 	localVarPath := localBasePath + "/{container_container_repository_href}add/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerAddExecu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.recursiveManage
@@ -146,10 +156,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerAddRoleRequest struct
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerAddRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesContainerAPIRepositoriesContainerContainerAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerAddRoleE
 
 	localVarPath := localBasePath + "/{container_container_repository_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerAddRoleE
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -260,10 +280,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerBuildImageRequest str
 	ctx context.Context
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
+	xTaskDiagnostics *[]string
 	containerfileName *string
 	containerfile *os.File
 	tag *string
 	buildContext *string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerBuildImageRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerBuildImageRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Name of the Containerfile, from build_context, that should be used to run podman-build.
@@ -328,7 +355,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerBuildIma
 
 	localVarPath := localBasePath + "/{container_container_repository_href}build_image/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -350,6 +377,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerBuildIma
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	if r.containerfileName != nil {
 		parameterAddToHeaderOrQuery(localVarFormParams, "containerfile_name", r.containerfileName, "", "")
@@ -419,10 +449,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerCopyManifestsRequest 
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	manifestCopy *ManifestCopy
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerCopyManifestsRequest) ManifestCopy(manifestCopy ManifestCopy) RepositoriesContainerAPIRepositoriesContainerContainerCopyManifestsRequest {
 	r.manifestCopy = &manifestCopy
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerCopyManifestsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerCopyManifestsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -464,7 +501,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerCopyMani
 
 	localVarPath := localBasePath + "/{container_container_repository_href}copy_manifests/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -489,6 +526,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerCopyMani
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.manifestCopy
@@ -534,10 +574,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerCopyTagsRequest struc
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	tagCopy *TagCopy
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerCopyTagsRequest) TagCopy(tagCopy TagCopy) RepositoriesContainerAPIRepositoriesContainerContainerCopyTagsRequest {
 	r.tagCopy = &tagCopy
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerCopyTagsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerCopyTagsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -579,7 +626,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerCopyTags
 
 	localVarPath := localBasePath + "/{container_container_repository_href}copy_tags/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -604,6 +651,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerCopyTags
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.tagCopy
@@ -649,10 +699,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerCreateRequest struct 
 	ApiService *RepositoriesContainerAPIService
 	pulpDomain string
 	containerContainerRepository *ContainerContainerRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerCreateRequest) ContainerContainerRepository(containerContainerRepository ContainerContainerRepository) RepositoriesContainerAPIRepositoriesContainerContainerCreateRequest {
 	r.containerContainerRepository = &containerContainerRepository
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -694,7 +751,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerCreateEx
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/container/container/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -719,6 +776,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerCreateEx
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.containerContainerRepository
@@ -763,6 +823,13 @@ type RepositoriesContainerAPIRepositoriesContainerContainerDeleteRequest struct 
 	ctx context.Context
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -803,7 +870,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerDeleteEx
 
 	localVarPath := localBasePath + "/{container_container_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -825,6 +892,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerDeleteEx
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -867,6 +937,7 @@ type RepositoriesContainerAPIRepositoriesContainerContainerListRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesContainerAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	latestWithContent *string
 	limit *int32
 	name *string
@@ -897,6 +968,12 @@ type RepositoriesContainerAPIRepositoriesContainerContainerListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Content Unit referenced by HREF/PRN
@@ -1117,7 +1194,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerListExec
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/container/container/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1246,6 +1323,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerListExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1287,8 +1367,15 @@ type RepositoriesContainerAPIRepositoriesContainerContainerListRolesRequest stru
 	ctx context.Context
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1341,7 +1428,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerListRole
 
 	localVarPath := localBasePath + "/{container_container_repository_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1386,6 +1473,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerListRole
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1427,8 +1517,15 @@ type RepositoriesContainerAPIRepositoriesContainerContainerMyPermissionsRequest 
 	ctx context.Context
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1481,7 +1578,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerMyPermis
 
 	localVarPath := localBasePath + "/{container_container_repository_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1526,6 +1623,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerMyPermis
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1568,6 +1668,7 @@ type RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest 
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	patchedcontainerContainerRepository *PatchedcontainerContainerRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest) PatchedcontainerContainerRepository(patchedcontainerContainerRepository PatchedcontainerContainerRepository) RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest {
@@ -1575,14 +1676,20 @@ func (r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateReque
 	return r
 }
 
-func (r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest) Execute() (*ContainerContainerRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesContainerContainerPartialUpdateExecute(r)
 }
 
 /*
 RepositoriesContainerContainerPartialUpdate Update a container repository
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param containerContainerRepositoryHref
@@ -1597,13 +1704,13 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerPartialU
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerPartialUpdateExecute(r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return ContainerContainerRepositoryResponse
+func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerPartialUpdateExecute(r RepositoriesContainerAPIRepositoriesContainerContainerPartialUpdateRequest) (*ContainerContainerRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *ContainerContainerRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesContainerAPIService.RepositoriesContainerContainerPartialUpdate")
@@ -1613,7 +1720,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerPartialU
 
 	localVarPath := localBasePath + "/{container_container_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1638,6 +1745,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerPartialU
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedcontainerContainerRepository
@@ -1682,8 +1792,15 @@ type RepositoriesContainerAPIRepositoriesContainerContainerReadRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1736,7 +1853,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerReadExec
 
 	localVarPath := localBasePath + "/{container_container_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1781,6 +1898,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerReadExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1823,10 +1943,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerRemoveRequest struct 
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	recursiveManage *RecursiveManage
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerRemoveRequest) RecursiveManage(recursiveManage RecursiveManage) RepositoriesContainerAPIRepositoriesContainerContainerRemoveRequest {
 	r.recursiveManage = &recursiveManage
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerRemoveRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerRemoveRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1868,7 +1995,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerRemoveEx
 
 	localVarPath := localBasePath + "/{container_container_repository_href}remove/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1893,6 +2020,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerRemoveEx
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.recursiveManage
@@ -1938,10 +2068,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerRemoveRoleRequest str
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerRemoveRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesContainerAPIRepositoriesContainerContainerRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1983,7 +2120,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerRemoveRo
 
 	localVarPath := localBasePath + "/{container_container_repository_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2008,6 +2145,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerRemoveRo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -2053,10 +2193,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerSetLabelRequest struc
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerSetLabelRequest) SetLabel(setLabel SetLabel) RepositoriesContainerAPIRepositoriesContainerContainerSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2098,7 +2245,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerSetLabel
 
 	localVarPath := localBasePath + "/{container_container_repository_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2123,6 +2270,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerSetLabel
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -2168,10 +2318,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerSignRequest struct {
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	repositorySign *RepositorySign
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerSignRequest) RepositorySign(repositorySign RepositorySign) RepositoriesContainerAPIRepositoriesContainerContainerSignRequest {
 	r.repositorySign = &repositorySign
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerSignRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerSignRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2213,7 +2370,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerSignExec
 
 	localVarPath := localBasePath + "/{container_container_repository_href}sign/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2238,6 +2395,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerSignExec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositorySign
@@ -2283,10 +2443,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerSyncRequest struct {
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	containerRepositorySyncURL *ContainerRepositorySyncURL
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerSyncRequest) ContainerRepositorySyncURL(containerRepositorySyncURL ContainerRepositorySyncURL) RepositoriesContainerAPIRepositoriesContainerContainerSyncRequest {
 	r.containerRepositorySyncURL = &containerRepositorySyncURL
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerSyncRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerSyncRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2328,7 +2495,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerSyncExec
 
 	localVarPath := localBasePath + "/{container_container_repository_href}sync/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2353,6 +2520,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerSyncExec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.containerRepositorySyncURL
@@ -2398,10 +2568,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerTagRequest struct {
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	tagImage *TagImage
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerTagRequest) TagImage(tagImage TagImage) RepositoriesContainerAPIRepositoriesContainerContainerTagRequest {
 	r.tagImage = &tagImage
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerTagRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerTagRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2443,7 +2620,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerTagExecu
 
 	localVarPath := localBasePath + "/{container_container_repository_href}tag/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2468,6 +2645,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerTagExecu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.tagImage
@@ -2513,10 +2693,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerUnsetLabelRequest str
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RepositoriesContainerAPIRepositoriesContainerContainerUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2558,7 +2745,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUnsetLab
 
 	localVarPath := localBasePath + "/{container_container_repository_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2583,6 +2770,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUnsetLab
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -2628,10 +2818,17 @@ type RepositoriesContainerAPIRepositoriesContainerContainerUntagRequest struct {
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	unTagImage *UnTagImage
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerUntagRequest) UnTagImage(unTagImage UnTagImage) RepositoriesContainerAPIRepositoriesContainerContainerUntagRequest {
 	r.unTagImage = &unTagImage
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerUntagRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerUntagRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2673,7 +2870,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUntagExe
 
 	localVarPath := localBasePath + "/{container_container_repository_href}untag/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2698,6 +2895,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUntagExe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unTagImage
@@ -2743,6 +2943,7 @@ type RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest struct 
 	ApiService *RepositoriesContainerAPIService
 	containerContainerRepositoryHref string
 	containerContainerRepository *ContainerContainerRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) ContainerContainerRepository(containerContainerRepository ContainerContainerRepository) RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest {
@@ -2750,14 +2951,20 @@ func (r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) Con
 	return r
 }
 
-func (r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) Execute() (*ContainerContainerRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesContainerContainerUpdateExecute(r)
 }
 
 /*
 RepositoriesContainerContainerUpdate Update a container repository
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param containerContainerRepositoryHref
@@ -2772,13 +2979,13 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUpdate(c
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUpdateExecute(r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return ContainerContainerRepositoryResponse
+func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUpdateExecute(r RepositoriesContainerAPIRepositoriesContainerContainerUpdateRequest) (*ContainerContainerRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *ContainerContainerRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesContainerAPIService.RepositoriesContainerContainerUpdate")
@@ -2788,7 +2995,7 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUpdateEx
 
 	localVarPath := localBasePath + "/{container_container_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_repository_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerRepositoryHref, "containerContainerRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2813,6 +3020,9 @@ func (a *RepositoriesContainerAPIService) RepositoriesContainerContainerUpdateEx
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.containerContainerRepository

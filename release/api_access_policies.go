@@ -29,6 +29,7 @@ type AccessPoliciesAPIAccessPoliciesListRequest struct {
 	ctx context.Context
 	ApiService *AccessPoliciesAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	customized *bool
 	limit *int32
 	offset *int32
@@ -48,6 +49,12 @@ type AccessPoliciesAPIAccessPoliciesListRequest struct {
 	viewsetNameStartswith *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AccessPoliciesAPIAccessPoliciesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) AccessPoliciesAPIAccessPoliciesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where customized matches value
@@ -202,7 +209,7 @@ func (a *AccessPoliciesAPIService) AccessPoliciesListExecute(r AccessPoliciesAPI
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/access_policies/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -298,6 +305,9 @@ func (a *AccessPoliciesAPIService) AccessPoliciesListExecute(r AccessPoliciesAPI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -340,10 +350,17 @@ type AccessPoliciesAPIAccessPoliciesPartialUpdateRequest struct {
 	ApiService *AccessPoliciesAPIService
 	accessPolicyHref string
 	patchedAccessPolicy *PatchedAccessPolicy
+	xTaskDiagnostics *[]string
 }
 
 func (r AccessPoliciesAPIAccessPoliciesPartialUpdateRequest) PatchedAccessPolicy(patchedAccessPolicy PatchedAccessPolicy) AccessPoliciesAPIAccessPoliciesPartialUpdateRequest {
 	r.patchedAccessPolicy = &patchedAccessPolicy
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r AccessPoliciesAPIAccessPoliciesPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) AccessPoliciesAPIAccessPoliciesPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -385,7 +402,7 @@ func (a *AccessPoliciesAPIService) AccessPoliciesPartialUpdateExecute(r AccessPo
 
 	localVarPath := localBasePath + "/{access_policy_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"access_policy_href"+"}", url.PathEscape(parameterValueToString(r.accessPolicyHref, "accessPolicyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -410,6 +427,9 @@ func (a *AccessPoliciesAPIService) AccessPoliciesPartialUpdateExecute(r AccessPo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedAccessPolicy
@@ -454,8 +474,15 @@ type AccessPoliciesAPIAccessPoliciesReadRequest struct {
 	ctx context.Context
 	ApiService *AccessPoliciesAPIService
 	accessPolicyHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AccessPoliciesAPIAccessPoliciesReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) AccessPoliciesAPIAccessPoliciesReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -508,7 +535,7 @@ func (a *AccessPoliciesAPIService) AccessPoliciesReadExecute(r AccessPoliciesAPI
 
 	localVarPath := localBasePath + "/{access_policy_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"access_policy_href"+"}", url.PathEscape(parameterValueToString(r.accessPolicyHref, "accessPolicyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -553,6 +580,9 @@ func (a *AccessPoliciesAPIService) AccessPoliciesReadExecute(r AccessPoliciesAPI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -594,6 +624,13 @@ type AccessPoliciesAPIAccessPoliciesResetRequest struct {
 	ctx context.Context
 	ApiService *AccessPoliciesAPIService
 	accessPolicyHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AccessPoliciesAPIAccessPoliciesResetRequest) XTaskDiagnostics(xTaskDiagnostics []string) AccessPoliciesAPIAccessPoliciesResetRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r AccessPoliciesAPIAccessPoliciesResetRequest) Execute() (*AccessPolicyResponse, *http.Response, error) {
@@ -634,7 +671,7 @@ func (a *AccessPoliciesAPIService) AccessPoliciesResetExecute(r AccessPoliciesAP
 
 	localVarPath := localBasePath + "/{access_policy_href}reset/"
 	localVarPath = strings.Replace(localVarPath, "{"+"access_policy_href"+"}", url.PathEscape(parameterValueToString(r.accessPolicyHref, "accessPolicyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -656,6 +693,9 @@ func (a *AccessPoliciesAPIService) AccessPoliciesResetExecute(r AccessPoliciesAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -699,10 +739,17 @@ type AccessPoliciesAPIAccessPoliciesUpdateRequest struct {
 	ApiService *AccessPoliciesAPIService
 	accessPolicyHref string
 	accessPolicy *AccessPolicy
+	xTaskDiagnostics *[]string
 }
 
 func (r AccessPoliciesAPIAccessPoliciesUpdateRequest) AccessPolicy(accessPolicy AccessPolicy) AccessPoliciesAPIAccessPoliciesUpdateRequest {
 	r.accessPolicy = &accessPolicy
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r AccessPoliciesAPIAccessPoliciesUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) AccessPoliciesAPIAccessPoliciesUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -744,7 +791,7 @@ func (a *AccessPoliciesAPIService) AccessPoliciesUpdateExecute(r AccessPoliciesA
 
 	localVarPath := localBasePath + "/{access_policy_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"access_policy_href"+"}", url.PathEscape(parameterValueToString(r.accessPolicyHref, "accessPolicyHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -769,6 +816,9 @@ func (a *AccessPoliciesAPIService) AccessPoliciesUpdateExecute(r AccessPoliciesA
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.accessPolicy

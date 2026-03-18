@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## ContentguardsCertguardX509Create
 
-> CertguardX509CertGuardResponse ContentguardsCertguardX509Create(ctx, pulpDomain).CertguardX509CertGuard(certguardX509CertGuard).Execute()
+> CertguardX509CertGuardResponse ContentguardsCertguardX509Create(ctx, pulpDomain).CertguardX509CertGuard(certguardX509CertGuard).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a x509 cert guard
 
@@ -30,16 +30,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	certguardX509CertGuard := *openapiclient.NewCertguardX509CertGuard("Name_example", "CaCertificate_example") // CertguardX509CertGuard | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Create(context.Background(), pulpDomain).CertguardX509CertGuard(certguardX509CertGuard).Execute()
+	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Create(context.Background(), pulpDomain).CertguardX509CertGuard(certguardX509CertGuard).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentguardsX509API.ContentguardsCertguardX509Create``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -66,6 +67,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **certguardX509CertGuard** | [**CertguardX509CertGuard**](CertguardX509CertGuard.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -87,7 +89,7 @@ Name | Type | Description  | Notes
 
 ## ContentguardsCertguardX509Delete
 
-> ContentguardsCertguardX509Delete(ctx, certguardX509CertGuardHref).Execute()
+> ContentguardsCertguardX509Delete(ctx, certguardX509CertGuardHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a x509 cert guard
 
@@ -102,15 +104,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	certguardX509CertGuardHref := "certguardX509CertGuardHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Delete(context.Background(), certguardX509CertGuardHref).Execute()
+	r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Delete(context.Background(), certguardX509CertGuardHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentguardsX509API.ContentguardsCertguardX509Delete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -134,6 +137,7 @@ Other parameters are passed through a pointer to a apiContentguardsCertguardX509
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -155,7 +159,7 @@ Name | Type | Description  | Notes
 
 ## ContentguardsCertguardX509List
 
-> PaginatedcertguardX509CertGuardResponseList ContentguardsCertguardX509List(ctx, pulpDomain).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedcertguardX509CertGuardResponseList ContentguardsCertguardX509List(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List x509 cert guards
 
@@ -170,11 +174,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
 	nameContains := "nameContains_example" // string | Filter results where name contains value (optional)
@@ -196,7 +201,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509List(context.Background(), pulpDomain).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509List(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentguardsX509API.ContentguardsCertguardX509List``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -222,6 +227,7 @@ Other parameters are passed through a pointer to a apiContentguardsCertguardX509
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
  **nameContains** | **string** | Filter results where name contains value | 
@@ -261,7 +267,7 @@ Name | Type | Description  | Notes
 
 ## ContentguardsCertguardX509PartialUpdate
 
-> CertguardX509CertGuardResponse ContentguardsCertguardX509PartialUpdate(ctx, certguardX509CertGuardHref).PatchedcertguardX509CertGuard(patchedcertguardX509CertGuard).Execute()
+> CertguardX509CertGuardResponse ContentguardsCertguardX509PartialUpdate(ctx, certguardX509CertGuardHref).PatchedcertguardX509CertGuard(patchedcertguardX509CertGuard).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a x509 cert guard
 
@@ -276,16 +282,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	certguardX509CertGuardHref := "certguardX509CertGuardHref_example" // string | 
 	patchedcertguardX509CertGuard := *openapiclient.NewPatchedcertguardX509CertGuard() // PatchedcertguardX509CertGuard | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509PartialUpdate(context.Background(), certguardX509CertGuardHref).PatchedcertguardX509CertGuard(patchedcertguardX509CertGuard).Execute()
+	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509PartialUpdate(context.Background(), certguardX509CertGuardHref).PatchedcertguardX509CertGuard(patchedcertguardX509CertGuard).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentguardsX509API.ContentguardsCertguardX509PartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -312,6 +319,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedcertguardX509CertGuard** | [**PatchedcertguardX509CertGuard**](PatchedcertguardX509CertGuard.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -333,7 +341,7 @@ Name | Type | Description  | Notes
 
 ## ContentguardsCertguardX509Read
 
-> CertguardX509CertGuardResponse ContentguardsCertguardX509Read(ctx, certguardX509CertGuardHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> CertguardX509CertGuardResponse ContentguardsCertguardX509Read(ctx, certguardX509CertGuardHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a x509 cert guard
 
@@ -348,17 +356,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	certguardX509CertGuardHref := "certguardX509CertGuardHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Read(context.Background(), certguardX509CertGuardHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Read(context.Background(), certguardX509CertGuardHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentguardsX509API.ContentguardsCertguardX509Read``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -384,6 +393,7 @@ Other parameters are passed through a pointer to a apiContentguardsCertguardX509
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -407,7 +417,7 @@ Name | Type | Description  | Notes
 
 ## ContentguardsCertguardX509Update
 
-> CertguardX509CertGuardResponse ContentguardsCertguardX509Update(ctx, certguardX509CertGuardHref).CertguardX509CertGuard(certguardX509CertGuard).Execute()
+> CertguardX509CertGuardResponse ContentguardsCertguardX509Update(ctx, certguardX509CertGuardHref).CertguardX509CertGuard(certguardX509CertGuard).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a x509 cert guard
 
@@ -422,16 +432,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	certguardX509CertGuardHref := "certguardX509CertGuardHref_example" // string | 
 	certguardX509CertGuard := *openapiclient.NewCertguardX509CertGuard("Name_example", "CaCertificate_example") // CertguardX509CertGuard | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Update(context.Background(), certguardX509CertGuardHref).CertguardX509CertGuard(certguardX509CertGuard).Execute()
+	resp, r, err := apiClient.ContentguardsX509API.ContentguardsCertguardX509Update(context.Background(), certguardX509CertGuardHref).CertguardX509CertGuard(certguardX509CertGuard).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentguardsX509API.ContentguardsCertguardX509Update``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -458,6 +469,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **certguardX509CertGuard** | [**CertguardX509CertGuard**](CertguardX509CertGuard.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

@@ -30,10 +30,17 @@ type ContentguardsRbacAPIContentguardsCoreRbacAddRoleRequest struct {
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsRbacAPIContentguardsCoreRbacAddRoleRequest) NestedRole(nestedRole NestedRole) ContentguardsRbacAPIContentguardsCoreRbacAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacAddRoleExecute(r Cont
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacAddRoleExecute(r Cont
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type ContentguardsRbacAPIContentguardsCoreRbacCreateRequest struct {
 	ApiService *ContentguardsRbacAPIService
 	pulpDomain string
 	rBACContentGuard *RBACContentGuard
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsRbacAPIContentguardsCoreRbacCreateRequest) RBACContentGuard(rBACContentGuard RBACContentGuard) ContentguardsRbacAPIContentguardsCoreRbacCreateRequest {
 	r.rBACContentGuard = &rBACContentGuard
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacCreateExecute(r Conte
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/contentguards/core/rbac/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacCreateExecute(r Conte
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.rBACContentGuard
@@ -259,6 +279,13 @@ type ContentguardsRbacAPIContentguardsCoreRbacDeleteRequest struct {
 	ctx context.Context
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r ContentguardsRbacAPIContentguardsCoreRbacDeleteRequest) Execute() (*http.Response, error) {
@@ -297,7 +324,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacDeleteExecute(r Conte
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -319,6 +346,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacDeleteExecute(r Conte
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -352,6 +382,7 @@ type ContentguardsRbacAPIContentguardsCoreRbacListRequest struct {
 	ctx context.Context
 	ApiService *ContentguardsRbacAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -370,6 +401,12 @@ type ContentguardsRbacAPIContentguardsCoreRbacListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -518,7 +555,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacListExecute(r Content
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/contentguards/core/rbac/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -611,6 +648,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacListExecute(r Content
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -652,8 +692,15 @@ type ContentguardsRbacAPIContentguardsCoreRbacListRolesRequest struct {
 	ctx context.Context
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -706,7 +753,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacListRolesExecute(r Co
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -751,6 +798,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacListRolesExecute(r Co
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -792,8 +842,15 @@ type ContentguardsRbacAPIContentguardsCoreRbacMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -846,7 +903,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacMyPermissionsExecute(
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -891,6 +948,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacMyPermissionsExecute(
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -933,10 +993,17 @@ type ContentguardsRbacAPIContentguardsCoreRbacPartialUpdateRequest struct {
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
 	patchedRBACContentGuard *PatchedRBACContentGuard
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsRbacAPIContentguardsCoreRbacPartialUpdateRequest) PatchedRBACContentGuard(patchedRBACContentGuard PatchedRBACContentGuard) ContentguardsRbacAPIContentguardsCoreRbacPartialUpdateRequest {
 	r.patchedRBACContentGuard = &patchedRBACContentGuard
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -978,7 +1045,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacPartialUpdateExecute(
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1003,6 +1070,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacPartialUpdateExecute(
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedRBACContentGuard
@@ -1047,8 +1117,15 @@ type ContentguardsRbacAPIContentguardsCoreRbacReadRequest struct {
 	ctx context.Context
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1101,7 +1178,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacReadExecute(r Content
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1146,6 +1223,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacReadExecute(r Content
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1188,10 +1268,17 @@ type ContentguardsRbacAPIContentguardsCoreRbacRemoveRoleRequest struct {
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsRbacAPIContentguardsCoreRbacRemoveRoleRequest) NestedRole(nestedRole NestedRole) ContentguardsRbacAPIContentguardsCoreRbacRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1233,7 +1320,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacRemoveRoleExecute(r C
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1258,6 +1345,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacRemoveRoleExecute(r C
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1303,10 +1393,17 @@ type ContentguardsRbacAPIContentguardsCoreRbacUpdateRequest struct {
 	ApiService *ContentguardsRbacAPIService
 	rBACContentGuardHref string
 	rBACContentGuard *RBACContentGuard
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsRbacAPIContentguardsCoreRbacUpdateRequest) RBACContentGuard(rBACContentGuard RBACContentGuard) ContentguardsRbacAPIContentguardsCoreRbacUpdateRequest {
 	r.rBACContentGuard = &rBACContentGuard
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsRbacAPIContentguardsCoreRbacUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsRbacAPIContentguardsCoreRbacUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1348,7 +1445,7 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacUpdateExecute(r Conte
 
 	localVarPath := localBasePath + "/{r_b_a_c_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"r_b_a_c_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.rBACContentGuardHref, "rBACContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1373,6 +1470,9 @@ func (a *ContentguardsRbacAPIService) ContentguardsCoreRbacUpdateExecute(r Conte
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.rBACContentGuard

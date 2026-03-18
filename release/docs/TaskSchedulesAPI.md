@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## TaskSchedulesAddRole
 
-> NestedRoleResponse TaskSchedulesAddRole(ctx, taskScheduleHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse TaskSchedulesAddRole(ctx, taskScheduleHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Add a role
 
@@ -30,16 +30,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	taskScheduleHref := "taskScheduleHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesAddRole(context.Background(), taskScheduleHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesAddRole(context.Background(), taskScheduleHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskSchedulesAPI.TaskSchedulesAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -66,6 +67,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -87,7 +89,7 @@ Name | Type | Description  | Notes
 
 ## TaskSchedulesList
 
-> PaginatedTaskScheduleResponseList TaskSchedulesList(ctx, pulpDomain).Limit(limit).Name(name).NameContains(nameContains).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).TaskName(taskName).TaskNameContains(taskNameContains).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedTaskScheduleResponseList TaskSchedulesList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Name(name).NameContains(nameContains).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).TaskName(taskName).TaskNameContains(taskNameContains).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List task schedules
 
@@ -102,11 +104,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
 	nameContains := "nameContains_example" // string | Filter results where name contains value (optional)
@@ -123,7 +126,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesList(context.Background(), pulpDomain).Limit(limit).Name(name).NameContains(nameContains).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).TaskName(taskName).TaskNameContains(taskNameContains).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Name(name).NameContains(nameContains).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).TaskName(taskName).TaskNameContains(taskNameContains).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskSchedulesAPI.TaskSchedulesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -149,6 +152,7 @@ Other parameters are passed through a pointer to a apiTaskSchedulesListRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
  **nameContains** | **string** | Filter results where name contains value | 
@@ -183,7 +187,7 @@ Name | Type | Description  | Notes
 
 ## TaskSchedulesListRoles
 
-> ObjectRolesResponse TaskSchedulesListRoles(ctx, taskScheduleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ObjectRolesResponse TaskSchedulesListRoles(ctx, taskScheduleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List roles
 
@@ -198,17 +202,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	taskScheduleHref := "taskScheduleHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesListRoles(context.Background(), taskScheduleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesListRoles(context.Background(), taskScheduleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskSchedulesAPI.TaskSchedulesListRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -234,6 +239,7 @@ Other parameters are passed through a pointer to a apiTaskSchedulesListRolesRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -257,7 +263,7 @@ Name | Type | Description  | Notes
 
 ## TaskSchedulesMyPermissions
 
-> MyPermissionsResponse TaskSchedulesMyPermissions(ctx, taskScheduleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MyPermissionsResponse TaskSchedulesMyPermissions(ctx, taskScheduleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List user permissions
 
@@ -272,17 +278,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	taskScheduleHref := "taskScheduleHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesMyPermissions(context.Background(), taskScheduleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesMyPermissions(context.Background(), taskScheduleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskSchedulesAPI.TaskSchedulesMyPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -308,6 +315,7 @@ Other parameters are passed through a pointer to a apiTaskSchedulesMyPermissions
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -331,7 +339,7 @@ Name | Type | Description  | Notes
 
 ## TaskSchedulesRead
 
-> TaskScheduleResponse TaskSchedulesRead(ctx, taskScheduleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> TaskScheduleResponse TaskSchedulesRead(ctx, taskScheduleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a task schedule
 
@@ -346,17 +354,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	taskScheduleHref := "taskScheduleHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesRead(context.Background(), taskScheduleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesRead(context.Background(), taskScheduleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskSchedulesAPI.TaskSchedulesRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -382,6 +391,7 @@ Other parameters are passed through a pointer to a apiTaskSchedulesReadRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -405,7 +415,7 @@ Name | Type | Description  | Notes
 
 ## TaskSchedulesRemoveRole
 
-> NestedRoleResponse TaskSchedulesRemoveRole(ctx, taskScheduleHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse TaskSchedulesRemoveRole(ctx, taskScheduleHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Remove a role
 
@@ -420,16 +430,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	taskScheduleHref := "taskScheduleHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesRemoveRole(context.Background(), taskScheduleHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.TaskSchedulesAPI.TaskSchedulesRemoveRole(context.Background(), taskScheduleHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TaskSchedulesAPI.TaskSchedulesRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -456,6 +467,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

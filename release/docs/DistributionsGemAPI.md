@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 ## DistributionsGemGemAddRole
 
-> NestedRoleResponse DistributionsGemGemAddRole(ctx, gemGemDistributionHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse DistributionsGemGemAddRole(ctx, gemGemDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Add a role
 
@@ -36,16 +36,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemAddRole(context.Background(), gemGemDistributionHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemAddRole(context.Background(), gemGemDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -72,6 +73,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -93,7 +95,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemCreate
 
-> AsyncOperationResponse DistributionsGemGemCreate(ctx, pulpDomain).GemGemDistribution(gemGemDistribution).Execute()
+> AsyncOperationResponse DistributionsGemGemCreate(ctx, pulpDomain).GemGemDistribution(gemGemDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a gem distribution
 
@@ -108,16 +110,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	gemGemDistribution := *openapiclient.NewGemGemDistribution("BasePath_example", "Name_example") // GemGemDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemCreate(context.Background(), pulpDomain).GemGemDistribution(gemGemDistribution).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemCreate(context.Background(), pulpDomain).GemGemDistribution(gemGemDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -144,6 +147,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **gemGemDistribution** | [**GemGemDistribution**](GemGemDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -165,7 +169,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemDelete
 
-> AsyncOperationResponse DistributionsGemGemDelete(ctx, gemGemDistributionHref).Execute()
+> AsyncOperationResponse DistributionsGemGemDelete(ctx, gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a gem distribution
 
@@ -180,15 +184,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemDelete(context.Background(), gemGemDistributionHref).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemDelete(context.Background(), gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -214,6 +219,7 @@ Other parameters are passed through a pointer to a apiDistributionsGemGemDeleteR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -235,7 +241,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemList
 
-> PaginatedgemGemDistributionResponseList DistributionsGemGemList(ctx, pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedgemGemDistributionResponseList DistributionsGemGemList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List gem distributions
 
@@ -250,11 +256,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	basePath := "basePath_example" // string | Filter results where base_path matches value (optional)
 	basePathContains := "basePathContains_example" // string | Filter results where base_path contains value (optional)
 	basePathIcontains := "basePathIcontains_example" // string | Filter results where base_path contains value (optional)
@@ -285,7 +292,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemList(context.Background(), pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -311,6 +318,7 @@ Other parameters are passed through a pointer to a apiDistributionsGemGemListReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **basePath** | **string** | Filter results where base_path matches value | 
  **basePathContains** | **string** | Filter results where base_path contains value | 
  **basePathIcontains** | **string** | Filter results where base_path contains value | 
@@ -359,7 +367,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemListRoles
 
-> ObjectRolesResponse DistributionsGemGemListRoles(ctx, gemGemDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ObjectRolesResponse DistributionsGemGemListRoles(ctx, gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List roles
 
@@ -374,17 +382,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemListRoles(context.Background(), gemGemDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemListRoles(context.Background(), gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemListRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -410,6 +419,7 @@ Other parameters are passed through a pointer to a apiDistributionsGemGemListRol
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -433,7 +443,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemMyPermissions
 
-> MyPermissionsResponse DistributionsGemGemMyPermissions(ctx, gemGemDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MyPermissionsResponse DistributionsGemGemMyPermissions(ctx, gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List user permissions
 
@@ -448,17 +458,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemMyPermissions(context.Background(), gemGemDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemMyPermissions(context.Background(), gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemMyPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -484,6 +495,7 @@ Other parameters are passed through a pointer to a apiDistributionsGemGemMyPermi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -507,7 +519,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemPartialUpdate
 
-> AsyncOperationResponse DistributionsGemGemPartialUpdate(ctx, gemGemDistributionHref).PatchedgemGemDistribution(patchedgemGemDistribution).Execute()
+> GemGemDistributionResponse DistributionsGemGemPartialUpdate(ctx, gemGemDistributionHref).PatchedgemGemDistribution(patchedgemGemDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a gem distribution
 
@@ -522,21 +534,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
 	patchedgemGemDistribution := *openapiclient.NewPatchedgemGemDistribution() // PatchedgemGemDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemPartialUpdate(context.Background(), gemGemDistributionHref).PatchedgemGemDistribution(patchedgemGemDistribution).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemPartialUpdate(context.Background(), gemGemDistributionHref).PatchedgemGemDistribution(patchedgemGemDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsGemGemPartialUpdate`: AsyncOperationResponse
+	// response from `DistributionsGemGemPartialUpdate`: GemGemDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsGemAPI.DistributionsGemGemPartialUpdate`: %v\n", resp)
 }
 ```
@@ -558,10 +571,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedgemGemDistribution** | [**PatchedgemGemDistribution**](PatchedgemGemDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**GemGemDistributionResponse**](GemGemDistributionResponse.md)
 
 ### Authorization
 
@@ -579,7 +593,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemRead
 
-> GemGemDistributionResponse DistributionsGemGemRead(ctx, gemGemDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> GemGemDistributionResponse DistributionsGemGemRead(ctx, gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a gem distribution
 
@@ -594,17 +608,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemRead(context.Background(), gemGemDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemRead(context.Background(), gemGemDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -630,6 +645,7 @@ Other parameters are passed through a pointer to a apiDistributionsGemGemReadReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -653,7 +669,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemRemoveRole
 
-> NestedRoleResponse DistributionsGemGemRemoveRole(ctx, gemGemDistributionHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse DistributionsGemGemRemoveRole(ctx, gemGemDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Remove a role
 
@@ -668,16 +684,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemRemoveRole(context.Background(), gemGemDistributionHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemRemoveRole(context.Background(), gemGemDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -704,6 +721,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -725,7 +743,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemSetLabel
 
-> SetLabelResponse DistributionsGemGemSetLabel(ctx, gemGemDistributionHref).SetLabel(setLabel).Execute()
+> SetLabelResponse DistributionsGemGemSetLabel(ctx, gemGemDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -740,16 +758,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemSetLabel(context.Background(), gemGemDistributionHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemSetLabel(context.Background(), gemGemDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -776,6 +795,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -797,7 +817,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemUnsetLabel
 
-> UnsetLabelResponse DistributionsGemGemUnsetLabel(ctx, gemGemDistributionHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse DistributionsGemGemUnsetLabel(ctx, gemGemDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -812,16 +832,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemUnsetLabel(context.Background(), gemGemDistributionHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemUnsetLabel(context.Background(), gemGemDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -848,6 +869,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -869,7 +891,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsGemGemUpdate
 
-> AsyncOperationResponse DistributionsGemGemUpdate(ctx, gemGemDistributionHref).GemGemDistribution(gemGemDistribution).Execute()
+> GemGemDistributionResponse DistributionsGemGemUpdate(ctx, gemGemDistributionHref).GemGemDistribution(gemGemDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a gem distribution
 
@@ -884,21 +906,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemDistributionHref := "gemGemDistributionHref_example" // string | 
 	gemGemDistribution := *openapiclient.NewGemGemDistribution("BasePath_example", "Name_example") // GemGemDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemUpdate(context.Background(), gemGemDistributionHref).GemGemDistribution(gemGemDistribution).Execute()
+	resp, r, err := apiClient.DistributionsGemAPI.DistributionsGemGemUpdate(context.Background(), gemGemDistributionHref).GemGemDistribution(gemGemDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsGemAPI.DistributionsGemGemUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsGemGemUpdate`: AsyncOperationResponse
+	// response from `DistributionsGemGemUpdate`: GemGemDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsGemAPI.DistributionsGemGemUpdate`: %v\n", resp)
 }
 ```
@@ -920,10 +943,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **gemGemDistribution** | [**GemGemDistribution**](GemGemDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**GemGemDistributionResponse**](GemGemDistributionResponse.md)
 
 ### Authorization
 

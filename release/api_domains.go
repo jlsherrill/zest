@@ -30,10 +30,17 @@ type DomainsAPIDomainsCreateRequest struct {
 	ApiService *DomainsAPIService
 	pulpDomain string
 	domain *Domain
+	xTaskDiagnostics *[]string
 }
 
 func (r DomainsAPIDomainsCreateRequest) Domain(domain Domain) DomainsAPIDomainsCreateRequest {
 	r.domain = &domain
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *DomainsAPIService) DomainsCreateExecute(r DomainsAPIDomainsCreateReques
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/domains/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *DomainsAPIService) DomainsCreateExecute(r DomainsAPIDomainsCreateReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.domain
@@ -144,6 +154,13 @@ type DomainsAPIDomainsDeleteRequest struct {
 	ctx context.Context
 	ApiService *DomainsAPIService
 	domainHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r DomainsAPIDomainsDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -184,7 +201,7 @@ func (a *DomainsAPIService) DomainsDeleteExecute(r DomainsAPIDomainsDeleteReques
 
 	localVarPath := localBasePath + "/{domain_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"domain_href"+"}", url.PathEscape(parameterValueToString(r.domainHref, "domainHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -206,6 +223,9 @@ func (a *DomainsAPIService) DomainsDeleteExecute(r DomainsAPIDomainsDeleteReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -248,6 +268,7 @@ type DomainsAPIDomainsListRequest struct {
 	ctx context.Context
 	ApiService *DomainsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -267,6 +288,12 @@ type DomainsAPIDomainsListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -421,7 +448,7 @@ func (a *DomainsAPIService) DomainsListExecute(r DomainsAPIDomainsListRequest) (
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/domains/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -517,6 +544,9 @@ func (a *DomainsAPIService) DomainsListExecute(r DomainsAPIDomainsListRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -559,10 +589,17 @@ type DomainsAPIDomainsMigrateRequest struct {
 	ApiService *DomainsAPIService
 	pulpDomain string
 	domainBackendMigrator *DomainBackendMigrator
+	xTaskDiagnostics *[]string
 }
 
 func (r DomainsAPIDomainsMigrateRequest) DomainBackendMigrator(domainBackendMigrator DomainBackendMigrator) DomainsAPIDomainsMigrateRequest {
 	r.domainBackendMigrator = &domainBackendMigrator
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsMigrateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsMigrateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -604,7 +641,7 @@ func (a *DomainsAPIService) DomainsMigrateExecute(r DomainsAPIDomainsMigrateRequ
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/domains/migrate/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -629,6 +666,9 @@ func (a *DomainsAPIService) DomainsMigrateExecute(r DomainsAPIDomainsMigrateRequ
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.domainBackendMigrator
@@ -674,6 +714,7 @@ type DomainsAPIDomainsPartialUpdateRequest struct {
 	ApiService *DomainsAPIService
 	domainHref string
 	patchedDomain *PatchedDomain
+	xTaskDiagnostics *[]string
 }
 
 func (r DomainsAPIDomainsPartialUpdateRequest) PatchedDomain(patchedDomain PatchedDomain) DomainsAPIDomainsPartialUpdateRequest {
@@ -681,14 +722,20 @@ func (r DomainsAPIDomainsPartialUpdateRequest) PatchedDomain(patchedDomain Patch
 	return r
 }
 
-func (r DomainsAPIDomainsPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DomainsAPIDomainsPartialUpdateRequest) Execute() (*DomainResponse, *http.Response, error) {
 	return r.ApiService.DomainsPartialUpdateExecute(r)
 }
 
 /*
 DomainsPartialUpdate Update a domain
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param domainHref
@@ -703,13 +750,13 @@ func (a *DomainsAPIService) DomainsPartialUpdate(ctx context.Context, domainHref
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DomainsAPIService) DomainsPartialUpdateExecute(r DomainsAPIDomainsPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return DomainResponse
+func (a *DomainsAPIService) DomainsPartialUpdateExecute(r DomainsAPIDomainsPartialUpdateRequest) (*DomainResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *DomainResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DomainsAPIService.DomainsPartialUpdate")
@@ -719,7 +766,7 @@ func (a *DomainsAPIService) DomainsPartialUpdateExecute(r DomainsAPIDomainsParti
 
 	localVarPath := localBasePath + "/{domain_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"domain_href"+"}", url.PathEscape(parameterValueToString(r.domainHref, "domainHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -744,6 +791,9 @@ func (a *DomainsAPIService) DomainsPartialUpdateExecute(r DomainsAPIDomainsParti
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedDomain
@@ -788,8 +838,15 @@ type DomainsAPIDomainsReadRequest struct {
 	ctx context.Context
 	ApiService *DomainsAPIService
 	domainHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -842,7 +899,7 @@ func (a *DomainsAPIService) DomainsReadExecute(r DomainsAPIDomainsReadRequest) (
 
 	localVarPath := localBasePath + "/{domain_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"domain_href"+"}", url.PathEscape(parameterValueToString(r.domainHref, "domainHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -887,6 +944,9 @@ func (a *DomainsAPIService) DomainsReadExecute(r DomainsAPIDomainsReadRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -929,10 +989,17 @@ type DomainsAPIDomainsSetLabelRequest struct {
 	ApiService *DomainsAPIService
 	domainHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DomainsAPIDomainsSetLabelRequest) SetLabel(setLabel SetLabel) DomainsAPIDomainsSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -974,7 +1041,7 @@ func (a *DomainsAPIService) DomainsSetLabelExecute(r DomainsAPIDomainsSetLabelRe
 
 	localVarPath := localBasePath + "/{domain_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"domain_href"+"}", url.PathEscape(parameterValueToString(r.domainHref, "domainHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -999,6 +1066,9 @@ func (a *DomainsAPIService) DomainsSetLabelExecute(r DomainsAPIDomainsSetLabelRe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1044,10 +1114,17 @@ type DomainsAPIDomainsUnsetLabelRequest struct {
 	ApiService *DomainsAPIService
 	domainHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DomainsAPIDomainsUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) DomainsAPIDomainsUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1089,7 +1166,7 @@ func (a *DomainsAPIService) DomainsUnsetLabelExecute(r DomainsAPIDomainsUnsetLab
 
 	localVarPath := localBasePath + "/{domain_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"domain_href"+"}", url.PathEscape(parameterValueToString(r.domainHref, "domainHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1114,6 +1191,9 @@ func (a *DomainsAPIService) DomainsUnsetLabelExecute(r DomainsAPIDomainsUnsetLab
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1159,6 +1239,7 @@ type DomainsAPIDomainsUpdateRequest struct {
 	ApiService *DomainsAPIService
 	domainHref string
 	domain *Domain
+	xTaskDiagnostics *[]string
 }
 
 func (r DomainsAPIDomainsUpdateRequest) Domain(domain Domain) DomainsAPIDomainsUpdateRequest {
@@ -1166,7 +1247,13 @@ func (r DomainsAPIDomainsUpdateRequest) Domain(domain Domain) DomainsAPIDomainsU
 	return r
 }
 
-func (r DomainsAPIDomainsUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DomainsAPIDomainsUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DomainsAPIDomainsUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DomainsAPIDomainsUpdateRequest) Execute() (*DomainResponse, *http.Response, error) {
 	return r.ApiService.DomainsUpdateExecute(r)
 }
 
@@ -1188,13 +1275,13 @@ func (a *DomainsAPIService) DomainsUpdate(ctx context.Context, domainHref string
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DomainsAPIService) DomainsUpdateExecute(r DomainsAPIDomainsUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return DomainResponse
+func (a *DomainsAPIService) DomainsUpdateExecute(r DomainsAPIDomainsUpdateRequest) (*DomainResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *DomainResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DomainsAPIService.DomainsUpdate")
@@ -1204,7 +1291,7 @@ func (a *DomainsAPIService) DomainsUpdateExecute(r DomainsAPIDomainsUpdateReques
 
 	localVarPath := localBasePath + "/{domain_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"domain_href"+"}", url.PathEscape(parameterValueToString(r.domainHref, "domainHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1229,6 +1316,9 @@ func (a *DomainsAPIService) DomainsUpdateExecute(r DomainsAPIDomainsUpdateReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.domain

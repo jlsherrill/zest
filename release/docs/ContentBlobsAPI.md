@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## ContentContainerBlobsList
 
-> PaginatedcontainerBlobResponseList ContentContainerBlobsList(ctx, pulpDomain).Digest(digest).DigestIn(digestIn).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedcontainerBlobResponseList ContentContainerBlobsList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Digest(digest).DigestIn(digestIn).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List blobs
 
@@ -28,11 +28,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	digest := "digest_example" // string | Filter results where digest matches value (optional)
 	digestIn := []string{"Inner_example"} // []string | Filter results where digest is in a comma-separated list of values (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
@@ -52,7 +53,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsList(context.Background(), pulpDomain).Digest(digest).DigestIn(digestIn).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Digest(digest).DigestIn(digestIn).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentBlobsAPI.ContentContainerBlobsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -78,6 +79,7 @@ Other parameters are passed through a pointer to a apiContentContainerBlobsListR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **digest** | **string** | Filter results where digest matches value | 
  **digestIn** | **[]string** | Filter results where digest is in a comma-separated list of values | 
  **limit** | **int32** | Number of results to return per page. | 
@@ -115,7 +117,7 @@ Name | Type | Description  | Notes
 
 ## ContentContainerBlobsRead
 
-> ContainerBlobResponse ContentContainerBlobsRead(ctx, containerBlobHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ContainerBlobResponse ContentContainerBlobsRead(ctx, containerBlobHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a blob
 
@@ -130,17 +132,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerBlobHref := "containerBlobHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsRead(context.Background(), containerBlobHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsRead(context.Background(), containerBlobHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentBlobsAPI.ContentContainerBlobsRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -166,6 +169,7 @@ Other parameters are passed through a pointer to a apiContentContainerBlobsReadR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -189,7 +193,7 @@ Name | Type | Description  | Notes
 
 ## ContentContainerBlobsSetLabel
 
-> SetLabelResponse ContentContainerBlobsSetLabel(ctx, containerBlobHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentContainerBlobsSetLabel(ctx, containerBlobHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -204,16 +208,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerBlobHref := "containerBlobHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsSetLabel(context.Background(), containerBlobHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsSetLabel(context.Background(), containerBlobHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentBlobsAPI.ContentContainerBlobsSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -240,6 +245,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -261,7 +267,7 @@ Name | Type | Description  | Notes
 
 ## ContentContainerBlobsUnsetLabel
 
-> UnsetLabelResponse ContentContainerBlobsUnsetLabel(ctx, containerBlobHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentContainerBlobsUnsetLabel(ctx, containerBlobHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -276,16 +282,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerBlobHref := "containerBlobHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsUnsetLabel(context.Background(), containerBlobHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentBlobsAPI.ContentContainerBlobsUnsetLabel(context.Background(), containerBlobHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentBlobsAPI.ContentContainerBlobsUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -312,6 +319,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

@@ -30,10 +30,17 @@ type ImportersPulpImportsAPIImportersCorePulpImportsCreateRequest struct {
 	ApiService *ImportersPulpImportsAPIService
 	pulpImporterHref string
 	pulpImport *PulpImport
+	xTaskDiagnostics *[]string
 }
 
 func (r ImportersPulpImportsAPIImportersCorePulpImportsCreateRequest) PulpImport(pulpImport PulpImport) ImportersPulpImportsAPIImportersCorePulpImportsCreateRequest {
 	r.pulpImport = &pulpImport
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ImportersPulpImportsAPIImportersCorePulpImportsCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ImportersPulpImportsAPIImportersCorePulpImportsCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsCreateExecute(r
 
 	localVarPath := localBasePath + "/{pulp_importer_href}imports/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_importer_href"+"}", url.PathEscape(parameterValueToString(r.pulpImporterHref, "pulpImporterHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsCreateExecute(r
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.pulpImport
@@ -144,6 +154,13 @@ type ImportersPulpImportsAPIImportersCorePulpImportsDeleteRequest struct {
 	ctx context.Context
 	ApiService *ImportersPulpImportsAPIService
 	pulpPulpImportHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ImportersPulpImportsAPIImportersCorePulpImportsDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) ImportersPulpImportsAPIImportersCorePulpImportsDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r ImportersPulpImportsAPIImportersCorePulpImportsDeleteRequest) Execute() (*http.Response, error) {
@@ -182,7 +199,7 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsDeleteExecute(r
 
 	localVarPath := localBasePath + "/{pulp_pulp_import_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_pulp_import_href"+"}", url.PathEscape(parameterValueToString(r.pulpPulpImportHref, "pulpPulpImportHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -204,6 +221,9 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsDeleteExecute(r
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -237,10 +257,17 @@ type ImportersPulpImportsAPIImportersCorePulpImportsListRequest struct {
 	ctx context.Context
 	ApiService *ImportersPulpImportsAPIService
 	pulpImporterHref string
+	xTaskDiagnostics *[]string
 	limit *int32
 	offset *int32
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ImportersPulpImportsAPIImportersCorePulpImportsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ImportersPulpImportsAPIImportersCorePulpImportsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -305,7 +332,7 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsListExecute(r I
 
 	localVarPath := localBasePath + "/{pulp_importer_href}imports/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_importer_href"+"}", url.PathEscape(parameterValueToString(r.pulpImporterHref, "pulpImporterHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -356,6 +383,9 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsListExecute(r I
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -397,8 +427,15 @@ type ImportersPulpImportsAPIImportersCorePulpImportsReadRequest struct {
 	ctx context.Context
 	ApiService *ImportersPulpImportsAPIService
 	pulpPulpImportHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ImportersPulpImportsAPIImportersCorePulpImportsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ImportersPulpImportsAPIImportersCorePulpImportsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -451,7 +488,7 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsReadExecute(r I
 
 	localVarPath := localBasePath + "/{pulp_pulp_import_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_pulp_import_href"+"}", url.PathEscape(parameterValueToString(r.pulpPulpImportHref, "pulpPulpImportHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -495,6 +532,9 @@ func (a *ImportersPulpImportsAPIService) ImportersCorePulpImportsReadExecute(r I
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

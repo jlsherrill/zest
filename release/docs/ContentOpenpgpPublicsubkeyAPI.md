@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## ContentCoreOpenpgpPublicsubkeyList
 
-> PaginatedOpenPGPPublicSubkeyResponseList ContentCoreOpenpgpPublicsubkeyList(ctx, pulpDomain).Fingerprint(fingerprint).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedOpenPGPPublicSubkeyResponseList ContentCoreOpenpgpPublicsubkeyList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Fingerprint(fingerprint).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List open pgp public subkeys
 
@@ -28,11 +28,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fingerprint := "fingerprint_example" // string | Filter results where fingerprint matches value (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	offset := int32(56) // int32 | The initial index from which to return the results. (optional)
@@ -51,7 +52,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyList(context.Background(), pulpDomain).Fingerprint(fingerprint).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Fingerprint(fingerprint).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -77,6 +78,7 @@ Other parameters are passed through a pointer to a apiContentCoreOpenpgpPublicsu
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fingerprint** | **string** | Filter results where fingerprint matches value | 
  **limit** | **int32** | Number of results to return per page. | 
  **offset** | **int32** | The initial index from which to return the results. | 
@@ -113,7 +115,7 @@ Name | Type | Description  | Notes
 
 ## ContentCoreOpenpgpPublicsubkeyRead
 
-> OpenPGPPublicSubkeyResponse ContentCoreOpenpgpPublicsubkeyRead(ctx, openPGPPublicSubkeyHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> OpenPGPPublicSubkeyResponse ContentCoreOpenpgpPublicsubkeyRead(ctx, openPGPPublicSubkeyHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect an open pgp public subkey
 
@@ -128,17 +130,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	openPGPPublicSubkeyHref := "openPGPPublicSubkeyHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyRead(context.Background(), openPGPPublicSubkeyHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyRead(context.Background(), openPGPPublicSubkeyHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -164,6 +167,7 @@ Other parameters are passed through a pointer to a apiContentCoreOpenpgpPublicsu
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -187,7 +191,7 @@ Name | Type | Description  | Notes
 
 ## ContentCoreOpenpgpPublicsubkeySetLabel
 
-> SetLabelResponse ContentCoreOpenpgpPublicsubkeySetLabel(ctx, openPGPPublicSubkeyHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentCoreOpenpgpPublicsubkeySetLabel(ctx, openPGPPublicSubkeyHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -202,16 +206,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	openPGPPublicSubkeyHref := "openPGPPublicSubkeyHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeySetLabel(context.Background(), openPGPPublicSubkeyHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeySetLabel(context.Background(), openPGPPublicSubkeyHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeySetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -238,6 +243,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -259,7 +265,7 @@ Name | Type | Description  | Notes
 
 ## ContentCoreOpenpgpPublicsubkeyUnsetLabel
 
-> UnsetLabelResponse ContentCoreOpenpgpPublicsubkeyUnsetLabel(ctx, openPGPPublicSubkeyHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentCoreOpenpgpPublicsubkeyUnsetLabel(ctx, openPGPPublicSubkeyHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -274,16 +280,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	openPGPPublicSubkeyHref := "openPGPPublicSubkeyHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyUnsetLabel(context.Background(), openPGPPublicSubkeyHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyUnsetLabel(context.Background(), openPGPPublicSubkeyHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpPublicsubkeyAPI.ContentCoreOpenpgpPublicsubkeyUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -310,6 +317,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

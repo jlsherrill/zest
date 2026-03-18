@@ -7,6 +7,8 @@
 
 * `STORAGES_BACKENDS_S3BOTO3_S3_BOTO3_STORAGE` (value: `"storages.backends.s3boto3.S3Boto3Storage"`)
 
+* `STORAGES_BACKENDS_S3_S3_STORAGE` (value: `"storages.backends.s3.S3Storage"`)
+
 * `STORAGES_BACKENDS_AZURE_STORAGE_AZURE_STORAGE` (value: `"storages.backends.azure_storage.AzureStorage"`)
 
 * `PULP_SERVICE_APP_STORAGE_OCI_STORAGE` (value: `"pulp_service.app.storage.OCIStorage"`)

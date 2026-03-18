@@ -56,15 +56,27 @@ type APIClient struct {
 
 	AcsRpmAPI *AcsRpmAPIService
 
+	ApiCreateDomainAPI *ApiCreateDomainAPIService
+
 	ApiDebugAuthHeaderAPI *ApiDebugAuthHeaderAPIService
+
+	ApiDebugDatabaseTriggersAPI *ApiDebugDatabaseTriggersAPIService
+
+	ApiDebugReleaseTaskLocksAPI *ApiDebugReleaseTaskLocksAPIService
+
+	ApiIntegrityProvenanceAPI *ApiIntegrityProvenanceAPIService
+
+	ApiLegacyAPI *ApiLegacyAPIService
 
 	ApiMavenAPI *ApiMavenAPIService
 
 	ApiPypiAPI *ApiPypiAPIService
 
-	ApiPypiLegacyAPI *ApiPypiLegacyAPIService
+	ApiRdsConnectionTestsAPI *ApiRdsConnectionTestsAPIService
 
-	ApiPypiSimpleAPI *ApiPypiSimpleAPIService
+	ApiSimpleAPI *ApiSimpleAPIService
+
+	ApiTestRandomLockTasksAPI *ApiTestRandomLockTasksAPIService
 
 	ApiTestTasksAPI *ApiTestTasksAPIService
 
@@ -78,17 +90,13 @@ type APIClient struct {
 
 	ContentBlobsAPI *ContentBlobsAPIService
 
-	ContentCommitsAPI *ContentCommitsAPIService
-
-	ContentConfigsAPI *ContentConfigsAPIService
-
-	ContentContentAPI *ContentContentAPIService
-
 	ContentDistributionTreesAPI *ContentDistributionTreesAPIService
 
 	ContentFilesAPI *ContentFilesAPIService
 
 	ContentGemAPI *ContentGemAPIService
+
+	ContentHuggingFaceAPI *ContentHuggingFaceAPIService
 
 	ContentManifestsAPI *ContentManifestsAPIService
 
@@ -97,8 +105,6 @@ type APIClient struct {
 	ContentModulemdObsoletesAPI *ContentModulemdObsoletesAPIService
 
 	ContentModulemdsAPI *ContentModulemdsAPIService
-
-	ContentObjectsAPI *ContentObjectsAPIService
 
 	ContentOpenpgpPublickeyAPI *ContentOpenpgpPublickeyAPIService
 
@@ -120,15 +126,11 @@ type APIClient struct {
 
 	ContentPackagesAPI *ContentPackagesAPIService
 
-	ContentRefsAPI *ContentRefsAPIService
+	ContentProvenanceAPI *ContentProvenanceAPIService
 
 	ContentRepoMetadataFilesAPI *ContentRepoMetadataFilesAPIService
 
-	ContentRpmpackagesAPI *ContentRpmpackagesAPIService
-
 	ContentSignaturesAPI *ContentSignaturesAPIService
-
-	ContentSummariesAPI *ContentSummariesAPIService
 
 	ContentTagsAPI *ContentTagsAPIService
 
@@ -158,13 +160,13 @@ type APIClient struct {
 
 	DistributionsGemAPI *DistributionsGemAPIService
 
+	DistributionsHuggingFaceAPI *DistributionsHuggingFaceAPIService
+
 	DistributionsMavenAPI *DistributionsMavenAPIService
 
 	DistributionsNpmAPI *DistributionsNpmAPIService
 
 	DistributionsOpenpgpAPI *DistributionsOpenpgpAPIService
-
-	DistributionsOstreeAPI *DistributionsOstreeAPIService
 
 	DistributionsPullThroughAPI *DistributionsPullThroughAPIService
 
@@ -212,6 +214,8 @@ type APIClient struct {
 
 	PublicationsGemAPI *PublicationsGemAPIService
 
+	PublicationsHuggingFaceAPI *PublicationsHuggingFaceAPIService
+
 	PublicationsPypiAPI *PublicationsPypiAPIService
 
 	PublicationsRpmAPI *PublicationsRpmAPIService
@@ -228,11 +232,11 @@ type APIClient struct {
 
 	RemotesGemAPI *RemotesGemAPIService
 
+	RemotesHuggingFaceAPI *RemotesHuggingFaceAPIService
+
 	RemotesMavenAPI *RemotesMavenAPIService
 
 	RemotesNpmAPI *RemotesNpmAPIService
-
-	RemotesOstreeAPI *RemotesOstreeAPIService
 
 	RemotesPullThroughAPI *RemotesPullThroughAPIService
 
@@ -262,6 +266,10 @@ type APIClient struct {
 
 	RepositoriesGemVersionsAPI *RepositoriesGemVersionsAPIService
 
+	RepositoriesHuggingFaceAPI *RepositoriesHuggingFaceAPIService
+
+	RepositoriesHuggingFaceVersionsAPI *RepositoriesHuggingFaceVersionsAPIService
+
 	RepositoriesMavenAPI *RepositoriesMavenAPIService
 
 	RepositoriesMavenVersionsAPI *RepositoriesMavenVersionsAPIService
@@ -271,10 +279,6 @@ type APIClient struct {
 	RepositoriesNpmVersionsAPI *RepositoriesNpmVersionsAPIService
 
 	RepositoriesOpenpgpKeyringAPI *RepositoriesOpenpgpKeyringAPIService
-
-	RepositoriesOstreeAPI *RepositoriesOstreeAPIService
-
-	RepositoriesOstreeVersionsAPI *RepositoriesOstreeVersionsAPIService
 
 	RepositoriesPythonAPI *RepositoriesPythonAPIService
 
@@ -318,6 +322,8 @@ type APIClient struct {
 
 	VulnReportAPI *VulnReportAPIService
 
+	VulnReportServiceAPI *VulnReportServiceAPIService
+
 	WorkersAPI *WorkersAPIService
 }
 
@@ -340,28 +346,31 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AccessPoliciesAPI = (*AccessPoliciesAPIService)(&c.common)
 	c.AcsFileAPI = (*AcsFileAPIService)(&c.common)
 	c.AcsRpmAPI = (*AcsRpmAPIService)(&c.common)
+	c.ApiCreateDomainAPI = (*ApiCreateDomainAPIService)(&c.common)
 	c.ApiDebugAuthHeaderAPI = (*ApiDebugAuthHeaderAPIService)(&c.common)
+	c.ApiDebugDatabaseTriggersAPI = (*ApiDebugDatabaseTriggersAPIService)(&c.common)
+	c.ApiDebugReleaseTaskLocksAPI = (*ApiDebugReleaseTaskLocksAPIService)(&c.common)
+	c.ApiIntegrityProvenanceAPI = (*ApiIntegrityProvenanceAPIService)(&c.common)
+	c.ApiLegacyAPI = (*ApiLegacyAPIService)(&c.common)
 	c.ApiMavenAPI = (*ApiMavenAPIService)(&c.common)
 	c.ApiPypiAPI = (*ApiPypiAPIService)(&c.common)
-	c.ApiPypiLegacyAPI = (*ApiPypiLegacyAPIService)(&c.common)
-	c.ApiPypiSimpleAPI = (*ApiPypiSimpleAPIService)(&c.common)
+	c.ApiRdsConnectionTestsAPI = (*ApiRdsConnectionTestsAPIService)(&c.common)
+	c.ApiSimpleAPI = (*ApiSimpleAPIService)(&c.common)
+	c.ApiTestRandomLockTasksAPI = (*ApiTestRandomLockTasksAPIService)(&c.common)
 	c.ApiTestTasksAPI = (*ApiTestTasksAPIService)(&c.common)
 	c.ArtifactsAPI = (*ArtifactsAPIService)(&c.common)
 	c.ContentAPI = (*ContentAPIService)(&c.common)
 	c.ContentAdvisoriesAPI = (*ContentAdvisoriesAPIService)(&c.common)
 	c.ContentArtifactAPI = (*ContentArtifactAPIService)(&c.common)
 	c.ContentBlobsAPI = (*ContentBlobsAPIService)(&c.common)
-	c.ContentCommitsAPI = (*ContentCommitsAPIService)(&c.common)
-	c.ContentConfigsAPI = (*ContentConfigsAPIService)(&c.common)
-	c.ContentContentAPI = (*ContentContentAPIService)(&c.common)
 	c.ContentDistributionTreesAPI = (*ContentDistributionTreesAPIService)(&c.common)
 	c.ContentFilesAPI = (*ContentFilesAPIService)(&c.common)
 	c.ContentGemAPI = (*ContentGemAPIService)(&c.common)
+	c.ContentHuggingFaceAPI = (*ContentHuggingFaceAPIService)(&c.common)
 	c.ContentManifestsAPI = (*ContentManifestsAPIService)(&c.common)
 	c.ContentModulemdDefaultsAPI = (*ContentModulemdDefaultsAPIService)(&c.common)
 	c.ContentModulemdObsoletesAPI = (*ContentModulemdObsoletesAPIService)(&c.common)
 	c.ContentModulemdsAPI = (*ContentModulemdsAPIService)(&c.common)
-	c.ContentObjectsAPI = (*ContentObjectsAPIService)(&c.common)
 	c.ContentOpenpgpPublickeyAPI = (*ContentOpenpgpPublickeyAPIService)(&c.common)
 	c.ContentOpenpgpPublicsubkeyAPI = (*ContentOpenpgpPublicsubkeyAPIService)(&c.common)
 	c.ContentOpenpgpSignatureAPI = (*ContentOpenpgpSignatureAPIService)(&c.common)
@@ -372,11 +381,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ContentPackagegroupsAPI = (*ContentPackagegroupsAPIService)(&c.common)
 	c.ContentPackagelangpacksAPI = (*ContentPackagelangpacksAPIService)(&c.common)
 	c.ContentPackagesAPI = (*ContentPackagesAPIService)(&c.common)
-	c.ContentRefsAPI = (*ContentRefsAPIService)(&c.common)
+	c.ContentProvenanceAPI = (*ContentProvenanceAPIService)(&c.common)
 	c.ContentRepoMetadataFilesAPI = (*ContentRepoMetadataFilesAPIService)(&c.common)
-	c.ContentRpmpackagesAPI = (*ContentRpmpackagesAPIService)(&c.common)
 	c.ContentSignaturesAPI = (*ContentSignaturesAPIService)(&c.common)
-	c.ContentSummariesAPI = (*ContentSummariesAPIService)(&c.common)
 	c.ContentTagsAPI = (*ContentTagsAPIService)(&c.common)
 	c.ContentguardsAPI = (*ContentguardsAPIService)(&c.common)
 	c.ContentguardsCompositeAPI = (*ContentguardsCompositeAPIService)(&c.common)
@@ -391,10 +398,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DistributionsContainerAPI = (*DistributionsContainerAPIService)(&c.common)
 	c.DistributionsFileAPI = (*DistributionsFileAPIService)(&c.common)
 	c.DistributionsGemAPI = (*DistributionsGemAPIService)(&c.common)
+	c.DistributionsHuggingFaceAPI = (*DistributionsHuggingFaceAPIService)(&c.common)
 	c.DistributionsMavenAPI = (*DistributionsMavenAPIService)(&c.common)
 	c.DistributionsNpmAPI = (*DistributionsNpmAPIService)(&c.common)
 	c.DistributionsOpenpgpAPI = (*DistributionsOpenpgpAPIService)(&c.common)
-	c.DistributionsOstreeAPI = (*DistributionsOstreeAPIService)(&c.common)
 	c.DistributionsPullThroughAPI = (*DistributionsPullThroughAPIService)(&c.common)
 	c.DistributionsPypiAPI = (*DistributionsPypiAPIService)(&c.common)
 	c.DistributionsRpmAPI = (*DistributionsRpmAPIService)(&c.common)
@@ -418,6 +425,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.PublicationsAPI = (*PublicationsAPIService)(&c.common)
 	c.PublicationsFileAPI = (*PublicationsFileAPIService)(&c.common)
 	c.PublicationsGemAPI = (*PublicationsGemAPIService)(&c.common)
+	c.PublicationsHuggingFaceAPI = (*PublicationsHuggingFaceAPIService)(&c.common)
 	c.PublicationsPypiAPI = (*PublicationsPypiAPIService)(&c.common)
 	c.PublicationsRpmAPI = (*PublicationsRpmAPIService)(&c.common)
 	c.PulpContainerNamespacesAPI = (*PulpContainerNamespacesAPIService)(&c.common)
@@ -426,9 +434,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RemotesContainerAPI = (*RemotesContainerAPIService)(&c.common)
 	c.RemotesFileAPI = (*RemotesFileAPIService)(&c.common)
 	c.RemotesGemAPI = (*RemotesGemAPIService)(&c.common)
+	c.RemotesHuggingFaceAPI = (*RemotesHuggingFaceAPIService)(&c.common)
 	c.RemotesMavenAPI = (*RemotesMavenAPIService)(&c.common)
 	c.RemotesNpmAPI = (*RemotesNpmAPIService)(&c.common)
-	c.RemotesOstreeAPI = (*RemotesOstreeAPIService)(&c.common)
 	c.RemotesPullThroughAPI = (*RemotesPullThroughAPIService)(&c.common)
 	c.RemotesPythonAPI = (*RemotesPythonAPIService)(&c.common)
 	c.RemotesRpmAPI = (*RemotesRpmAPIService)(&c.common)
@@ -443,13 +451,13 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RepositoriesFileVersionsAPI = (*RepositoriesFileVersionsAPIService)(&c.common)
 	c.RepositoriesGemAPI = (*RepositoriesGemAPIService)(&c.common)
 	c.RepositoriesGemVersionsAPI = (*RepositoriesGemVersionsAPIService)(&c.common)
+	c.RepositoriesHuggingFaceAPI = (*RepositoriesHuggingFaceAPIService)(&c.common)
+	c.RepositoriesHuggingFaceVersionsAPI = (*RepositoriesHuggingFaceVersionsAPIService)(&c.common)
 	c.RepositoriesMavenAPI = (*RepositoriesMavenAPIService)(&c.common)
 	c.RepositoriesMavenVersionsAPI = (*RepositoriesMavenVersionsAPIService)(&c.common)
 	c.RepositoriesNpmAPI = (*RepositoriesNpmAPIService)(&c.common)
 	c.RepositoriesNpmVersionsAPI = (*RepositoriesNpmVersionsAPIService)(&c.common)
 	c.RepositoriesOpenpgpKeyringAPI = (*RepositoriesOpenpgpKeyringAPIService)(&c.common)
-	c.RepositoriesOstreeAPI = (*RepositoriesOstreeAPIService)(&c.common)
-	c.RepositoriesOstreeVersionsAPI = (*RepositoriesOstreeVersionsAPIService)(&c.common)
 	c.RepositoriesPythonAPI = (*RepositoriesPythonAPIService)(&c.common)
 	c.RepositoriesPythonVersionsAPI = (*RepositoriesPythonVersionsAPIService)(&c.common)
 	c.RepositoriesReclaimSpaceAPI = (*RepositoriesReclaimSpaceAPIService)(&c.common)
@@ -471,6 +479,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.UsersAPI = (*UsersAPIService)(&c.common)
 	c.UsersRolesAPI = (*UsersRolesAPIService)(&c.common)
 	c.VulnReportAPI = (*VulnReportAPIService)(&c.common)
+	c.VulnReportServiceAPI = (*VulnReportServiceAPIService)(&c.common)
 	c.WorkersAPI = (*WorkersAPIService)(&c.common)
 
 	return c

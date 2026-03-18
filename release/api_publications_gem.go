@@ -31,10 +31,17 @@ type PublicationsGemAPIPublicationsGemGemAddRoleRequest struct {
 	ApiService *PublicationsGemAPIService
 	gemGemPublicationHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r PublicationsGemAPIPublicationsGemGemAddRoleRequest) NestedRole(nestedRole NestedRole) PublicationsGemAPIPublicationsGemGemAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemAddRoleExecute(r Publicati
 
 	localVarPath := localBasePath + "/{gem_gem_publication_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_publication_href"+"}", url.PathEscape(parameterValueToString(r.gemGemPublicationHref, "gemGemPublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemAddRoleExecute(r Publicati
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -146,10 +156,17 @@ type PublicationsGemAPIPublicationsGemGemCreateRequest struct {
 	ApiService *PublicationsGemAPIService
 	pulpDomain string
 	gemGemPublication *GemGemPublication
+	xTaskDiagnostics *[]string
 }
 
 func (r PublicationsGemAPIPublicationsGemGemCreateRequest) GemGemPublication(gemGemPublication GemGemPublication) PublicationsGemAPIPublicationsGemGemCreateRequest {
 	r.gemGemPublication = &gemGemPublication
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemCreateExecute(r Publicatio
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/publications/gem/gem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemCreateExecute(r Publicatio
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.gemGemPublication
@@ -260,6 +280,13 @@ type PublicationsGemAPIPublicationsGemGemDeleteRequest struct {
 	ctx context.Context
 	ApiService *PublicationsGemAPIService
 	gemGemPublicationHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r PublicationsGemAPIPublicationsGemGemDeleteRequest) Execute() (*http.Response, error) {
@@ -298,7 +325,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemDeleteExecute(r Publicatio
 
 	localVarPath := localBasePath + "/{gem_gem_publication_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_publication_href"+"}", url.PathEscape(parameterValueToString(r.gemGemPublicationHref, "gemGemPublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -320,6 +347,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemDeleteExecute(r Publicatio
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -353,6 +383,7 @@ type PublicationsGemAPIPublicationsGemGemListRequest struct {
 	ctx context.Context
 	ApiService *PublicationsGemAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	checkpoint *bool
 	content *string
 	contentIn *[]string
@@ -374,6 +405,12 @@ type PublicationsGemAPIPublicationsGemGemListRequest struct {
 	repositoryVersion *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemListRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where checkpoint matches value
@@ -540,7 +577,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemListExecute(r Publications
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/publications/gem/gem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -642,6 +679,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemListExecute(r Publications
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -683,8 +723,15 @@ type PublicationsGemAPIPublicationsGemGemListRolesRequest struct {
 	ctx context.Context
 	ApiService *PublicationsGemAPIService
 	gemGemPublicationHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -737,7 +784,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemListRolesExecute(r Publica
 
 	localVarPath := localBasePath + "/{gem_gem_publication_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_publication_href"+"}", url.PathEscape(parameterValueToString(r.gemGemPublicationHref, "gemGemPublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -782,6 +829,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemListRolesExecute(r Publica
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -823,8 +873,15 @@ type PublicationsGemAPIPublicationsGemGemMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *PublicationsGemAPIService
 	gemGemPublicationHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -877,7 +934,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemMyPermissionsExecute(r Pub
 
 	localVarPath := localBasePath + "/{gem_gem_publication_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_publication_href"+"}", url.PathEscape(parameterValueToString(r.gemGemPublicationHref, "gemGemPublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -922,6 +979,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemMyPermissionsExecute(r Pub
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -963,8 +1023,15 @@ type PublicationsGemAPIPublicationsGemGemReadRequest struct {
 	ctx context.Context
 	ApiService *PublicationsGemAPIService
 	gemGemPublicationHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1017,7 +1084,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemReadExecute(r Publications
 
 	localVarPath := localBasePath + "/{gem_gem_publication_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_publication_href"+"}", url.PathEscape(parameterValueToString(r.gemGemPublicationHref, "gemGemPublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1062,6 +1129,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemReadExecute(r Publications
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1104,10 +1174,17 @@ type PublicationsGemAPIPublicationsGemGemRemoveRoleRequest struct {
 	ApiService *PublicationsGemAPIService
 	gemGemPublicationHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r PublicationsGemAPIPublicationsGemGemRemoveRoleRequest) NestedRole(nestedRole NestedRole) PublicationsGemAPIPublicationsGemGemRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsGemAPIPublicationsGemGemRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsGemAPIPublicationsGemGemRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1149,7 +1226,7 @@ func (a *PublicationsGemAPIService) PublicationsGemGemRemoveRoleExecute(r Public
 
 	localVarPath := localBasePath + "/{gem_gem_publication_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_publication_href"+"}", url.PathEscape(parameterValueToString(r.gemGemPublicationHref, "gemGemPublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1174,6 +1251,9 @@ func (a *PublicationsGemAPIService) PublicationsGemGemRemoveRoleExecute(r Public
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole

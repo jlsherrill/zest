@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## RepositoriesContainerContainerPushAddRole
 
-> NestedRoleResponse RepositoriesContainerContainerPushAddRole(ctx, containerContainerPushRepositoryHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse RepositoriesContainerContainerPushAddRole(ctx, containerContainerPushRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Add a role
 
@@ -37,16 +37,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushAddRole(context.Background(), containerContainerPushRepositoryHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushAddRole(context.Background(), containerContainerPushRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -73,6 +74,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -94,7 +96,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushList
 
-> PaginatedcontainerContainerPushRepositoryResponseList RepositoriesContainerContainerPushList(ctx, pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedcontainerContainerPushRepositoryResponseList RepositoriesContainerContainerPushList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List container push repositorys
 
@@ -109,11 +111,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	latestWithContent := "latestWithContent_example" // string | Content Unit referenced by HREF/PRN (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
@@ -147,7 +150,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushList(context.Background(), pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -173,6 +176,7 @@ Other parameters are passed through a pointer to a apiRepositoriesContainerConta
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **latestWithContent** | **string** | Content Unit referenced by HREF/PRN | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
@@ -224,7 +228,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushListRoles
 
-> ObjectRolesResponse RepositoriesContainerContainerPushListRoles(ctx, containerContainerPushRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ObjectRolesResponse RepositoriesContainerContainerPushListRoles(ctx, containerContainerPushRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List roles
 
@@ -239,17 +243,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushListRoles(context.Background(), containerContainerPushRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushListRoles(context.Background(), containerContainerPushRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushListRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -275,6 +280,7 @@ Other parameters are passed through a pointer to a apiRepositoriesContainerConta
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -298,7 +304,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushMyPermissions
 
-> MyPermissionsResponse RepositoriesContainerContainerPushMyPermissions(ctx, containerContainerPushRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MyPermissionsResponse RepositoriesContainerContainerPushMyPermissions(ctx, containerContainerPushRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List user permissions
 
@@ -313,17 +319,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushMyPermissions(context.Background(), containerContainerPushRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushMyPermissions(context.Background(), containerContainerPushRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushMyPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -349,6 +356,7 @@ Other parameters are passed through a pointer to a apiRepositoriesContainerConta
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -372,7 +380,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushPartialUpdate
 
-> AsyncOperationResponse RepositoriesContainerContainerPushPartialUpdate(ctx, containerContainerPushRepositoryHref).PatchedcontainerContainerPushRepository(patchedcontainerContainerPushRepository).Execute()
+> ContainerContainerPushRepositoryResponse RepositoriesContainerContainerPushPartialUpdate(ctx, containerContainerPushRepositoryHref).PatchedcontainerContainerPushRepository(patchedcontainerContainerPushRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a container push repository
 
@@ -387,21 +395,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	patchedcontainerContainerPushRepository := *openapiclient.NewPatchedcontainerContainerPushRepository() // PatchedcontainerContainerPushRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushPartialUpdate(context.Background(), containerContainerPushRepositoryHref).PatchedcontainerContainerPushRepository(patchedcontainerContainerPushRepository).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushPartialUpdate(context.Background(), containerContainerPushRepositoryHref).PatchedcontainerContainerPushRepository(patchedcontainerContainerPushRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesContainerContainerPushPartialUpdate`: AsyncOperationResponse
+	// response from `RepositoriesContainerContainerPushPartialUpdate`: ContainerContainerPushRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushPartialUpdate`: %v\n", resp)
 }
 ```
@@ -423,10 +432,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedcontainerContainerPushRepository** | [**PatchedcontainerContainerPushRepository**](PatchedcontainerContainerPushRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**ContainerContainerPushRepositoryResponse**](ContainerContainerPushRepositoryResponse.md)
 
 ### Authorization
 
@@ -444,7 +454,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushRead
 
-> ContainerContainerPushRepositoryResponse RepositoriesContainerContainerPushRead(ctx, containerContainerPushRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ContainerContainerPushRepositoryResponse RepositoriesContainerContainerPushRead(ctx, containerContainerPushRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a container push repository
 
@@ -459,17 +469,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRead(context.Background(), containerContainerPushRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRead(context.Background(), containerContainerPushRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -495,6 +506,7 @@ Other parameters are passed through a pointer to a apiRepositoriesContainerConta
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -518,7 +530,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushRemoveImage
 
-> AsyncOperationResponse RepositoriesContainerContainerPushRemoveImage(ctx, containerContainerPushRepositoryHref).RemoveImage(removeImage).Execute()
+> AsyncOperationResponse RepositoriesContainerContainerPushRemoveImage(ctx, containerContainerPushRepositoryHref).RemoveImage(removeImage).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete an image from a repository
 
@@ -533,16 +545,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	removeImage := *openapiclient.NewRemoveImage("Digest_example") // RemoveImage | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveImage(context.Background(), containerContainerPushRepositoryHref).RemoveImage(removeImage).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveImage(context.Background(), containerContainerPushRepositoryHref).RemoveImage(removeImage).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveImage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -569,6 +582,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **removeImage** | [**RemoveImage**](RemoveImage.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -590,7 +604,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushRemoveRole
 
-> NestedRoleResponse RepositoriesContainerContainerPushRemoveRole(ctx, containerContainerPushRepositoryHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse RepositoriesContainerContainerPushRemoveRole(ctx, containerContainerPushRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Remove a role
 
@@ -605,16 +619,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveRole(context.Background(), containerContainerPushRepositoryHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveRole(context.Background(), containerContainerPushRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -641,6 +656,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -662,7 +678,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushRemoveSignatures
 
-> RemoveSignaturesResponse RepositoriesContainerContainerPushRemoveSignatures(ctx, containerContainerPushRepositoryHref).RemoveSignatures(removeSignatures).Execute()
+> RemoveSignaturesResponse RepositoriesContainerContainerPushRemoveSignatures(ctx, containerContainerPushRepositoryHref).RemoveSignatures(removeSignatures).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 
 
@@ -677,16 +693,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	removeSignatures := *openapiclient.NewRemoveSignatures("SignedWithKeyId_example") // RemoveSignatures | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveSignatures(context.Background(), containerContainerPushRepositoryHref).RemoveSignatures(removeSignatures).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveSignatures(context.Background(), containerContainerPushRepositoryHref).RemoveSignatures(removeSignatures).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushRemoveSignatures``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -713,6 +730,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **removeSignatures** | [**RemoveSignatures**](RemoveSignatures.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -734,7 +752,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushSign
 
-> AsyncOperationResponse RepositoriesContainerContainerPushSign(ctx, containerContainerPushRepositoryHref).RepositorySign(repositorySign).Execute()
+> AsyncOperationResponse RepositoriesContainerContainerPushSign(ctx, containerContainerPushRepositoryHref).RepositorySign(repositorySign).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Sign images in the repo
 
@@ -749,16 +767,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	repositorySign := *openapiclient.NewRepositorySign() // RepositorySign | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushSign(context.Background(), containerContainerPushRepositoryHref).RepositorySign(repositorySign).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushSign(context.Background(), containerContainerPushRepositoryHref).RepositorySign(repositorySign).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushSign``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -785,6 +804,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositorySign** | [**RepositorySign**](RepositorySign.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -806,7 +826,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushTag
 
-> AsyncOperationResponse RepositoriesContainerContainerPushTag(ctx, containerContainerPushRepositoryHref).TagImage(tagImage).Execute()
+> AsyncOperationResponse RepositoriesContainerContainerPushTag(ctx, containerContainerPushRepositoryHref).TagImage(tagImage).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a Tag
 
@@ -821,16 +841,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	tagImage := *openapiclient.NewTagImage("Tag_example", "Digest_example") // TagImage | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushTag(context.Background(), containerContainerPushRepositoryHref).TagImage(tagImage).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushTag(context.Background(), containerContainerPushRepositoryHref).TagImage(tagImage).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushTag``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -857,6 +878,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **tagImage** | [**TagImage**](TagImage.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -878,7 +900,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushUntag
 
-> AsyncOperationResponse RepositoriesContainerContainerPushUntag(ctx, containerContainerPushRepositoryHref).UnTagImage(unTagImage).Execute()
+> AsyncOperationResponse RepositoriesContainerContainerPushUntag(ctx, containerContainerPushRepositoryHref).UnTagImage(unTagImage).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a tag
 
@@ -893,16 +915,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	unTagImage := *openapiclient.NewUnTagImage("Tag_example") // UnTagImage | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUntag(context.Background(), containerContainerPushRepositoryHref).UnTagImage(unTagImage).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUntag(context.Background(), containerContainerPushRepositoryHref).UnTagImage(unTagImage).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUntag``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -929,6 +952,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unTagImage** | [**UnTagImage**](UnTagImage.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -950,7 +974,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesContainerContainerPushUpdate
 
-> AsyncOperationResponse RepositoriesContainerContainerPushUpdate(ctx, containerContainerPushRepositoryHref).ContainerContainerPushRepository(containerContainerPushRepository).Execute()
+> ContainerContainerPushRepositoryResponse RepositoriesContainerContainerPushUpdate(ctx, containerContainerPushRepositoryHref).ContainerContainerPushRepository(containerContainerPushRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a container push repository
 
@@ -965,21 +989,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPushRepositoryHref := "containerContainerPushRepositoryHref_example" // string | 
 	containerContainerPushRepository := *openapiclient.NewContainerContainerPushRepository("Name_example") // ContainerContainerPushRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUpdate(context.Background(), containerContainerPushRepositoryHref).ContainerContainerPushRepository(containerContainerPushRepository).Execute()
+	resp, r, err := apiClient.RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUpdate(context.Background(), containerContainerPushRepositoryHref).ContainerContainerPushRepository(containerContainerPushRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesContainerContainerPushUpdate`: AsyncOperationResponse
+	// response from `RepositoriesContainerContainerPushUpdate`: ContainerContainerPushRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesContainerPushAPI.RepositoriesContainerContainerPushUpdate`: %v\n", resp)
 }
 ```
@@ -1001,10 +1026,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **containerContainerPushRepository** | [**ContainerContainerPushRepository**](ContainerContainerPushRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**ContainerContainerPushRepositoryResponse**](ContainerContainerPushRepositoryResponse.md)
 
 ### Authorization
 

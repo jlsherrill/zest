@@ -30,10 +30,17 @@ type ContentModulemdsAPIContentRpmModulemdsCreateRequest struct {
 	ApiService *ContentModulemdsAPIService
 	pulpDomain string
 	rpmModulemd *RpmModulemd
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentModulemdsAPIContentRpmModulemdsCreateRequest) RpmModulemd(rpmModulemd RpmModulemd) ContentModulemdsAPIContentRpmModulemdsCreateRequest {
 	r.rpmModulemd = &rpmModulemd
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentModulemdsAPIContentRpmModulemdsCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentModulemdsAPIContentRpmModulemdsCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsCreateExecute(r ContentM
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/rpm/modulemds/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsCreateExecute(r ContentM
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.rpmModulemd
@@ -144,6 +154,7 @@ type ContentModulemdsAPIContentRpmModulemdsListRequest struct {
 	ctx context.Context
 	ApiService *ContentModulemdsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	arch *string
 	archIn *[]string
 	context *string
@@ -169,6 +180,12 @@ type ContentModulemdsAPIContentRpmModulemdsListRequest struct {
 	versionIn *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentModulemdsAPIContentRpmModulemdsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentModulemdsAPIContentRpmModulemdsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where arch matches value
@@ -358,7 +375,7 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsListExecute(r ContentMod
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/rpm/modulemds/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -472,6 +489,9 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsListExecute(r ContentMod
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -513,8 +533,15 @@ type ContentModulemdsAPIContentRpmModulemdsReadRequest struct {
 	ctx context.Context
 	ApiService *ContentModulemdsAPIService
 	rpmModulemdHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentModulemdsAPIContentRpmModulemdsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentModulemdsAPIContentRpmModulemdsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -567,7 +594,7 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsReadExecute(r ContentMod
 
 	localVarPath := localBasePath + "/{rpm_modulemd_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_modulemd_href"+"}", url.PathEscape(parameterValueToString(r.rpmModulemdHref, "rpmModulemdHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -612,6 +639,9 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsReadExecute(r ContentMod
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -654,10 +684,17 @@ type ContentModulemdsAPIContentRpmModulemdsSetLabelRequest struct {
 	ApiService *ContentModulemdsAPIService
 	rpmModulemdHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentModulemdsAPIContentRpmModulemdsSetLabelRequest) SetLabel(setLabel SetLabel) ContentModulemdsAPIContentRpmModulemdsSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentModulemdsAPIContentRpmModulemdsSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentModulemdsAPIContentRpmModulemdsSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -699,7 +736,7 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsSetLabelExecute(r Conten
 
 	localVarPath := localBasePath + "/{rpm_modulemd_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_modulemd_href"+"}", url.PathEscape(parameterValueToString(r.rpmModulemdHref, "rpmModulemdHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -724,6 +761,9 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsSetLabelExecute(r Conten
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -769,10 +809,17 @@ type ContentModulemdsAPIContentRpmModulemdsUnsetLabelRequest struct {
 	ApiService *ContentModulemdsAPIService
 	rpmModulemdHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentModulemdsAPIContentRpmModulemdsUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentModulemdsAPIContentRpmModulemdsUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentModulemdsAPIContentRpmModulemdsUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentModulemdsAPIContentRpmModulemdsUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -814,7 +861,7 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsUnsetLabelExecute(r Cont
 
 	localVarPath := localBasePath + "/{rpm_modulemd_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_modulemd_href"+"}", url.PathEscape(parameterValueToString(r.rpmModulemdHref, "rpmModulemdHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -839,6 +886,9 @@ func (a *ContentModulemdsAPIService) ContentRpmModulemdsUnsetLabelExecute(r Cont
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

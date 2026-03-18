@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GroupsRolesCreate
 
-> GroupRoleResponse GroupsRolesCreate(ctx, groupHref).GroupRole(groupRole).Execute()
+> GroupRoleResponse GroupsRolesCreate(ctx, groupHref).GroupRole(groupRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a group role
 
@@ -28,16 +28,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	groupHref := "groupHref_example" // string | 
 	groupRole := *openapiclient.NewGroupRole("Role_example") // GroupRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GroupsRolesAPI.GroupsRolesCreate(context.Background(), groupHref).GroupRole(groupRole).Execute()
+	resp, r, err := apiClient.GroupsRolesAPI.GroupsRolesCreate(context.Background(), groupHref).GroupRole(groupRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GroupsRolesAPI.GroupsRolesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -64,6 +65,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **groupRole** | [**GroupRole**](GroupRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -85,7 +87,7 @@ Name | Type | Description  | Notes
 
 ## GroupsRolesDelete
 
-> GroupsRolesDelete(ctx, groupsGroupRoleHref).Execute()
+> GroupsRolesDelete(ctx, groupsGroupRoleHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a group role
 
@@ -100,15 +102,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	groupsGroupRoleHref := "groupsGroupRoleHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.GroupsRolesAPI.GroupsRolesDelete(context.Background(), groupsGroupRoleHref).Execute()
+	r, err := apiClient.GroupsRolesAPI.GroupsRolesDelete(context.Background(), groupsGroupRoleHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GroupsRolesAPI.GroupsRolesDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -132,6 +135,7 @@ Other parameters are passed through a pointer to a apiGroupsRolesDeleteRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -153,7 +157,7 @@ Name | Type | Description  | Notes
 
 ## GroupsRolesList
 
-> PaginatedGroupRoleResponseList GroupsRolesList(ctx, groupHref).ContentObject(contentObject).Domain(domain).Limit(limit).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Role(role).RoleContains(roleContains).RoleIcontains(roleIcontains).RoleIn(roleIn).RoleStartswith(roleStartswith).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedGroupRoleResponseList GroupsRolesList(ctx, groupHref).XTaskDiagnostics(xTaskDiagnostics).ContentObject(contentObject).Domain(domain).Limit(limit).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Role(role).RoleContains(roleContains).RoleIcontains(roleIcontains).RoleIn(roleIn).RoleStartswith(roleStartswith).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List group roles
 
@@ -168,11 +172,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	groupHref := "groupHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	contentObject := "contentObject_example" // string | content_object (optional)
 	domain := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Foreign Key referenced by HREF (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
@@ -192,7 +197,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GroupsRolesAPI.GroupsRolesList(context.Background(), groupHref).ContentObject(contentObject).Domain(domain).Limit(limit).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Role(role).RoleContains(roleContains).RoleIcontains(roleIcontains).RoleIn(roleIn).RoleStartswith(roleStartswith).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.GroupsRolesAPI.GroupsRolesList(context.Background(), groupHref).XTaskDiagnostics(xTaskDiagnostics).ContentObject(contentObject).Domain(domain).Limit(limit).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).Q(q).Role(role).RoleContains(roleContains).RoleIcontains(roleIcontains).RoleIn(roleIn).RoleStartswith(roleStartswith).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GroupsRolesAPI.GroupsRolesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -218,6 +223,7 @@ Other parameters are passed through a pointer to a apiGroupsRolesListRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **contentObject** | **string** | content_object | 
  **domain** | **string** | Foreign Key referenced by HREF | 
  **limit** | **int32** | Number of results to return per page. | 
@@ -255,7 +261,7 @@ Name | Type | Description  | Notes
 
 ## GroupsRolesRead
 
-> GroupRoleResponse GroupsRolesRead(ctx, groupsGroupRoleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> GroupRoleResponse GroupsRolesRead(ctx, groupsGroupRoleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a group role
 
@@ -270,17 +276,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	groupsGroupRoleHref := "groupsGroupRoleHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GroupsRolesAPI.GroupsRolesRead(context.Background(), groupsGroupRoleHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.GroupsRolesAPI.GroupsRolesRead(context.Background(), groupsGroupRoleHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GroupsRolesAPI.GroupsRolesRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -306,6 +313,7 @@ Other parameters are passed through a pointer to a apiGroupsRolesReadRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 

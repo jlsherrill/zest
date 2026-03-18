@@ -30,10 +30,17 @@ type DistributionsMavenAPIDistributionsMavenMavenCreateRequest struct {
 	ApiService *DistributionsMavenAPIService
 	pulpDomain string
 	mavenMavenDistribution *MavenMavenDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsMavenAPIDistributionsMavenMavenCreateRequest) MavenMavenDistribution(mavenMavenDistribution MavenMavenDistribution) DistributionsMavenAPIDistributionsMavenMavenCreateRequest {
 	r.mavenMavenDistribution = &mavenMavenDistribution
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenCreateExecute(r Di
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/distributions/maven/maven/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenCreateExecute(r Di
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenDistribution
@@ -144,6 +154,13 @@ type DistributionsMavenAPIDistributionsMavenMavenDeleteRequest struct {
 	ctx context.Context
 	ApiService *DistributionsMavenAPIService
 	mavenMavenDistributionHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r DistributionsMavenAPIDistributionsMavenMavenDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -184,7 +201,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenDeleteExecute(r Di
 
 	localVarPath := localBasePath + "/{maven_maven_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_distribution_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenDistributionHref, "mavenMavenDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -206,6 +223,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenDeleteExecute(r Di
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -248,6 +268,7 @@ type DistributionsMavenAPIDistributionsMavenMavenListRequest struct {
 	ctx context.Context
 	ApiService *DistributionsMavenAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	basePath *string
 	basePathContains *string
 	basePathIcontains *string
@@ -275,6 +296,12 @@ type DistributionsMavenAPIDistributionsMavenMavenListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenListRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where base_path matches value
@@ -477,7 +504,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenListExecute(r Dist
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/distributions/maven/maven/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -597,6 +624,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenListExecute(r Dist
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -639,6 +669,7 @@ type DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest struct {
 	ApiService *DistributionsMavenAPIService
 	mavenMavenDistributionHref string
 	patchedmavenMavenDistribution *PatchedmavenMavenDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) PatchedmavenMavenDistribution(patchedmavenMavenDistribution PatchedmavenMavenDistribution) DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest {
@@ -646,14 +677,20 @@ func (r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) Patche
 	return r
 }
 
-func (r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) Execute() (*MavenMavenDistributionResponse, *http.Response, error) {
 	return r.ApiService.DistributionsMavenMavenPartialUpdateExecute(r)
 }
 
 /*
 DistributionsMavenMavenPartialUpdate Update a maven distribution
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param mavenMavenDistributionHref
@@ -668,13 +705,13 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenPartialUpdate(ctx 
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DistributionsMavenAPIService) DistributionsMavenMavenPartialUpdateExecute(r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return MavenMavenDistributionResponse
+func (a *DistributionsMavenAPIService) DistributionsMavenMavenPartialUpdateExecute(r DistributionsMavenAPIDistributionsMavenMavenPartialUpdateRequest) (*MavenMavenDistributionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *MavenMavenDistributionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DistributionsMavenAPIService.DistributionsMavenMavenPartialUpdate")
@@ -684,7 +721,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenPartialUpdateExecu
 
 	localVarPath := localBasePath + "/{maven_maven_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_distribution_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenDistributionHref, "mavenMavenDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -709,6 +746,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenPartialUpdateExecu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedmavenMavenDistribution
@@ -753,8 +793,15 @@ type DistributionsMavenAPIDistributionsMavenMavenReadRequest struct {
 	ctx context.Context
 	ApiService *DistributionsMavenAPIService
 	mavenMavenDistributionHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -807,7 +854,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenReadExecute(r Dist
 
 	localVarPath := localBasePath + "/{maven_maven_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_distribution_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenDistributionHref, "mavenMavenDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -852,6 +899,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenReadExecute(r Dist
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -894,10 +944,17 @@ type DistributionsMavenAPIDistributionsMavenMavenSetLabelRequest struct {
 	ApiService *DistributionsMavenAPIService
 	mavenMavenDistributionHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsMavenAPIDistributionsMavenMavenSetLabelRequest) SetLabel(setLabel SetLabel) DistributionsMavenAPIDistributionsMavenMavenSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -939,7 +996,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenSetLabelExecute(r 
 
 	localVarPath := localBasePath + "/{maven_maven_distribution_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_distribution_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenDistributionHref, "mavenMavenDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -964,6 +1021,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenSetLabelExecute(r 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1009,10 +1069,17 @@ type DistributionsMavenAPIDistributionsMavenMavenUnsetLabelRequest struct {
 	ApiService *DistributionsMavenAPIService
 	mavenMavenDistributionHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsMavenAPIDistributionsMavenMavenUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) DistributionsMavenAPIDistributionsMavenMavenUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1054,7 +1121,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenUnsetLabelExecute(
 
 	localVarPath := localBasePath + "/{maven_maven_distribution_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_distribution_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenDistributionHref, "mavenMavenDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1079,6 +1146,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenUnsetLabelExecute(
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1124,6 +1194,7 @@ type DistributionsMavenAPIDistributionsMavenMavenUpdateRequest struct {
 	ApiService *DistributionsMavenAPIService
 	mavenMavenDistributionHref string
 	mavenMavenDistribution *MavenMavenDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) MavenMavenDistribution(mavenMavenDistribution MavenMavenDistribution) DistributionsMavenAPIDistributionsMavenMavenUpdateRequest {
@@ -1131,14 +1202,20 @@ func (r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) MavenMavenDis
 	return r
 }
 
-func (r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsMavenAPIDistributionsMavenMavenUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) Execute() (*MavenMavenDistributionResponse, *http.Response, error) {
 	return r.ApiService.DistributionsMavenMavenUpdateExecute(r)
 }
 
 /*
 DistributionsMavenMavenUpdate Update a maven distribution
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param mavenMavenDistributionHref
@@ -1153,13 +1230,13 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenUpdate(ctx context
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DistributionsMavenAPIService) DistributionsMavenMavenUpdateExecute(r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return MavenMavenDistributionResponse
+func (a *DistributionsMavenAPIService) DistributionsMavenMavenUpdateExecute(r DistributionsMavenAPIDistributionsMavenMavenUpdateRequest) (*MavenMavenDistributionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *MavenMavenDistributionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DistributionsMavenAPIService.DistributionsMavenMavenUpdate")
@@ -1169,7 +1246,7 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenUpdateExecute(r Di
 
 	localVarPath := localBasePath + "/{maven_maven_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_distribution_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenDistributionHref, "mavenMavenDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1194,6 +1271,9 @@ func (a *DistributionsMavenAPIService) DistributionsMavenMavenUpdateExecute(r Di
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenDistribution

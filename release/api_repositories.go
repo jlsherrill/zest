@@ -29,6 +29,7 @@ type RepositoriesAPIRepositoriesListRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	latestWithContent *string
 	limit *int32
 	name *string
@@ -61,6 +62,12 @@ type RepositoriesAPIRepositoriesListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesAPIRepositoriesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesAPIRepositoriesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Content Unit referenced by HREF/PRN
@@ -165,13 +172,13 @@ func (r RepositoriesAPIRepositoriesListRequest) PulpLabelSelect(pulpLabelSelect 
 	return r
 }
 
-// Pulp type* &#x60;core.openpgp&#x60; - core.openpgp* &#x60;python.python&#x60; - python.python* &#x60;gem.gem&#x60; - gem.gem* &#x60;npm.npm&#x60; - npm.npm* &#x60;ostree.ostree&#x60; - ostree.ostree* &#x60;container.container&#x60; - container.container* &#x60;container.container-push&#x60; - container.container-push* &#x60;file.file&#x60; - file.file* &#x60;maven.maven&#x60; - maven.maven* &#x60;rpm.rpm&#x60; - rpm.rpm
+// Pulp type* &#x60;core.openpgp&#x60; - core.openpgp* &#x60;container.container&#x60; - container.container* &#x60;container.container-push&#x60; - container.container-push* &#x60;gem.gem&#x60; - gem.gem* &#x60;hugging_face.hugging-face&#x60; - hugging_face.hugging-face* &#x60;maven.maven&#x60; - maven.maven* &#x60;npm.npm&#x60; - npm.npm* &#x60;python.python&#x60; - python.python* &#x60;rpm.rpm&#x60; - rpm.rpm* &#x60;file.file&#x60; - file.file
 func (r RepositoriesAPIRepositoriesListRequest) PulpType(pulpType string) RepositoriesAPIRepositoriesListRequest {
 	r.pulpType = &pulpType
 	return r
 }
 
-// Multiple values may be separated by commas.* &#x60;core.openpgp&#x60; - core.openpgp* &#x60;python.python&#x60; - python.python* &#x60;gem.gem&#x60; - gem.gem* &#x60;npm.npm&#x60; - npm.npm* &#x60;ostree.ostree&#x60; - ostree.ostree* &#x60;container.container&#x60; - container.container* &#x60;container.container-push&#x60; - container.container-push* &#x60;file.file&#x60; - file.file* &#x60;maven.maven&#x60; - maven.maven* &#x60;rpm.rpm&#x60; - rpm.rpm
+// Multiple values may be separated by commas.* &#x60;core.openpgp&#x60; - core.openpgp* &#x60;container.container&#x60; - container.container* &#x60;container.container-push&#x60; - container.container-push* &#x60;gem.gem&#x60; - gem.gem* &#x60;hugging_face.hugging-face&#x60; - hugging_face.hugging-face* &#x60;maven.maven&#x60; - maven.maven* &#x60;npm.npm&#x60; - npm.npm* &#x60;python.python&#x60; - python.python* &#x60;rpm.rpm&#x60; - rpm.rpm* &#x60;file.file&#x60; - file.file
 func (r RepositoriesAPIRepositoriesListRequest) PulpTypeIn(pulpTypeIn []string) RepositoriesAPIRepositoriesListRequest {
 	r.pulpTypeIn = &pulpTypeIn
 	return r
@@ -293,7 +300,7 @@ func (a *RepositoriesAPIService) RepositoriesListExecute(r RepositoriesAPIReposi
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -427,6 +434,9 @@ func (a *RepositoriesAPIService) RepositoriesListExecute(r RepositoriesAPIReposi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

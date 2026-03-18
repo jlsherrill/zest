@@ -31,10 +31,17 @@ type UploadsAPIUploadsAddRoleRequest struct {
 	ApiService *UploadsAPIService
 	uploadHref string
 	upload *Upload
+	xTaskDiagnostics *[]string
 }
 
 func (r UploadsAPIUploadsAddRoleRequest) Upload(upload Upload) UploadsAPIUploadsAddRoleRequest {
 	r.upload = &upload
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *UploadsAPIService) UploadsAddRoleExecute(r UploadsAPIUploadsAddRoleRequ
 
 	localVarPath := localBasePath + "/{upload_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *UploadsAPIService) UploadsAddRoleExecute(r UploadsAPIUploadsAddRoleRequ
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.upload
@@ -146,10 +156,17 @@ type UploadsAPIUploadsCommitRequest struct {
 	ApiService *UploadsAPIService
 	uploadHref string
 	uploadCommit *UploadCommit
+	xTaskDiagnostics *[]string
 }
 
 func (r UploadsAPIUploadsCommitRequest) UploadCommit(uploadCommit UploadCommit) UploadsAPIUploadsCommitRequest {
 	r.uploadCommit = &uploadCommit
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsCommitRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsCommitRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *UploadsAPIService) UploadsCommitExecute(r UploadsAPIUploadsCommitReques
 
 	localVarPath := localBasePath + "/{upload_href}commit/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *UploadsAPIService) UploadsCommitExecute(r UploadsAPIUploadsCommitReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.uploadCommit
@@ -261,10 +281,17 @@ type UploadsAPIUploadsCreateRequest struct {
 	ApiService *UploadsAPIService
 	pulpDomain string
 	upload *Upload
+	xTaskDiagnostics *[]string
 }
 
 func (r UploadsAPIUploadsCreateRequest) Upload(upload Upload) UploadsAPIUploadsCreateRequest {
 	r.upload = &upload
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -306,7 +333,7 @@ func (a *UploadsAPIService) UploadsCreateExecute(r UploadsAPIUploadsCreateReques
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/uploads/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -331,6 +358,9 @@ func (a *UploadsAPIService) UploadsCreateExecute(r UploadsAPIUploadsCreateReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.upload
@@ -375,6 +405,13 @@ type UploadsAPIUploadsDeleteRequest struct {
 	ctx context.Context
 	ApiService *UploadsAPIService
 	uploadHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r UploadsAPIUploadsDeleteRequest) Execute() (*http.Response, error) {
@@ -413,7 +450,7 @@ func (a *UploadsAPIService) UploadsDeleteExecute(r UploadsAPIUploadsDeleteReques
 
 	localVarPath := localBasePath + "/{upload_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -435,6 +472,9 @@ func (a *UploadsAPIService) UploadsDeleteExecute(r UploadsAPIUploadsDeleteReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -468,6 +508,7 @@ type UploadsAPIUploadsListRequest struct {
 	ctx context.Context
 	ApiService *UploadsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	offset *int32
 	ordering *[]string
@@ -481,6 +522,12 @@ type UploadsAPIUploadsListRequest struct {
 	sizeRange *[]int32
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -599,7 +646,7 @@ func (a *UploadsAPIService) UploadsListExecute(r UploadsAPIUploadsListRequest) (
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/uploads/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -677,6 +724,9 @@ func (a *UploadsAPIService) UploadsListExecute(r UploadsAPIUploadsListRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -718,8 +768,15 @@ type UploadsAPIUploadsListRolesRequest struct {
 	ctx context.Context
 	ApiService *UploadsAPIService
 	uploadHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -772,7 +829,7 @@ func (a *UploadsAPIService) UploadsListRolesExecute(r UploadsAPIUploadsListRoles
 
 	localVarPath := localBasePath + "/{upload_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -817,6 +874,9 @@ func (a *UploadsAPIService) UploadsListRolesExecute(r UploadsAPIUploadsListRoles
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -858,8 +918,15 @@ type UploadsAPIUploadsMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *UploadsAPIService
 	uploadHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -912,7 +979,7 @@ func (a *UploadsAPIService) UploadsMyPermissionsExecute(r UploadsAPIUploadsMyPer
 
 	localVarPath := localBasePath + "/{upload_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -957,6 +1024,9 @@ func (a *UploadsAPIService) UploadsMyPermissionsExecute(r UploadsAPIUploadsMyPer
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -998,8 +1068,15 @@ type UploadsAPIUploadsReadRequest struct {
 	ctx context.Context
 	ApiService *UploadsAPIService
 	uploadHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1052,7 +1129,7 @@ func (a *UploadsAPIService) UploadsReadExecute(r UploadsAPIUploadsReadRequest) (
 
 	localVarPath := localBasePath + "/{upload_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1097,6 +1174,9 @@ func (a *UploadsAPIService) UploadsReadExecute(r UploadsAPIUploadsReadRequest) (
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1139,10 +1219,17 @@ type UploadsAPIUploadsRemoveRoleRequest struct {
 	ApiService *UploadsAPIService
 	uploadHref string
 	upload *Upload
+	xTaskDiagnostics *[]string
 }
 
 func (r UploadsAPIUploadsRemoveRoleRequest) Upload(upload Upload) UploadsAPIUploadsRemoveRoleRequest {
 	r.upload = &upload
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1184,7 +1271,7 @@ func (a *UploadsAPIService) UploadsRemoveRoleExecute(r UploadsAPIUploadsRemoveRo
 
 	localVarPath := localBasePath + "/{upload_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1209,6 +1296,9 @@ func (a *UploadsAPIService) UploadsRemoveRoleExecute(r UploadsAPIUploadsRemoveRo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.upload
@@ -1255,6 +1345,7 @@ type UploadsAPIUploadsUpdateRequest struct {
 	contentRange *string
 	uploadHref string
 	file *os.File
+	xTaskDiagnostics *[]string
 	sha256 *string
 }
 
@@ -1267,6 +1358,12 @@ func (r UploadsAPIUploadsUpdateRequest) ContentRange(contentRange string) Upload
 // A chunk of the uploaded file.
 func (r UploadsAPIUploadsUpdateRequest) File(file *os.File) UploadsAPIUploadsUpdateRequest {
 	r.file = file
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UploadsAPIUploadsUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) UploadsAPIUploadsUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1314,7 +1411,7 @@ func (a *UploadsAPIService) UploadsUpdateExecute(r UploadsAPIUploadsUpdateReques
 
 	localVarPath := localBasePath + "/{upload_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upload_href"+"}", url.PathEscape(parameterValueToString(r.uploadHref, "uploadHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1344,6 +1441,9 @@ func (a *UploadsAPIService) UploadsUpdateExecute(r UploadsAPIUploadsUpdateReques
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	parameterAddToHeaderOrQuery(localVarHeaderParams, "Content-Range", r.contentRange, "simple", "")
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	var fileLocalVarFormFileName string
 	var fileLocalVarFileName     string
 	var fileLocalVarFileBytes    []byte

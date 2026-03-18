@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## ContentCoreOpenpgpSignatureList
 
-> PaginatedOpenPGPSignatureResponseList ContentCoreOpenpgpSignatureList(ctx, pulpDomain).Issuer(issuer).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedOpenPGPSignatureResponseList ContentCoreOpenpgpSignatureList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Issuer(issuer).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List open pgp signatures
 
@@ -28,11 +28,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	issuer := "issuer_example" // string | Filter results where issuer matches value (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	offset := int32(56) // int32 | The initial index from which to return the results. (optional)
@@ -51,7 +52,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureList(context.Background(), pulpDomain).Issuer(issuer).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Issuer(issuer).Limit(limit).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -77,6 +78,7 @@ Other parameters are passed through a pointer to a apiContentCoreOpenpgpSignatur
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **issuer** | **string** | Filter results where issuer matches value | 
  **limit** | **int32** | Number of results to return per page. | 
  **offset** | **int32** | The initial index from which to return the results. | 
@@ -113,7 +115,7 @@ Name | Type | Description  | Notes
 
 ## ContentCoreOpenpgpSignatureRead
 
-> OpenPGPSignatureResponse ContentCoreOpenpgpSignatureRead(ctx, openPGPSignatureHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> OpenPGPSignatureResponse ContentCoreOpenpgpSignatureRead(ctx, openPGPSignatureHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect an open pgp signature
 
@@ -128,17 +130,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	openPGPSignatureHref := "openPGPSignatureHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureRead(context.Background(), openPGPSignatureHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureRead(context.Background(), openPGPSignatureHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -164,6 +167,7 @@ Other parameters are passed through a pointer to a apiContentCoreOpenpgpSignatur
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -187,7 +191,7 @@ Name | Type | Description  | Notes
 
 ## ContentCoreOpenpgpSignatureSetLabel
 
-> SetLabelResponse ContentCoreOpenpgpSignatureSetLabel(ctx, openPGPSignatureHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentCoreOpenpgpSignatureSetLabel(ctx, openPGPSignatureHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -202,16 +206,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	openPGPSignatureHref := "openPGPSignatureHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureSetLabel(context.Background(), openPGPSignatureHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureSetLabel(context.Background(), openPGPSignatureHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -238,6 +243,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -259,7 +265,7 @@ Name | Type | Description  | Notes
 
 ## ContentCoreOpenpgpSignatureUnsetLabel
 
-> UnsetLabelResponse ContentCoreOpenpgpSignatureUnsetLabel(ctx, openPGPSignatureHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentCoreOpenpgpSignatureUnsetLabel(ctx, openPGPSignatureHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -274,16 +280,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	openPGPSignatureHref := "openPGPSignatureHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureUnsetLabel(context.Background(), openPGPSignatureHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureUnsetLabel(context.Background(), openPGPSignatureHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentOpenpgpSignatureAPI.ContentCoreOpenpgpSignatureUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -310,6 +317,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

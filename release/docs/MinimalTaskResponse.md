@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **UnblockedAt** | Pointer to **time.Time** | Timestamp of when this task was identified ready for pickup. | [optional] [readonly] 
 **StartedAt** | Pointer to **time.Time** | Timestamp of when this task started execution. | [optional] [readonly] 
 **FinishedAt** | Pointer to **time.Time** | Timestamp of when this task stopped execution. | [optional] [readonly] 
-**Worker** | Pointer to **string** | The worker associated with this task. This field is empty if a worker is not yet assigned. | [optional] [readonly] 
+**Worker** | Pointer to **NullableString** | DEPRECATED - Always null | [optional] [readonly] 
 
 ## Methods
 
@@ -279,6 +279,16 @@ SetWorker sets Worker field to given value.
 
 HasWorker returns a boolean if a field has been set.
 
+### SetWorkerNil
+
+`func (o *MinimalTaskResponse) SetWorkerNil(b bool)`
+
+ SetWorkerNil sets the value for Worker to be an explicit nil
+
+### UnsetWorker
+`func (o *MinimalTaskResponse) UnsetWorker()`
+
+UnsetWorker ensures that no value is present for Worker, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

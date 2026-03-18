@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 ## DistributionsMavenMavenCreate
 
-> AsyncOperationResponse DistributionsMavenMavenCreate(ctx, pulpDomain).MavenMavenDistribution(mavenMavenDistribution).Execute()
+> AsyncOperationResponse DistributionsMavenMavenCreate(ctx, pulpDomain).MavenMavenDistribution(mavenMavenDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a maven distribution
 
@@ -32,16 +32,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	mavenMavenDistribution := *openapiclient.NewMavenMavenDistribution("BasePath_example", "Name_example") // MavenMavenDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenCreate(context.Background(), pulpDomain).MavenMavenDistribution(mavenMavenDistribution).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenCreate(context.Background(), pulpDomain).MavenMavenDistribution(mavenMavenDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -68,6 +69,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **mavenMavenDistribution** | [**MavenMavenDistribution**](MavenMavenDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -89,7 +91,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenDelete
 
-> AsyncOperationResponse DistributionsMavenMavenDelete(ctx, mavenMavenDistributionHref).Execute()
+> AsyncOperationResponse DistributionsMavenMavenDelete(ctx, mavenMavenDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a maven distribution
 
@@ -104,15 +106,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenDistributionHref := "mavenMavenDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenDelete(context.Background(), mavenMavenDistributionHref).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenDelete(context.Background(), mavenMavenDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -138,6 +141,7 @@ Other parameters are passed through a pointer to a apiDistributionsMavenMavenDel
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -159,7 +163,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenList
 
-> PaginatedmavenMavenDistributionResponseList DistributionsMavenMavenList(ctx, pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedmavenMavenDistributionResponseList DistributionsMavenMavenList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List maven distributions
 
@@ -174,11 +178,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	basePath := "basePath_example" // string | Filter results where base_path matches value (optional)
 	basePathContains := "basePathContains_example" // string | Filter results where base_path contains value (optional)
 	basePathIcontains := "basePathIcontains_example" // string | Filter results where base_path contains value (optional)
@@ -209,7 +214,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenList(context.Background(), pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -235,6 +240,7 @@ Other parameters are passed through a pointer to a apiDistributionsMavenMavenLis
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **basePath** | **string** | Filter results where base_path matches value | 
  **basePathContains** | **string** | Filter results where base_path contains value | 
  **basePathIcontains** | **string** | Filter results where base_path contains value | 
@@ -283,7 +289,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenPartialUpdate
 
-> AsyncOperationResponse DistributionsMavenMavenPartialUpdate(ctx, mavenMavenDistributionHref).PatchedmavenMavenDistribution(patchedmavenMavenDistribution).Execute()
+> MavenMavenDistributionResponse DistributionsMavenMavenPartialUpdate(ctx, mavenMavenDistributionHref).PatchedmavenMavenDistribution(patchedmavenMavenDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a maven distribution
 
@@ -298,21 +304,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenDistributionHref := "mavenMavenDistributionHref_example" // string | 
 	patchedmavenMavenDistribution := *openapiclient.NewPatchedmavenMavenDistribution() // PatchedmavenMavenDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenPartialUpdate(context.Background(), mavenMavenDistributionHref).PatchedmavenMavenDistribution(patchedmavenMavenDistribution).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenPartialUpdate(context.Background(), mavenMavenDistributionHref).PatchedmavenMavenDistribution(patchedmavenMavenDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsMavenMavenPartialUpdate`: AsyncOperationResponse
+	// response from `DistributionsMavenMavenPartialUpdate`: MavenMavenDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsMavenAPI.DistributionsMavenMavenPartialUpdate`: %v\n", resp)
 }
 ```
@@ -334,10 +341,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedmavenMavenDistribution** | [**PatchedmavenMavenDistribution**](PatchedmavenMavenDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**MavenMavenDistributionResponse**](MavenMavenDistributionResponse.md)
 
 ### Authorization
 
@@ -355,7 +363,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenRead
 
-> MavenMavenDistributionResponse DistributionsMavenMavenRead(ctx, mavenMavenDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MavenMavenDistributionResponse DistributionsMavenMavenRead(ctx, mavenMavenDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a maven distribution
 
@@ -370,17 +378,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenDistributionHref := "mavenMavenDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenRead(context.Background(), mavenMavenDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenRead(context.Background(), mavenMavenDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -406,6 +415,7 @@ Other parameters are passed through a pointer to a apiDistributionsMavenMavenRea
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -429,7 +439,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenSetLabel
 
-> SetLabelResponse DistributionsMavenMavenSetLabel(ctx, mavenMavenDistributionHref).SetLabel(setLabel).Execute()
+> SetLabelResponse DistributionsMavenMavenSetLabel(ctx, mavenMavenDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -444,16 +454,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenDistributionHref := "mavenMavenDistributionHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenSetLabel(context.Background(), mavenMavenDistributionHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenSetLabel(context.Background(), mavenMavenDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -480,6 +491,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -501,7 +513,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenUnsetLabel
 
-> UnsetLabelResponse DistributionsMavenMavenUnsetLabel(ctx, mavenMavenDistributionHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse DistributionsMavenMavenUnsetLabel(ctx, mavenMavenDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -516,16 +528,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenDistributionHref := "mavenMavenDistributionHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenUnsetLabel(context.Background(), mavenMavenDistributionHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenUnsetLabel(context.Background(), mavenMavenDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -552,6 +565,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -573,7 +587,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsMavenMavenUpdate
 
-> AsyncOperationResponse DistributionsMavenMavenUpdate(ctx, mavenMavenDistributionHref).MavenMavenDistribution(mavenMavenDistribution).Execute()
+> MavenMavenDistributionResponse DistributionsMavenMavenUpdate(ctx, mavenMavenDistributionHref).MavenMavenDistribution(mavenMavenDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a maven distribution
 
@@ -588,21 +602,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	mavenMavenDistributionHref := "mavenMavenDistributionHref_example" // string | 
 	mavenMavenDistribution := *openapiclient.NewMavenMavenDistribution("BasePath_example", "Name_example") // MavenMavenDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenUpdate(context.Background(), mavenMavenDistributionHref).MavenMavenDistribution(mavenMavenDistribution).Execute()
+	resp, r, err := apiClient.DistributionsMavenAPI.DistributionsMavenMavenUpdate(context.Background(), mavenMavenDistributionHref).MavenMavenDistribution(mavenMavenDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsMavenAPI.DistributionsMavenMavenUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsMavenMavenUpdate`: AsyncOperationResponse
+	// response from `DistributionsMavenMavenUpdate`: MavenMavenDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsMavenAPI.DistributionsMavenMavenUpdate`: %v\n", resp)
 }
 ```
@@ -624,10 +639,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **mavenMavenDistribution** | [**MavenMavenDistribution**](MavenMavenDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**MavenMavenDistributionResponse**](MavenMavenDistributionResponse.md)
 
 ### Authorization
 

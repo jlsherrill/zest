@@ -25,34 +25,41 @@ import (
 // PypiMetadataAPIService PypiMetadataAPI service
 type PypiMetadataAPIService service
 
-type PypiMetadataAPIApiPulpPypiPypiReadRequest struct {
+type PypiMetadataAPIApiPypiPypiReadRequest struct {
 	ctx context.Context
 	ApiService *PypiMetadataAPIService
 	meta string
 	path string
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
 }
 
+// List of profilers to use on tasks.
+func (r PypiMetadataAPIApiPypiPypiReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) PypiMetadataAPIApiPypiPypiReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
 // A list of fields to include in the response.
-func (r PypiMetadataAPIApiPulpPypiPypiReadRequest) Fields(fields []string) PypiMetadataAPIApiPulpPypiPypiReadRequest {
+func (r PypiMetadataAPIApiPypiPypiReadRequest) Fields(fields []string) PypiMetadataAPIApiPypiPypiReadRequest {
 	r.fields = &fields
 	return r
 }
 
 // A list of fields to exclude from the response.
-func (r PypiMetadataAPIApiPulpPypiPypiReadRequest) ExcludeFields(excludeFields []string) PypiMetadataAPIApiPulpPypiPypiReadRequest {
+func (r PypiMetadataAPIApiPypiPypiReadRequest) ExcludeFields(excludeFields []string) PypiMetadataAPIApiPypiPypiReadRequest {
 	r.excludeFields = &excludeFields
 	return r
 }
 
-func (r PypiMetadataAPIApiPulpPypiPypiReadRequest) Execute() (*PackageMetadataResponse, *http.Response, error) {
-	return r.ApiService.ApiPulpPypiPypiReadExecute(r)
+func (r PypiMetadataAPIApiPypiPypiReadRequest) Execute() (*PackageMetadataResponse, *http.Response, error) {
+	return r.ApiService.ApiPypiPypiReadExecute(r)
 }
 
 /*
-ApiPulpPypiPypiRead Get package metadata
+ApiPypiPypiRead Get package metadata
 
 Retrieves the package's core-metadata specified byhttps://packaging.python.org/specifications/core-metadata/.`meta` must be a path in form of `{package}/json/` or `{package}/{version}/json/`
 
@@ -60,10 +67,10 @@ Retrieves the package's core-metadata specified byhttps://packaging.python.org/s
  @param meta
  @param path
  @param pulpDomain
- @return PypiMetadataAPIApiPulpPypiPypiReadRequest
+ @return PypiMetadataAPIApiPypiPypiReadRequest
 */
-func (a *PypiMetadataAPIService) ApiPulpPypiPypiRead(ctx context.Context, meta string, path string, pulpDomain string) PypiMetadataAPIApiPulpPypiPypiReadRequest {
-	return PypiMetadataAPIApiPulpPypiPypiReadRequest{
+func (a *PypiMetadataAPIService) ApiPypiPypiRead(ctx context.Context, meta string, path string, pulpDomain string) PypiMetadataAPIApiPypiPypiReadRequest {
+	return PypiMetadataAPIApiPypiPypiReadRequest{
 		ApiService: a,
 		ctx: ctx,
 		meta: meta,
@@ -74,7 +81,7 @@ func (a *PypiMetadataAPIService) ApiPulpPypiPypiRead(ctx context.Context, meta s
 
 // Execute executes the request
 //  @return PackageMetadataResponse
-func (a *PypiMetadataAPIService) ApiPulpPypiPypiReadExecute(r PypiMetadataAPIApiPulpPypiPypiReadRequest) (*PackageMetadataResponse, *http.Response, error) {
+func (a *PypiMetadataAPIService) ApiPypiPypiReadExecute(r PypiMetadataAPIApiPypiPypiReadRequest) (*PackageMetadataResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -82,20 +89,16 @@ func (a *PypiMetadataAPIService) ApiPulpPypiPypiReadExecute(r PypiMetadataAPIApi
 		localVarReturnValue  *PackageMetadataResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PypiMetadataAPIService.ApiPulpPypiPypiRead")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PypiMetadataAPIService.ApiPypiPypiRead")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/pulp/pypi/{pulp_domain}/{path}/pypi/{meta}/"
+	localVarPath := localBasePath + "/api/pypi/{pulp_domain}/{path}/pypi/{meta}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"meta"+"}", url.PathEscape(parameterValueToString(r.meta, "meta")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
-
 	localVarPath = strings.Replace(localVarPath, "{"+"path"+"}", url.PathEscape(parameterValueToString(r.path, "path")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
-
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -139,6 +142,9 @@ func (a *PypiMetadataAPIService) ApiPulpPypiPypiReadExecute(r PypiMetadataAPIApi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

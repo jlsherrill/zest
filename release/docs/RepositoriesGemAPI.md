@@ -23,7 +23,7 @@ Method | HTTP request | Description
 
 ## RepositoriesGemGemAddRole
 
-> NestedRoleResponse RepositoriesGemGemAddRole(ctx, gemGemRepositoryHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse RepositoriesGemGemAddRole(ctx, gemGemRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Add a role
 
@@ -38,16 +38,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemAddRole(context.Background(), gemGemRepositoryHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemAddRole(context.Background(), gemGemRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -74,6 +75,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -95,7 +97,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemCreate
 
-> GemGemRepositoryResponse RepositoriesGemGemCreate(ctx, pulpDomain).GemGemRepository(gemGemRepository).Execute()
+> GemGemRepositoryResponse RepositoriesGemGemCreate(ctx, pulpDomain).GemGemRepository(gemGemRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a gem repository
 
@@ -110,16 +112,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	gemGemRepository := *openapiclient.NewGemGemRepository("Name_example") // GemGemRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemCreate(context.Background(), pulpDomain).GemGemRepository(gemGemRepository).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemCreate(context.Background(), pulpDomain).GemGemRepository(gemGemRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -146,6 +149,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **gemGemRepository** | [**GemGemRepository**](GemGemRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -167,7 +171,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemDelete
 
-> AsyncOperationResponse RepositoriesGemGemDelete(ctx, gemGemRepositoryHref).Execute()
+> AsyncOperationResponse RepositoriesGemGemDelete(ctx, gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a gem repository
 
@@ -182,15 +186,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemDelete(context.Background(), gemGemRepositoryHref).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemDelete(context.Background(), gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -216,6 +221,7 @@ Other parameters are passed through a pointer to a apiRepositoriesGemGemDeleteRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -237,7 +243,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemList
 
-> PaginatedgemGemRepositoryResponseList RepositoriesGemGemList(ctx, pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedgemGemRepositoryResponseList RepositoriesGemGemList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List gem repositorys
 
@@ -252,11 +258,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	latestWithContent := "latestWithContent_example" // string | Content Unit referenced by HREF/PRN (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
@@ -290,7 +297,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemList(context.Background(), pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -316,6 +323,7 @@ Other parameters are passed through a pointer to a apiRepositoriesGemGemListRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **latestWithContent** | **string** | Content Unit referenced by HREF/PRN | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
@@ -367,7 +375,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemListRoles
 
-> ObjectRolesResponse RepositoriesGemGemListRoles(ctx, gemGemRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ObjectRolesResponse RepositoriesGemGemListRoles(ctx, gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List roles
 
@@ -382,17 +390,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemListRoles(context.Background(), gemGemRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemListRoles(context.Background(), gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemListRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -418,6 +427,7 @@ Other parameters are passed through a pointer to a apiRepositoriesGemGemListRole
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -441,7 +451,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemModify
 
-> AsyncOperationResponse RepositoriesGemGemModify(ctx, gemGemRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).Execute()
+> AsyncOperationResponse RepositoriesGemGemModify(ctx, gemGemRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Modify Repository Content
 
@@ -456,16 +466,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	repositoryAddRemoveContent := *openapiclient.NewRepositoryAddRemoveContent() // RepositoryAddRemoveContent | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemModify(context.Background(), gemGemRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemModify(context.Background(), gemGemRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemModify``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -492,6 +503,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositoryAddRemoveContent** | [**RepositoryAddRemoveContent**](RepositoryAddRemoveContent.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -513,7 +525,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemMyPermissions
 
-> MyPermissionsResponse RepositoriesGemGemMyPermissions(ctx, gemGemRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MyPermissionsResponse RepositoriesGemGemMyPermissions(ctx, gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List user permissions
 
@@ -528,17 +540,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemMyPermissions(context.Background(), gemGemRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemMyPermissions(context.Background(), gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemMyPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -564,6 +577,7 @@ Other parameters are passed through a pointer to a apiRepositoriesGemGemMyPermis
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -587,7 +601,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemPartialUpdate
 
-> AsyncOperationResponse RepositoriesGemGemPartialUpdate(ctx, gemGemRepositoryHref).PatchedgemGemRepository(patchedgemGemRepository).Execute()
+> GemGemRepositoryResponse RepositoriesGemGemPartialUpdate(ctx, gemGemRepositoryHref).PatchedgemGemRepository(patchedgemGemRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a gem repository
 
@@ -602,21 +616,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	patchedgemGemRepository := *openapiclient.NewPatchedgemGemRepository() // PatchedgemGemRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemPartialUpdate(context.Background(), gemGemRepositoryHref).PatchedgemGemRepository(patchedgemGemRepository).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemPartialUpdate(context.Background(), gemGemRepositoryHref).PatchedgemGemRepository(patchedgemGemRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesGemGemPartialUpdate`: AsyncOperationResponse
+	// response from `RepositoriesGemGemPartialUpdate`: GemGemRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesGemAPI.RepositoriesGemGemPartialUpdate`: %v\n", resp)
 }
 ```
@@ -638,10 +653,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedgemGemRepository** | [**PatchedgemGemRepository**](PatchedgemGemRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**GemGemRepositoryResponse**](GemGemRepositoryResponse.md)
 
 ### Authorization
 
@@ -659,7 +675,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemRead
 
-> GemGemRepositoryResponse RepositoriesGemGemRead(ctx, gemGemRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> GemGemRepositoryResponse RepositoriesGemGemRead(ctx, gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a gem repository
 
@@ -674,17 +690,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemRead(context.Background(), gemGemRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemRead(context.Background(), gemGemRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -710,6 +727,7 @@ Other parameters are passed through a pointer to a apiRepositoriesGemGemReadRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -733,7 +751,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemRemoveRole
 
-> NestedRoleResponse RepositoriesGemGemRemoveRole(ctx, gemGemRepositoryHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse RepositoriesGemGemRemoveRole(ctx, gemGemRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Remove a role
 
@@ -748,16 +766,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemRemoveRole(context.Background(), gemGemRepositoryHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemRemoveRole(context.Background(), gemGemRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -784,6 +803,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -805,7 +825,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemSetLabel
 
-> SetLabelResponse RepositoriesGemGemSetLabel(ctx, gemGemRepositoryHref).SetLabel(setLabel).Execute()
+> SetLabelResponse RepositoriesGemGemSetLabel(ctx, gemGemRepositoryHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -820,16 +840,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemSetLabel(context.Background(), gemGemRepositoryHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemSetLabel(context.Background(), gemGemRepositoryHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -856,6 +877,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -877,7 +899,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemSync
 
-> AsyncOperationResponse RepositoriesGemGemSync(ctx, gemGemRepositoryHref).RepositorySyncURL(repositorySyncURL).Execute()
+> AsyncOperationResponse RepositoriesGemGemSync(ctx, gemGemRepositoryHref).RepositorySyncURL(repositorySyncURL).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Sync from a remote
 
@@ -892,16 +914,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	repositorySyncURL := *openapiclient.NewRepositorySyncURL() // RepositorySyncURL | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemSync(context.Background(), gemGemRepositoryHref).RepositorySyncURL(repositorySyncURL).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemSync(context.Background(), gemGemRepositoryHref).RepositorySyncURL(repositorySyncURL).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemSync``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -928,6 +951,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositorySyncURL** | [**RepositorySyncURL**](RepositorySyncURL.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -949,7 +973,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemUnsetLabel
 
-> UnsetLabelResponse RepositoriesGemGemUnsetLabel(ctx, gemGemRepositoryHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse RepositoriesGemGemUnsetLabel(ctx, gemGemRepositoryHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -964,16 +988,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemUnsetLabel(context.Background(), gemGemRepositoryHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemUnsetLabel(context.Background(), gemGemRepositoryHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1000,6 +1025,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -1021,7 +1047,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesGemGemUpdate
 
-> AsyncOperationResponse RepositoriesGemGemUpdate(ctx, gemGemRepositoryHref).GemGemRepository(gemGemRepository).Execute()
+> GemGemRepositoryResponse RepositoriesGemGemUpdate(ctx, gemGemRepositoryHref).GemGemRepository(gemGemRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a gem repository
 
@@ -1036,21 +1062,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	gemGemRepositoryHref := "gemGemRepositoryHref_example" // string | 
 	gemGemRepository := *openapiclient.NewGemGemRepository("Name_example") // GemGemRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemUpdate(context.Background(), gemGemRepositoryHref).GemGemRepository(gemGemRepository).Execute()
+	resp, r, err := apiClient.RepositoriesGemAPI.RepositoriesGemGemUpdate(context.Background(), gemGemRepositoryHref).GemGemRepository(gemGemRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesGemAPI.RepositoriesGemGemUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesGemGemUpdate`: AsyncOperationResponse
+	// response from `RepositoriesGemGemUpdate`: GemGemRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesGemAPI.RepositoriesGemGemUpdate`: %v\n", resp)
 }
 ```
@@ -1072,10 +1099,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **gemGemRepository** | [**GemGemRepository**](GemGemRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**GemGemRepositoryResponse**](GemGemRepositoryResponse.md)
 
 ### Authorization
 

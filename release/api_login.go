@@ -29,6 +29,13 @@ type LoginAPILoginRequest struct {
 	ctx context.Context
 	ApiService *LoginAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r LoginAPILoginRequest) XTaskDiagnostics(xTaskDiagnostics []string) LoginAPILoginRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r LoginAPILoginRequest) Execute() (*LoginResponse, *http.Response, error) {
@@ -67,7 +74,7 @@ func (a *LoginAPIService) LoginExecute(r LoginAPILoginRequest) (*LoginResponse, 
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/login/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -89,6 +96,9 @@ func (a *LoginAPIService) LoginExecute(r LoginAPILoginRequest) (*LoginResponse, 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -131,8 +141,15 @@ type LoginAPILoginReadRequest struct {
 	ctx context.Context
 	ApiService *LoginAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r LoginAPILoginReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) LoginAPILoginReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -183,7 +200,7 @@ func (a *LoginAPIService) LoginReadExecute(r LoginAPILoginReadRequest) (*LoginRe
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/login/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -228,6 +245,9 @@ func (a *LoginAPIService) LoginReadExecute(r LoginAPILoginReadRequest) (*LoginRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -269,6 +289,13 @@ type LoginAPILogoutRequest struct {
 	ctx context.Context
 	ApiService *LoginAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r LoginAPILogoutRequest) XTaskDiagnostics(xTaskDiagnostics []string) LoginAPILogoutRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r LoginAPILogoutRequest) Execute() (*http.Response, error) {
@@ -305,7 +332,7 @@ func (a *LoginAPIService) LogoutExecute(r LoginAPILogoutRequest) (*http.Response
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/login/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -327,6 +354,9 @@ func (a *LoginAPIService) LogoutExecute(r LoginAPILogoutRequest) (*http.Response
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

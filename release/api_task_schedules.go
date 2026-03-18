@@ -30,10 +30,17 @@ type TaskSchedulesAPITaskSchedulesAddRoleRequest struct {
 	ApiService *TaskSchedulesAPIService
 	taskScheduleHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r TaskSchedulesAPITaskSchedulesAddRoleRequest) NestedRole(nestedRole NestedRole) TaskSchedulesAPITaskSchedulesAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r TaskSchedulesAPITaskSchedulesAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) TaskSchedulesAPITaskSchedulesAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *TaskSchedulesAPIService) TaskSchedulesAddRoleExecute(r TaskSchedulesAPI
 
 	localVarPath := localBasePath + "/{task_schedule_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_schedule_href"+"}", url.PathEscape(parameterValueToString(r.taskScheduleHref, "taskScheduleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *TaskSchedulesAPIService) TaskSchedulesAddRoleExecute(r TaskSchedulesAPI
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -144,6 +154,7 @@ type TaskSchedulesAPITaskSchedulesListRequest struct {
 	ctx context.Context
 	ApiService *TaskSchedulesAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -157,6 +168,12 @@ type TaskSchedulesAPITaskSchedulesListRequest struct {
 	taskNameContains *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TaskSchedulesAPITaskSchedulesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) TaskSchedulesAPITaskSchedulesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -275,7 +292,7 @@ func (a *TaskSchedulesAPIService) TaskSchedulesListExecute(r TaskSchedulesAPITas
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/task-schedules/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -353,6 +370,9 @@ func (a *TaskSchedulesAPIService) TaskSchedulesListExecute(r TaskSchedulesAPITas
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -394,8 +414,15 @@ type TaskSchedulesAPITaskSchedulesListRolesRequest struct {
 	ctx context.Context
 	ApiService *TaskSchedulesAPIService
 	taskScheduleHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TaskSchedulesAPITaskSchedulesListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) TaskSchedulesAPITaskSchedulesListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -448,7 +475,7 @@ func (a *TaskSchedulesAPIService) TaskSchedulesListRolesExecute(r TaskSchedulesA
 
 	localVarPath := localBasePath + "/{task_schedule_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_schedule_href"+"}", url.PathEscape(parameterValueToString(r.taskScheduleHref, "taskScheduleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -493,6 +520,9 @@ func (a *TaskSchedulesAPIService) TaskSchedulesListRolesExecute(r TaskSchedulesA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -534,8 +564,15 @@ type TaskSchedulesAPITaskSchedulesMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *TaskSchedulesAPIService
 	taskScheduleHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TaskSchedulesAPITaskSchedulesMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) TaskSchedulesAPITaskSchedulesMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -588,7 +625,7 @@ func (a *TaskSchedulesAPIService) TaskSchedulesMyPermissionsExecute(r TaskSchedu
 
 	localVarPath := localBasePath + "/{task_schedule_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_schedule_href"+"}", url.PathEscape(parameterValueToString(r.taskScheduleHref, "taskScheduleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -633,6 +670,9 @@ func (a *TaskSchedulesAPIService) TaskSchedulesMyPermissionsExecute(r TaskSchedu
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -674,8 +714,15 @@ type TaskSchedulesAPITaskSchedulesReadRequest struct {
 	ctx context.Context
 	ApiService *TaskSchedulesAPIService
 	taskScheduleHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TaskSchedulesAPITaskSchedulesReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) TaskSchedulesAPITaskSchedulesReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -728,7 +775,7 @@ func (a *TaskSchedulesAPIService) TaskSchedulesReadExecute(r TaskSchedulesAPITas
 
 	localVarPath := localBasePath + "/{task_schedule_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_schedule_href"+"}", url.PathEscape(parameterValueToString(r.taskScheduleHref, "taskScheduleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -773,6 +820,9 @@ func (a *TaskSchedulesAPIService) TaskSchedulesReadExecute(r TaskSchedulesAPITas
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -815,10 +865,17 @@ type TaskSchedulesAPITaskSchedulesRemoveRoleRequest struct {
 	ApiService *TaskSchedulesAPIService
 	taskScheduleHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r TaskSchedulesAPITaskSchedulesRemoveRoleRequest) NestedRole(nestedRole NestedRole) TaskSchedulesAPITaskSchedulesRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r TaskSchedulesAPITaskSchedulesRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) TaskSchedulesAPITaskSchedulesRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -860,7 +917,7 @@ func (a *TaskSchedulesAPIService) TaskSchedulesRemoveRoleExecute(r TaskSchedules
 
 	localVarPath := localBasePath + "/{task_schedule_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_schedule_href"+"}", url.PathEscape(parameterValueToString(r.taskScheduleHref, "taskScheduleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -885,6 +942,9 @@ func (a *TaskSchedulesAPIService) TaskSchedulesRemoveRoleExecute(r TaskSchedules
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole

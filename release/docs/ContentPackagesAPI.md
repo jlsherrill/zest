@@ -9,19 +9,25 @@ Method | HTTP request | Description
 [**ContentNpmPackagesRead**](ContentPackagesAPI.md#ContentNpmPackagesRead) | **Get** /{npm_package_href} | Inspect a package
 [**ContentNpmPackagesSetLabel**](ContentPackagesAPI.md#ContentNpmPackagesSetLabel) | **Post** /{npm_package_href}set_label/ | Set a label
 [**ContentNpmPackagesUnsetLabel**](ContentPackagesAPI.md#ContentNpmPackagesUnsetLabel) | **Post** /{npm_package_href}unset_label/ | Unset a label
+[**ContentNpmPackagesUpload**](ContentPackagesAPI.md#ContentNpmPackagesUpload) | **Post** /api/pulp/{pulp_domain}/api/v3/content/npm/packages/upload/ | Synchronous npm package upload
 [**ContentPythonPackagesCreate**](ContentPackagesAPI.md#ContentPythonPackagesCreate) | **Post** /api/pulp/{pulp_domain}/api/v3/content/python/packages/ | Create a python package content
 [**ContentPythonPackagesList**](ContentPackagesAPI.md#ContentPythonPackagesList) | **Get** /api/pulp/{pulp_domain}/api/v3/content/python/packages/ | List python package contents
 [**ContentPythonPackagesRead**](ContentPackagesAPI.md#ContentPythonPackagesRead) | **Get** /{python_python_package_content_href} | Inspect a python package content
 [**ContentPythonPackagesSetLabel**](ContentPackagesAPI.md#ContentPythonPackagesSetLabel) | **Post** /{python_python_package_content_href}set_label/ | Set a label
 [**ContentPythonPackagesUnsetLabel**](ContentPackagesAPI.md#ContentPythonPackagesUnsetLabel) | **Post** /{python_python_package_content_href}unset_label/ | Unset a label
+[**ContentPythonPackagesUpload**](ContentPackagesAPI.md#ContentPythonPackagesUpload) | **Post** /api/pulp/{pulp_domain}/api/v3/content/python/packages/upload/ | Synchronous Python package upload
 [**ContentRpmPackagesCreate**](ContentPackagesAPI.md#ContentRpmPackagesCreate) | **Post** /api/pulp/{pulp_domain}/api/v3/content/rpm/packages/ | Create a package
 [**ContentRpmPackagesList**](ContentPackagesAPI.md#ContentRpmPackagesList) | **Get** /api/pulp/{pulp_domain}/api/v3/content/rpm/packages/ | List packages
+[**ContentRpmPackagesRead**](ContentPackagesAPI.md#ContentRpmPackagesRead) | **Get** /{rpm_package_href} | Inspect a package
+[**ContentRpmPackagesSetLabel**](ContentPackagesAPI.md#ContentRpmPackagesSetLabel) | **Post** /{rpm_package_href}set_label/ | Set a label
+[**ContentRpmPackagesUnsetLabel**](ContentPackagesAPI.md#ContentRpmPackagesUnsetLabel) | **Post** /{rpm_package_href}unset_label/ | Unset a label
+[**ContentRpmPackagesUpload**](ContentPackagesAPI.md#ContentRpmPackagesUpload) | **Post** /api/pulp/{pulp_domain}/api/v3/content/rpm/packages/upload/ | Upload an RPM package synchronously.
 
 
 
 ## ContentNpmPackagesCreate
 
-> NpmPackageResponse ContentNpmPackagesCreate(ctx, pulpDomain).RelativePath(relativePath).Name(name).Version(version).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).Execute()
+> AsyncOperationResponse ContentNpmPackagesCreate(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Name(name).Version(version).Execute()
 
 Create a package
 
@@ -36,29 +42,31 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
-	relativePath := "relativePath_example" // string | 
-	name := "name_example" // string | 
-	version := "version_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	repository := "repository_example" // string | A URI of a repository the new content unit should be associated with. (optional)
 	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
 	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
+	relativePath := "relativePath_example" // string | Path where the artifact is located relative to distributions base_path. If not provided, it will be computed from name and version. (optional)
 	file := os.NewFile(1234, "some_file") // *os.File | An uploaded file that may be turned into the content unit. (optional)
 	upload := "upload_example" // string | An uncommitted upload that may be turned into the content unit. (optional)
 	fileUrl := "fileUrl_example" // string | A url that Pulp can download and turn into the content unit. (optional)
+	downloaderConfig := *openapiclient.NewRemoteNetworkConfig() // RemoteNetworkConfig | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url. (optional)
+	name := "name_example" // string | The name of the npm package. (optional)
+	version := "version_example" // string | The version of the npm package. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesCreate(context.Background(), pulpDomain).RelativePath(relativePath).Name(name).Version(version).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesCreate(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Name(name).Version(version).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentNpmPackagesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ContentNpmPackagesCreate`: NpmPackageResponse
+	// response from `ContentNpmPackagesCreate`: AsyncOperationResponse
 	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentNpmPackagesCreate`: %v\n", resp)
 }
 ```
@@ -79,19 +87,21 @@ Other parameters are passed through a pointer to a apiContentNpmPackagesCreateRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **relativePath** | **string** |  | 
- **name** | **string** |  | 
- **version** | **string** |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **repository** | **string** | A URI of a repository the new content unit should be associated with. | 
  **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
  **artifact** | **string** | Artifact file representing the physical content | 
+ **relativePath** | **string** | Path where the artifact is located relative to distributions base_path. If not provided, it will be computed from name and version. | 
  **file** | ***os.File** | An uploaded file that may be turned into the content unit. | 
  **upload** | **string** | An uncommitted upload that may be turned into the content unit. | 
  **fileUrl** | **string** | A url that Pulp can download and turn into the content unit. | 
+ **downloaderConfig** | [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | 
+ **name** | **string** | The name of the npm package. | 
+ **version** | **string** | The version of the npm package. | 
 
 ### Return type
 
-[**NpmPackageResponse**](NpmPackageResponse.md)
+[**AsyncOperationResponse**](AsyncOperationResponse.md)
 
 ### Authorization
 
@@ -109,7 +119,7 @@ Name | Type | Description  | Notes
 
 ## ContentNpmPackagesList
 
-> PaginatednpmPackageResponseList ContentNpmPackagesList(ctx, pulpDomain).Limit(limit).Name(name).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatednpmPackageResponseList ContentNpmPackagesList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Name(name).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List packages
 
@@ -124,11 +134,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
 	nameIn := []string{"Inner_example"} // []string | Filter results where name is in a comma-separated list of values (optional)
@@ -148,7 +159,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesList(context.Background(), pulpDomain).Limit(limit).Name(name).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Name(name).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentNpmPackagesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -174,6 +185,7 @@ Other parameters are passed through a pointer to a apiContentNpmPackagesListRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
  **nameIn** | **[]string** | Filter results where name is in a comma-separated list of values | 
@@ -211,7 +223,7 @@ Name | Type | Description  | Notes
 
 ## ContentNpmPackagesRead
 
-> NpmPackageResponse ContentNpmPackagesRead(ctx, npmPackageHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> NpmPackageResponse ContentNpmPackagesRead(ctx, npmPackageHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a package
 
@@ -226,17 +238,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmPackageHref := "npmPackageHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesRead(context.Background(), npmPackageHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesRead(context.Background(), npmPackageHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentNpmPackagesRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -262,6 +275,7 @@ Other parameters are passed through a pointer to a apiContentNpmPackagesReadRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -285,7 +299,7 @@ Name | Type | Description  | Notes
 
 ## ContentNpmPackagesSetLabel
 
-> SetLabelResponse ContentNpmPackagesSetLabel(ctx, npmPackageHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentNpmPackagesSetLabel(ctx, npmPackageHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -300,16 +314,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmPackageHref := "npmPackageHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesSetLabel(context.Background(), npmPackageHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesSetLabel(context.Background(), npmPackageHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentNpmPackagesSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -336,6 +351,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -357,7 +373,7 @@ Name | Type | Description  | Notes
 
 ## ContentNpmPackagesUnsetLabel
 
-> UnsetLabelResponse ContentNpmPackagesUnsetLabel(ctx, npmPackageHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentNpmPackagesUnsetLabel(ctx, npmPackageHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -372,16 +388,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmPackageHref := "npmPackageHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesUnsetLabel(context.Background(), npmPackageHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesUnsetLabel(context.Background(), npmPackageHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentNpmPackagesUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -408,6 +425,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -427,9 +445,99 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ContentNpmPackagesUpload
+
+> NpmPackageResponse ContentNpmPackagesUpload(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Name(name).Version(version).Execute()
+
+Synchronous npm package upload
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
+	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
+	relativePath := "relativePath_example" // string | Path where the artifact is located relative to distributions base_path. If not provided, it will be computed from name and version. (optional)
+	file := os.NewFile(1234, "some_file") // *os.File | An uploaded file that may be turned into the content unit. (optional)
+	upload := "upload_example" // string | An uncommitted upload that may be turned into the content unit. (optional)
+	fileUrl := "fileUrl_example" // string | A url that Pulp can download and turn into the content unit. (optional)
+	downloaderConfig := *openapiclient.NewRemoteNetworkConfig() // RemoteNetworkConfig | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url. (optional)
+	name := "name_example" // string | The name of the npm package. (optional)
+	version := "version_example" // string | The version of the npm package. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContentPackagesAPI.ContentNpmPackagesUpload(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Name(name).Version(version).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentNpmPackagesUpload``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContentNpmPackagesUpload`: NpmPackageResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentNpmPackagesUpload`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**pulpDomain** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContentNpmPackagesUploadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+ **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
+ **artifact** | **string** | Artifact file representing the physical content | 
+ **relativePath** | **string** | Path where the artifact is located relative to distributions base_path. If not provided, it will be computed from name and version. | 
+ **file** | ***os.File** | An uploaded file that may be turned into the content unit. | 
+ **upload** | **string** | An uncommitted upload that may be turned into the content unit. | 
+ **fileUrl** | **string** | A url that Pulp can download and turn into the content unit. | 
+ **downloaderConfig** | [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | 
+ **name** | **string** | The name of the npm package. | 
+ **version** | **string** | The version of the npm package. | 
+
+### Return type
+
+[**NpmPackageResponse**](NpmPackageResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data, application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ContentPythonPackagesCreate
 
-> AsyncOperationResponse ContentPythonPackagesCreate(ctx, pulpDomain).RelativePath(relativePath).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).Sha256(sha256).Summary(summary).Description(description).DescriptionContentType(descriptionContentType).Keywords(keywords).HomePage(homePage).DownloadUrl(downloadUrl).Author(author).AuthorEmail(authorEmail).Maintainer(maintainer).MaintainerEmail(maintainerEmail).License(license).RequiresPython(requiresPython).ProjectUrl(projectUrl).ProjectUrls(projectUrls).Platform(platform).SupportedPlatform(supportedPlatform).RequiresDist(requiresDist).ProvidesDist(providesDist).ObsoletesDist(obsoletesDist).RequiresExternal(requiresExternal).Classifiers(classifiers).Execute()
+> AsyncOperationResponse ContentPythonPackagesCreate(ctx, pulpDomain).RelativePath(relativePath).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Author(author).AuthorEmail(authorEmail).Description(description).HomePage(homePage).Keywords(keywords).License(license).Platform(platform).Summary(summary).Classifiers(classifiers).DownloadUrl(downloadUrl).SupportedPlatform(supportedPlatform).Maintainer(maintainer).MaintainerEmail(maintainerEmail).ObsoletesDist(obsoletesDist).ProjectUrl(projectUrl).ProjectUrls(projectUrls).ProvidesDist(providesDist).RequiresExternal(requiresExternal).RequiresDist(requiresDist).RequiresPython(requiresPython).DescriptionContentType(descriptionContentType).ProvidesExtras(providesExtras).Dynamic(dynamic).LicenseExpression(licenseExpression).LicenseFile(licenseFile).Sha256(sha256).MetadataSha256(metadataSha256).Attestations(attestations).Execute()
 
 Create a python package content
 
@@ -444,44 +552,52 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	relativePath := "relativePath_example" // string | Path where the artifact is located relative to distributions base_path
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	repository := "repository_example" // string | A URI of a repository the new content unit should be associated with. (optional)
 	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
 	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
 	file := os.NewFile(1234, "some_file") // *os.File | An uploaded file that may be turned into the content unit. (optional)
 	upload := "upload_example" // string | An uncommitted upload that may be turned into the content unit. (optional)
 	fileUrl := "fileUrl_example" // string | A url that Pulp can download and turn into the content unit. (optional)
-	sha256 := "sha256_example" // string | The SHA256 digest of this package. (optional) (default to "")
-	summary := "summary_example" // string | A one-line summary of what the package does. (optional)
-	description := "description_example" // string | A longer description of the package that can run to several paragraphs. (optional)
-	descriptionContentType := "descriptionContentType_example" // string | A string stating the markup syntax (if any) used in the distribution’s description, so that tools can intelligently render the description. (optional)
-	keywords := "keywords_example" // string | Additional keywords to be used to assist searching for the package in a larger catalog. (optional)
-	homePage := "homePage_example" // string | The URL for the package's home page. (optional)
-	downloadUrl := "downloadUrl_example" // string | Legacy field denoting the URL from which this package can be downloaded. (optional)
+	downloaderConfig := *openapiclient.NewRemoteNetworkConfig() // RemoteNetworkConfig | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url. (optional)
 	author := "author_example" // string | Text containing the author's name. Contact information can also be added, separated with newlines. (optional)
 	authorEmail := "authorEmail_example" // string | The author's e-mail address.  (optional)
+	description := "description_example" // string | A longer description of the package that can run to several paragraphs. (optional)
+	homePage := "homePage_example" // string | The URL for the package's home page. (optional)
+	keywords := "keywords_example" // string | Additional keywords to be used to assist searching for the package in a larger catalog. (optional)
+	license := "license_example" // string | Text indicating the license covering the distribution (optional)
+	platform := "platform_example" // string | A comma-separated list of platform specifications, summarizing the operating systems supported by the package. (optional)
+	summary := "summary_example" // string | A one-line summary of what the package does. (optional)
+	classifiers := TODO // interface{} | A JSON list containing classification values for a Python package. (optional)
+	downloadUrl := "downloadUrl_example" // string | Legacy field denoting the URL from which this package can be downloaded. (optional)
+	supportedPlatform := "supportedPlatform_example" // string | Field to specify the OS and CPU for which the binary package was compiled.  (optional)
 	maintainer := "maintainer_example" // string | The maintainer's name at a minimum; additional contact information may be provided. (optional)
 	maintainerEmail := "maintainerEmail_example" // string | The maintainer's e-mail address. (optional)
-	license := "license_example" // string | Text indicating the license covering the distribution (optional)
-	requiresPython := "requiresPython_example" // string | The Python version(s) that the distribution is guaranteed to be compatible with. (optional)
+	obsoletesDist := TODO // interface{} | A JSON list containing names of a distutils project's distribution which this distribution renders obsolete, meaning that the two projects should not be installed at the same time. (optional)
 	projectUrl := "projectUrl_example" // string | A browsable URL for the project and a label for it, separated by a comma. (optional)
 	projectUrls := TODO // interface{} | A dictionary of labels and URLs for the project. (optional)
-	platform := "platform_example" // string | A comma-separated list of platform specifications, summarizing the operating systems supported by the package. (optional)
-	supportedPlatform := "supportedPlatform_example" // string | Field to specify the OS and CPU for which the binary package was compiled.  (optional)
-	requiresDist := TODO // interface{} | A JSON list containing names of some other distutils project required by this distribution. (optional)
 	providesDist := TODO // interface{} | A JSON list containing names of a Distutils project which is contained within this distribution. (optional)
-	obsoletesDist := TODO // interface{} | A JSON list containing names of a distutils project's distribution which this distribution renders obsolete, meaning that the two projects should not be installed at the same time. (optional)
 	requiresExternal := TODO // interface{} | A JSON list containing some dependency in the system that the distribution is to be used. (optional)
-	classifiers := TODO // interface{} | A JSON list containing classification values for a Python package. (optional)
+	requiresDist := TODO // interface{} | A JSON list containing names of some other distutils project required by this distribution. (optional)
+	requiresPython := "requiresPython_example" // string | The Python version(s) that the distribution is guaranteed to be compatible with. (optional)
+	descriptionContentType := "descriptionContentType_example" // string | A string stating the markup syntax (if any) used in the distribution's description, so that tools can intelligently render the description. (optional)
+	providesExtras := TODO // interface{} | A JSON list containing names of optional features provided by the package. (optional)
+	dynamic := TODO // interface{} | A JSON list containing names of other core metadata fields which are permitted to vary between sdist and bdist packages. Fields NOT marked dynamic MUST be the same between bdist and sdist. (optional)
+	licenseExpression := "licenseExpression_example" // string | Text string that is a valid SPDX license expression. (optional)
+	licenseFile := TODO // interface{} | A JSON list containing names of the paths to license-related files. (optional)
+	sha256 := "sha256_example" // string | The SHA256 digest of this package. (optional) (default to "")
+	metadataSha256 := "metadataSha256_example" // string | The SHA256 digest of the package's METADATA file. (optional)
+	attestations := TODO // interface{} | A JSON list containing attestations for the package. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesCreate(context.Background(), pulpDomain).RelativePath(relativePath).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).Sha256(sha256).Summary(summary).Description(description).DescriptionContentType(descriptionContentType).Keywords(keywords).HomePage(homePage).DownloadUrl(downloadUrl).Author(author).AuthorEmail(authorEmail).Maintainer(maintainer).MaintainerEmail(maintainerEmail).License(license).RequiresPython(requiresPython).ProjectUrl(projectUrl).ProjectUrls(projectUrls).Platform(platform).SupportedPlatform(supportedPlatform).RequiresDist(requiresDist).ProvidesDist(providesDist).ObsoletesDist(obsoletesDist).RequiresExternal(requiresExternal).Classifiers(classifiers).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesCreate(context.Background(), pulpDomain).RelativePath(relativePath).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Author(author).AuthorEmail(authorEmail).Description(description).HomePage(homePage).Keywords(keywords).License(license).Platform(platform).Summary(summary).Classifiers(classifiers).DownloadUrl(downloadUrl).SupportedPlatform(supportedPlatform).Maintainer(maintainer).MaintainerEmail(maintainerEmail).ObsoletesDist(obsoletesDist).ProjectUrl(projectUrl).ProjectUrls(projectUrls).ProvidesDist(providesDist).RequiresExternal(requiresExternal).RequiresDist(requiresDist).RequiresPython(requiresPython).DescriptionContentType(descriptionContentType).ProvidesExtras(providesExtras).Dynamic(dynamic).LicenseExpression(licenseExpression).LicenseFile(licenseFile).Sha256(sha256).MetadataSha256(metadataSha256).Attestations(attestations).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentPythonPackagesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -508,34 +624,42 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **relativePath** | **string** | Path where the artifact is located relative to distributions base_path | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **repository** | **string** | A URI of a repository the new content unit should be associated with. | 
  **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
  **artifact** | **string** | Artifact file representing the physical content | 
  **file** | ***os.File** | An uploaded file that may be turned into the content unit. | 
  **upload** | **string** | An uncommitted upload that may be turned into the content unit. | 
  **fileUrl** | **string** | A url that Pulp can download and turn into the content unit. | 
- **sha256** | **string** | The SHA256 digest of this package. | [default to &quot;&quot;]
- **summary** | **string** | A one-line summary of what the package does. | 
- **description** | **string** | A longer description of the package that can run to several paragraphs. | 
- **descriptionContentType** | **string** | A string stating the markup syntax (if any) used in the distribution’s description, so that tools can intelligently render the description. | 
- **keywords** | **string** | Additional keywords to be used to assist searching for the package in a larger catalog. | 
- **homePage** | **string** | The URL for the package&#39;s home page. | 
- **downloadUrl** | **string** | Legacy field denoting the URL from which this package can be downloaded. | 
+ **downloaderConfig** | [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | 
  **author** | **string** | Text containing the author&#39;s name. Contact information can also be added, separated with newlines. | 
  **authorEmail** | **string** | The author&#39;s e-mail address.  | 
+ **description** | **string** | A longer description of the package that can run to several paragraphs. | 
+ **homePage** | **string** | The URL for the package&#39;s home page. | 
+ **keywords** | **string** | Additional keywords to be used to assist searching for the package in a larger catalog. | 
+ **license** | **string** | Text indicating the license covering the distribution | 
+ **platform** | **string** | A comma-separated list of platform specifications, summarizing the operating systems supported by the package. | 
+ **summary** | **string** | A one-line summary of what the package does. | 
+ **classifiers** | [**interface{}**](interface{}.md) | A JSON list containing classification values for a Python package. | 
+ **downloadUrl** | **string** | Legacy field denoting the URL from which this package can be downloaded. | 
+ **supportedPlatform** | **string** | Field to specify the OS and CPU for which the binary package was compiled.  | 
  **maintainer** | **string** | The maintainer&#39;s name at a minimum; additional contact information may be provided. | 
  **maintainerEmail** | **string** | The maintainer&#39;s e-mail address. | 
- **license** | **string** | Text indicating the license covering the distribution | 
- **requiresPython** | **string** | The Python version(s) that the distribution is guaranteed to be compatible with. | 
+ **obsoletesDist** | [**interface{}**](interface{}.md) | A JSON list containing names of a distutils project&#39;s distribution which this distribution renders obsolete, meaning that the two projects should not be installed at the same time. | 
  **projectUrl** | **string** | A browsable URL for the project and a label for it, separated by a comma. | 
  **projectUrls** | [**interface{}**](interface{}.md) | A dictionary of labels and URLs for the project. | 
- **platform** | **string** | A comma-separated list of platform specifications, summarizing the operating systems supported by the package. | 
- **supportedPlatform** | **string** | Field to specify the OS and CPU for which the binary package was compiled.  | 
- **requiresDist** | [**interface{}**](interface{}.md) | A JSON list containing names of some other distutils project required by this distribution. | 
  **providesDist** | [**interface{}**](interface{}.md) | A JSON list containing names of a Distutils project which is contained within this distribution. | 
- **obsoletesDist** | [**interface{}**](interface{}.md) | A JSON list containing names of a distutils project&#39;s distribution which this distribution renders obsolete, meaning that the two projects should not be installed at the same time. | 
  **requiresExternal** | [**interface{}**](interface{}.md) | A JSON list containing some dependency in the system that the distribution is to be used. | 
- **classifiers** | [**interface{}**](interface{}.md) | A JSON list containing classification values for a Python package. | 
+ **requiresDist** | [**interface{}**](interface{}.md) | A JSON list containing names of some other distutils project required by this distribution. | 
+ **requiresPython** | **string** | The Python version(s) that the distribution is guaranteed to be compatible with. | 
+ **descriptionContentType** | **string** | A string stating the markup syntax (if any) used in the distribution&#39;s description, so that tools can intelligently render the description. | 
+ **providesExtras** | [**interface{}**](interface{}.md) | A JSON list containing names of optional features provided by the package. | 
+ **dynamic** | [**interface{}**](interface{}.md) | A JSON list containing names of other core metadata fields which are permitted to vary between sdist and bdist packages. Fields NOT marked dynamic MUST be the same between bdist and sdist. | 
+ **licenseExpression** | **string** | Text string that is a valid SPDX license expression. | 
+ **licenseFile** | [**interface{}**](interface{}.md) | A JSON list containing names of the paths to license-related files. | 
+ **sha256** | **string** | The SHA256 digest of this package. | [default to &quot;&quot;]
+ **metadataSha256** | **string** | The SHA256 digest of the package&#39;s METADATA file. | 
+ **attestations** | [**interface{}**](interface{}.md) | A JSON list containing attestations for the package. | 
 
 ### Return type
 
@@ -557,7 +681,7 @@ Name | Type | Description  | Notes
 
 ## ContentPythonPackagesList
 
-> PaginatedpythonPythonPackageContentResponseList ContentPythonPackagesList(ctx, pulpDomain).Author(author).AuthorIn(authorIn).Filename(filename).FilenameContains(filenameContains).FilenameIn(filenameIn).KeywordsContains(keywordsContains).KeywordsIn(keywordsIn).Limit(limit).Name(name).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Packagetype(packagetype).PackagetypeIn(packagetypeIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).RequiresPython(requiresPython).RequiresPythonContains(requiresPythonContains).RequiresPythonIn(requiresPythonIn).Sha256(sha256).Sha256In(sha256In).Version(version).VersionGt(versionGt).VersionGte(versionGte).VersionLt(versionLt).VersionLte(versionLte).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedpythonPythonPackageContentResponseList ContentPythonPackagesList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Author(author).AuthorContains(authorContains).AuthorIn(authorIn).Filename(filename).FilenameContains(filenameContains).FilenameIn(filenameIn).KeywordsContains(keywordsContains).KeywordsIn(keywordsIn).Limit(limit).Name(name).NameContains(nameContains).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Packagetype(packagetype).PackagetypeIn(packagetypeIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).RequiresPython(requiresPython).RequiresPythonContains(requiresPythonContains).RequiresPythonIn(requiresPythonIn).Sha256(sha256).Sha256In(sha256In).Version(version).VersionGt(versionGt).VersionGte(versionGte).VersionLt(versionLt).VersionLte(versionLte).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List python package contents
 
@@ -572,12 +696,14 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	author := "author_example" // string | Filter results where author matches value (optional)
+	authorContains := "authorContains_example" // string | Filter results where author contains value (optional)
 	authorIn := []string{"Inner_example"} // []string | Filter results where author is in a comma-separated list of values (optional)
 	filename := "filename_example" // string | Filter results where filename matches value (optional)
 	filenameContains := "filenameContains_example" // string | Filter results where filename contains value (optional)
@@ -586,9 +712,10 @@ func main() {
 	keywordsIn := []string{"Inner_example"} // []string | Filter results where keywords is in a comma-separated list of values (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
+	nameContains := "nameContains_example" // string | Filter results where name contains value (optional)
 	nameIn := []string{"Inner_example"} // []string | Filter results where name is in a comma-separated list of values (optional)
 	offset := int32(56) // int32 | The initial index from which to return the results. (optional)
-	ordering := []string{"Ordering_example"} // []string | Ordering* `pulp_id` - Pulp id* `-pulp_id` - Pulp id (descending)* `pulp_created` - Pulp created* `-pulp_created` - Pulp created (descending)* `pulp_last_updated` - Pulp last updated* `-pulp_last_updated` - Pulp last updated (descending)* `pulp_type` - Pulp type* `-pulp_type` - Pulp type (descending)* `upstream_id` - Upstream id* `-upstream_id` - Upstream id (descending)* `pulp_labels` - Pulp labels* `-pulp_labels` - Pulp labels (descending)* `timestamp_of_interest` - Timestamp of interest* `-timestamp_of_interest` - Timestamp of interest (descending)* `filename` - Filename* `-filename` - Filename (descending)* `packagetype` - Packagetype* `-packagetype` - Packagetype (descending)* `name` - Name* `-name` - Name (descending)* `version` - Version* `-version` - Version (descending)* `sha256` - Sha256* `-sha256` - Sha256 (descending)* `python_version` - Python version* `-python_version` - Python version (descending)* `metadata_version` - Metadata version* `-metadata_version` - Metadata version (descending)* `summary` - Summary* `-summary` - Summary (descending)* `description` - Description* `-description` - Description (descending)* `keywords` - Keywords* `-keywords` - Keywords (descending)* `home_page` - Home page* `-home_page` - Home page (descending)* `download_url` - Download url* `-download_url` - Download url (descending)* `author` - Author* `-author` - Author (descending)* `author_email` - Author email* `-author_email` - Author email (descending)* `maintainer` - Maintainer* `-maintainer` - Maintainer (descending)* `maintainer_email` - Maintainer email* `-maintainer_email` - Maintainer email (descending)* `license` - License* `-license` - License (descending)* `requires_python` - Requires python* `-requires_python` - Requires python (descending)* `project_url` - Project url* `-project_url` - Project url (descending)* `platform` - Platform* `-platform` - Platform (descending)* `supported_platform` - Supported platform* `-supported_platform` - Supported platform (descending)* `requires_dist` - Requires dist* `-requires_dist` - Requires dist (descending)* `provides_dist` - Provides dist* `-provides_dist` - Provides dist (descending)* `obsoletes_dist` - Obsoletes dist* `-obsoletes_dist` - Obsoletes dist (descending)* `requires_external` - Requires external* `-requires_external` - Requires external (descending)* `classifiers` - Classifiers* `-classifiers` - Classifiers (descending)* `project_urls` - Project urls* `-project_urls` - Project urls (descending)* `description_content_type` - Description content type* `-description_content_type` - Description content type (descending)* `pk` - Pk* `-pk` - Pk (descending) (optional)
+	ordering := []string{"Ordering_example"} // []string | Ordering* `pulp_id` - Pulp id* `-pulp_id` - Pulp id (descending)* `pulp_created` - Pulp created* `-pulp_created` - Pulp created (descending)* `pulp_last_updated` - Pulp last updated* `-pulp_last_updated` - Pulp last updated (descending)* `pulp_type` - Pulp type* `-pulp_type` - Pulp type (descending)* `upstream_id` - Upstream id* `-upstream_id` - Upstream id (descending)* `pulp_labels` - Pulp labels* `-pulp_labels` - Pulp labels (descending)* `timestamp_of_interest` - Timestamp of interest* `-timestamp_of_interest` - Timestamp of interest (descending)* `author` - Author* `-author` - Author (descending)* `author_email` - Author email* `-author_email` - Author email (descending)* `description` - Description* `-description` - Description (descending)* `home_page` - Home page* `-home_page` - Home page (descending)* `keywords` - Keywords* `-keywords` - Keywords (descending)* `license` - License* `-license` - License (descending)* `metadata_version` - Metadata version* `-metadata_version` - Metadata version (descending)* `name` - Name* `-name` - Name (descending)* `platform` - Platform* `-platform` - Platform (descending)* `summary` - Summary* `-summary` - Summary (descending)* `version` - Version* `-version` - Version (descending)* `classifiers` - Classifiers* `-classifiers` - Classifiers (descending)* `download_url` - Download url* `-download_url` - Download url (descending)* `supported_platform` - Supported platform* `-supported_platform` - Supported platform (descending)* `maintainer` - Maintainer* `-maintainer` - Maintainer (descending)* `maintainer_email` - Maintainer email* `-maintainer_email` - Maintainer email (descending)* `obsoletes_dist` - Obsoletes dist* `-obsoletes_dist` - Obsoletes dist (descending)* `project_url` - Project url* `-project_url` - Project url (descending)* `project_urls` - Project urls* `-project_urls` - Project urls (descending)* `provides_dist` - Provides dist* `-provides_dist` - Provides dist (descending)* `requires_external` - Requires external* `-requires_external` - Requires external (descending)* `requires_dist` - Requires dist* `-requires_dist` - Requires dist (descending)* `requires_python` - Requires python* `-requires_python` - Requires python (descending)* `description_content_type` - Description content type* `-description_content_type` - Description content type (descending)* `provides_extras` - Provides extras* `-provides_extras` - Provides extras (descending)* `dynamic` - Dynamic* `-dynamic` - Dynamic (descending)* `license_expression` - License expression* `-license_expression` - License expression (descending)* `license_file` - License file* `-license_file` - License file (descending)* `filename` - Filename* `-filename` - Filename (descending)* `packagetype` - Packagetype* `-packagetype` - Packagetype (descending)* `python_version` - Python version* `-python_version` - Python version (descending)* `sha256` - Sha256* `-sha256` - Sha256 (descending)* `metadata_sha256` - Metadata sha256* `-metadata_sha256` - Metadata sha256 (descending)* `size` - Size* `-size` - Size (descending)* `pk` - Pk* `-pk` - Pk (descending) (optional)
 	orphanedFor := float32(8.14) // float32 | Minutes Content has been orphaned for. -1 uses ORPHAN_PROTECTION_TIME. (optional)
 	packagetype := "packagetype_example" // string | Filter results where packagetype matches value* `bdist_dmg` - bdist_dmg* `bdist_dumb` - bdist_dumb* `bdist_egg` - bdist_egg* `bdist_msi` - bdist_msi* `bdist_rpm` - bdist_rpm* `bdist_wheel` - bdist_wheel* `bdist_wininst` - bdist_wininst* `sdist` - sdist (optional)
 	packagetypeIn := []string{"Inner_example"} // []string | Filter results where packagetype is in a comma-separated list of values (optional)
@@ -615,7 +742,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesList(context.Background(), pulpDomain).Author(author).AuthorIn(authorIn).Filename(filename).FilenameContains(filenameContains).FilenameIn(filenameIn).KeywordsContains(keywordsContains).KeywordsIn(keywordsIn).Limit(limit).Name(name).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Packagetype(packagetype).PackagetypeIn(packagetypeIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).RequiresPython(requiresPython).RequiresPythonContains(requiresPythonContains).RequiresPythonIn(requiresPythonIn).Sha256(sha256).Sha256In(sha256In).Version(version).VersionGt(versionGt).VersionGte(versionGte).VersionLt(versionLt).VersionLte(versionLte).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Author(author).AuthorContains(authorContains).AuthorIn(authorIn).Filename(filename).FilenameContains(filenameContains).FilenameIn(filenameIn).KeywordsContains(keywordsContains).KeywordsIn(keywordsIn).Limit(limit).Name(name).NameContains(nameContains).NameIn(nameIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).Packagetype(packagetype).PackagetypeIn(packagetypeIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).RequiresPython(requiresPython).RequiresPythonContains(requiresPythonContains).RequiresPythonIn(requiresPythonIn).Sha256(sha256).Sha256In(sha256In).Version(version).VersionGt(versionGt).VersionGte(versionGte).VersionLt(versionLt).VersionLte(versionLte).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentPythonPackagesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -641,7 +768,9 @@ Other parameters are passed through a pointer to a apiContentPythonPackagesListR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **author** | **string** | Filter results where author matches value | 
+ **authorContains** | **string** | Filter results where author contains value | 
  **authorIn** | **[]string** | Filter results where author is in a comma-separated list of values | 
  **filename** | **string** | Filter results where filename matches value | 
  **filenameContains** | **string** | Filter results where filename contains value | 
@@ -650,9 +779,10 @@ Name | Type | Description  | Notes
  **keywordsIn** | **[]string** | Filter results where keywords is in a comma-separated list of values | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
+ **nameContains** | **string** | Filter results where name contains value | 
  **nameIn** | **[]string** | Filter results where name is in a comma-separated list of values | 
  **offset** | **int32** | The initial index from which to return the results. | 
- **ordering** | **[]string** | Ordering* &#x60;pulp_id&#x60; - Pulp id* &#x60;-pulp_id&#x60; - Pulp id (descending)* &#x60;pulp_created&#x60; - Pulp created* &#x60;-pulp_created&#x60; - Pulp created (descending)* &#x60;pulp_last_updated&#x60; - Pulp last updated* &#x60;-pulp_last_updated&#x60; - Pulp last updated (descending)* &#x60;pulp_type&#x60; - Pulp type* &#x60;-pulp_type&#x60; - Pulp type (descending)* &#x60;upstream_id&#x60; - Upstream id* &#x60;-upstream_id&#x60; - Upstream id (descending)* &#x60;pulp_labels&#x60; - Pulp labels* &#x60;-pulp_labels&#x60; - Pulp labels (descending)* &#x60;timestamp_of_interest&#x60; - Timestamp of interest* &#x60;-timestamp_of_interest&#x60; - Timestamp of interest (descending)* &#x60;filename&#x60; - Filename* &#x60;-filename&#x60; - Filename (descending)* &#x60;packagetype&#x60; - Packagetype* &#x60;-packagetype&#x60; - Packagetype (descending)* &#x60;name&#x60; - Name* &#x60;-name&#x60; - Name (descending)* &#x60;version&#x60; - Version* &#x60;-version&#x60; - Version (descending)* &#x60;sha256&#x60; - Sha256* &#x60;-sha256&#x60; - Sha256 (descending)* &#x60;python_version&#x60; - Python version* &#x60;-python_version&#x60; - Python version (descending)* &#x60;metadata_version&#x60; - Metadata version* &#x60;-metadata_version&#x60; - Metadata version (descending)* &#x60;summary&#x60; - Summary* &#x60;-summary&#x60; - Summary (descending)* &#x60;description&#x60; - Description* &#x60;-description&#x60; - Description (descending)* &#x60;keywords&#x60; - Keywords* &#x60;-keywords&#x60; - Keywords (descending)* &#x60;home_page&#x60; - Home page* &#x60;-home_page&#x60; - Home page (descending)* &#x60;download_url&#x60; - Download url* &#x60;-download_url&#x60; - Download url (descending)* &#x60;author&#x60; - Author* &#x60;-author&#x60; - Author (descending)* &#x60;author_email&#x60; - Author email* &#x60;-author_email&#x60; - Author email (descending)* &#x60;maintainer&#x60; - Maintainer* &#x60;-maintainer&#x60; - Maintainer (descending)* &#x60;maintainer_email&#x60; - Maintainer email* &#x60;-maintainer_email&#x60; - Maintainer email (descending)* &#x60;license&#x60; - License* &#x60;-license&#x60; - License (descending)* &#x60;requires_python&#x60; - Requires python* &#x60;-requires_python&#x60; - Requires python (descending)* &#x60;project_url&#x60; - Project url* &#x60;-project_url&#x60; - Project url (descending)* &#x60;platform&#x60; - Platform* &#x60;-platform&#x60; - Platform (descending)* &#x60;supported_platform&#x60; - Supported platform* &#x60;-supported_platform&#x60; - Supported platform (descending)* &#x60;requires_dist&#x60; - Requires dist* &#x60;-requires_dist&#x60; - Requires dist (descending)* &#x60;provides_dist&#x60; - Provides dist* &#x60;-provides_dist&#x60; - Provides dist (descending)* &#x60;obsoletes_dist&#x60; - Obsoletes dist* &#x60;-obsoletes_dist&#x60; - Obsoletes dist (descending)* &#x60;requires_external&#x60; - Requires external* &#x60;-requires_external&#x60; - Requires external (descending)* &#x60;classifiers&#x60; - Classifiers* &#x60;-classifiers&#x60; - Classifiers (descending)* &#x60;project_urls&#x60; - Project urls* &#x60;-project_urls&#x60; - Project urls (descending)* &#x60;description_content_type&#x60; - Description content type* &#x60;-description_content_type&#x60; - Description content type (descending)* &#x60;pk&#x60; - Pk* &#x60;-pk&#x60; - Pk (descending) | 
+ **ordering** | **[]string** | Ordering* &#x60;pulp_id&#x60; - Pulp id* &#x60;-pulp_id&#x60; - Pulp id (descending)* &#x60;pulp_created&#x60; - Pulp created* &#x60;-pulp_created&#x60; - Pulp created (descending)* &#x60;pulp_last_updated&#x60; - Pulp last updated* &#x60;-pulp_last_updated&#x60; - Pulp last updated (descending)* &#x60;pulp_type&#x60; - Pulp type* &#x60;-pulp_type&#x60; - Pulp type (descending)* &#x60;upstream_id&#x60; - Upstream id* &#x60;-upstream_id&#x60; - Upstream id (descending)* &#x60;pulp_labels&#x60; - Pulp labels* &#x60;-pulp_labels&#x60; - Pulp labels (descending)* &#x60;timestamp_of_interest&#x60; - Timestamp of interest* &#x60;-timestamp_of_interest&#x60; - Timestamp of interest (descending)* &#x60;author&#x60; - Author* &#x60;-author&#x60; - Author (descending)* &#x60;author_email&#x60; - Author email* &#x60;-author_email&#x60; - Author email (descending)* &#x60;description&#x60; - Description* &#x60;-description&#x60; - Description (descending)* &#x60;home_page&#x60; - Home page* &#x60;-home_page&#x60; - Home page (descending)* &#x60;keywords&#x60; - Keywords* &#x60;-keywords&#x60; - Keywords (descending)* &#x60;license&#x60; - License* &#x60;-license&#x60; - License (descending)* &#x60;metadata_version&#x60; - Metadata version* &#x60;-metadata_version&#x60; - Metadata version (descending)* &#x60;name&#x60; - Name* &#x60;-name&#x60; - Name (descending)* &#x60;platform&#x60; - Platform* &#x60;-platform&#x60; - Platform (descending)* &#x60;summary&#x60; - Summary* &#x60;-summary&#x60; - Summary (descending)* &#x60;version&#x60; - Version* &#x60;-version&#x60; - Version (descending)* &#x60;classifiers&#x60; - Classifiers* &#x60;-classifiers&#x60; - Classifiers (descending)* &#x60;download_url&#x60; - Download url* &#x60;-download_url&#x60; - Download url (descending)* &#x60;supported_platform&#x60; - Supported platform* &#x60;-supported_platform&#x60; - Supported platform (descending)* &#x60;maintainer&#x60; - Maintainer* &#x60;-maintainer&#x60; - Maintainer (descending)* &#x60;maintainer_email&#x60; - Maintainer email* &#x60;-maintainer_email&#x60; - Maintainer email (descending)* &#x60;obsoletes_dist&#x60; - Obsoletes dist* &#x60;-obsoletes_dist&#x60; - Obsoletes dist (descending)* &#x60;project_url&#x60; - Project url* &#x60;-project_url&#x60; - Project url (descending)* &#x60;project_urls&#x60; - Project urls* &#x60;-project_urls&#x60; - Project urls (descending)* &#x60;provides_dist&#x60; - Provides dist* &#x60;-provides_dist&#x60; - Provides dist (descending)* &#x60;requires_external&#x60; - Requires external* &#x60;-requires_external&#x60; - Requires external (descending)* &#x60;requires_dist&#x60; - Requires dist* &#x60;-requires_dist&#x60; - Requires dist (descending)* &#x60;requires_python&#x60; - Requires python* &#x60;-requires_python&#x60; - Requires python (descending)* &#x60;description_content_type&#x60; - Description content type* &#x60;-description_content_type&#x60; - Description content type (descending)* &#x60;provides_extras&#x60; - Provides extras* &#x60;-provides_extras&#x60; - Provides extras (descending)* &#x60;dynamic&#x60; - Dynamic* &#x60;-dynamic&#x60; - Dynamic (descending)* &#x60;license_expression&#x60; - License expression* &#x60;-license_expression&#x60; - License expression (descending)* &#x60;license_file&#x60; - License file* &#x60;-license_file&#x60; - License file (descending)* &#x60;filename&#x60; - Filename* &#x60;-filename&#x60; - Filename (descending)* &#x60;packagetype&#x60; - Packagetype* &#x60;-packagetype&#x60; - Packagetype (descending)* &#x60;python_version&#x60; - Python version* &#x60;-python_version&#x60; - Python version (descending)* &#x60;sha256&#x60; - Sha256* &#x60;-sha256&#x60; - Sha256 (descending)* &#x60;metadata_sha256&#x60; - Metadata sha256* &#x60;-metadata_sha256&#x60; - Metadata sha256 (descending)* &#x60;size&#x60; - Size* &#x60;-size&#x60; - Size (descending)* &#x60;pk&#x60; - Pk* &#x60;-pk&#x60; - Pk (descending) | 
  **orphanedFor** | **float32** | Minutes Content has been orphaned for. -1 uses ORPHAN_PROTECTION_TIME. | 
  **packagetype** | **string** | Filter results where packagetype matches value* &#x60;bdist_dmg&#x60; - bdist_dmg* &#x60;bdist_dumb&#x60; - bdist_dumb* &#x60;bdist_egg&#x60; - bdist_egg* &#x60;bdist_msi&#x60; - bdist_msi* &#x60;bdist_rpm&#x60; - bdist_rpm* &#x60;bdist_wheel&#x60; - bdist_wheel* &#x60;bdist_wininst&#x60; - bdist_wininst* &#x60;sdist&#x60; - sdist | 
  **packagetypeIn** | **[]string** | Filter results where packagetype is in a comma-separated list of values | 
@@ -697,7 +827,7 @@ Name | Type | Description  | Notes
 
 ## ContentPythonPackagesRead
 
-> PythonPythonPackageContentResponse ContentPythonPackagesRead(ctx, pythonPythonPackageContentHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PythonPythonPackageContentResponse ContentPythonPackagesRead(ctx, pythonPythonPackageContentHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a python package content
 
@@ -712,17 +842,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonPackageContentHref := "pythonPythonPackageContentHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesRead(context.Background(), pythonPythonPackageContentHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesRead(context.Background(), pythonPythonPackageContentHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentPythonPackagesRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -748,6 +879,7 @@ Other parameters are passed through a pointer to a apiContentPythonPackagesReadR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -771,7 +903,7 @@ Name | Type | Description  | Notes
 
 ## ContentPythonPackagesSetLabel
 
-> SetLabelResponse ContentPythonPackagesSetLabel(ctx, pythonPythonPackageContentHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentPythonPackagesSetLabel(ctx, pythonPythonPackageContentHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -786,16 +918,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonPackageContentHref := "pythonPythonPackageContentHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesSetLabel(context.Background(), pythonPythonPackageContentHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesSetLabel(context.Background(), pythonPythonPackageContentHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentPythonPackagesSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -822,6 +955,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -843,7 +977,7 @@ Name | Type | Description  | Notes
 
 ## ContentPythonPackagesUnsetLabel
 
-> UnsetLabelResponse ContentPythonPackagesUnsetLabel(ctx, pythonPythonPackageContentHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentPythonPackagesUnsetLabel(ctx, pythonPythonPackageContentHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -858,16 +992,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonPackageContentHref := "pythonPythonPackageContentHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesUnsetLabel(context.Background(), pythonPythonPackageContentHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesUnsetLabel(context.Background(), pythonPythonPackageContentHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentPythonPackagesUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -894,6 +1029,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -913,9 +1049,149 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ContentPythonPackagesUpload
+
+> PythonPythonPackageContentResponse ContentPythonPackagesUpload(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Author(author).AuthorEmail(authorEmail).Description(description).HomePage(homePage).Keywords(keywords).License(license).Platform(platform).Summary(summary).Classifiers(classifiers).DownloadUrl(downloadUrl).SupportedPlatform(supportedPlatform).Maintainer(maintainer).MaintainerEmail(maintainerEmail).ObsoletesDist(obsoletesDist).ProjectUrl(projectUrl).ProjectUrls(projectUrls).ProvidesDist(providesDist).RequiresExternal(requiresExternal).RequiresDist(requiresDist).RequiresPython(requiresPython).DescriptionContentType(descriptionContentType).ProvidesExtras(providesExtras).Dynamic(dynamic).LicenseExpression(licenseExpression).LicenseFile(licenseFile).Sha256(sha256).MetadataSha256(metadataSha256).Attestations(attestations).Execute()
+
+Synchronous Python package upload
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
+	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
+	file := os.NewFile(1234, "some_file") // *os.File | An uploaded file that may be turned into the content unit. (optional)
+	upload := "upload_example" // string | An uncommitted upload that may be turned into the content unit. (optional)
+	fileUrl := "fileUrl_example" // string | A url that Pulp can download and turn into the content unit. (optional)
+	downloaderConfig := *openapiclient.NewRemoteNetworkConfig() // RemoteNetworkConfig | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url. (optional)
+	author := "author_example" // string | Text containing the author's name. Contact information can also be added, separated with newlines. (optional)
+	authorEmail := "authorEmail_example" // string | The author's e-mail address.  (optional)
+	description := "description_example" // string | A longer description of the package that can run to several paragraphs. (optional)
+	homePage := "homePage_example" // string | The URL for the package's home page. (optional)
+	keywords := "keywords_example" // string | Additional keywords to be used to assist searching for the package in a larger catalog. (optional)
+	license := "license_example" // string | Text indicating the license covering the distribution (optional)
+	platform := "platform_example" // string | A comma-separated list of platform specifications, summarizing the operating systems supported by the package. (optional)
+	summary := "summary_example" // string | A one-line summary of what the package does. (optional)
+	classifiers := TODO // interface{} | A JSON list containing classification values for a Python package. (optional)
+	downloadUrl := "downloadUrl_example" // string | Legacy field denoting the URL from which this package can be downloaded. (optional)
+	supportedPlatform := "supportedPlatform_example" // string | Field to specify the OS and CPU for which the binary package was compiled.  (optional)
+	maintainer := "maintainer_example" // string | The maintainer's name at a minimum; additional contact information may be provided. (optional)
+	maintainerEmail := "maintainerEmail_example" // string | The maintainer's e-mail address. (optional)
+	obsoletesDist := TODO // interface{} | A JSON list containing names of a distutils project's distribution which this distribution renders obsolete, meaning that the two projects should not be installed at the same time. (optional)
+	projectUrl := "projectUrl_example" // string | A browsable URL for the project and a label for it, separated by a comma. (optional)
+	projectUrls := TODO // interface{} | A dictionary of labels and URLs for the project. (optional)
+	providesDist := TODO // interface{} | A JSON list containing names of a Distutils project which is contained within this distribution. (optional)
+	requiresExternal := TODO // interface{} | A JSON list containing some dependency in the system that the distribution is to be used. (optional)
+	requiresDist := TODO // interface{} | A JSON list containing names of some other distutils project required by this distribution. (optional)
+	requiresPython := "requiresPython_example" // string | The Python version(s) that the distribution is guaranteed to be compatible with. (optional)
+	descriptionContentType := "descriptionContentType_example" // string | A string stating the markup syntax (if any) used in the distribution's description, so that tools can intelligently render the description. (optional)
+	providesExtras := TODO // interface{} | A JSON list containing names of optional features provided by the package. (optional)
+	dynamic := TODO // interface{} | A JSON list containing names of other core metadata fields which are permitted to vary between sdist and bdist packages. Fields NOT marked dynamic MUST be the same between bdist and sdist. (optional)
+	licenseExpression := "licenseExpression_example" // string | Text string that is a valid SPDX license expression. (optional)
+	licenseFile := TODO // interface{} | A JSON list containing names of the paths to license-related files. (optional)
+	sha256 := "sha256_example" // string | The SHA256 digest of this package. (optional) (default to "")
+	metadataSha256 := "metadataSha256_example" // string | The SHA256 digest of the package's METADATA file. (optional)
+	attestations := TODO // interface{} | A JSON list containing attestations for the package. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContentPackagesAPI.ContentPythonPackagesUpload(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Author(author).AuthorEmail(authorEmail).Description(description).HomePage(homePage).Keywords(keywords).License(license).Platform(platform).Summary(summary).Classifiers(classifiers).DownloadUrl(downloadUrl).SupportedPlatform(supportedPlatform).Maintainer(maintainer).MaintainerEmail(maintainerEmail).ObsoletesDist(obsoletesDist).ProjectUrl(projectUrl).ProjectUrls(projectUrls).ProvidesDist(providesDist).RequiresExternal(requiresExternal).RequiresDist(requiresDist).RequiresPython(requiresPython).DescriptionContentType(descriptionContentType).ProvidesExtras(providesExtras).Dynamic(dynamic).LicenseExpression(licenseExpression).LicenseFile(licenseFile).Sha256(sha256).MetadataSha256(metadataSha256).Attestations(attestations).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentPythonPackagesUpload``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContentPythonPackagesUpload`: PythonPythonPackageContentResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentPythonPackagesUpload`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**pulpDomain** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContentPythonPackagesUploadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+ **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
+ **artifact** | **string** | Artifact file representing the physical content | 
+ **file** | ***os.File** | An uploaded file that may be turned into the content unit. | 
+ **upload** | **string** | An uncommitted upload that may be turned into the content unit. | 
+ **fileUrl** | **string** | A url that Pulp can download and turn into the content unit. | 
+ **downloaderConfig** | [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | 
+ **author** | **string** | Text containing the author&#39;s name. Contact information can also be added, separated with newlines. | 
+ **authorEmail** | **string** | The author&#39;s e-mail address.  | 
+ **description** | **string** | A longer description of the package that can run to several paragraphs. | 
+ **homePage** | **string** | The URL for the package&#39;s home page. | 
+ **keywords** | **string** | Additional keywords to be used to assist searching for the package in a larger catalog. | 
+ **license** | **string** | Text indicating the license covering the distribution | 
+ **platform** | **string** | A comma-separated list of platform specifications, summarizing the operating systems supported by the package. | 
+ **summary** | **string** | A one-line summary of what the package does. | 
+ **classifiers** | [**interface{}**](interface{}.md) | A JSON list containing classification values for a Python package. | 
+ **downloadUrl** | **string** | Legacy field denoting the URL from which this package can be downloaded. | 
+ **supportedPlatform** | **string** | Field to specify the OS and CPU for which the binary package was compiled.  | 
+ **maintainer** | **string** | The maintainer&#39;s name at a minimum; additional contact information may be provided. | 
+ **maintainerEmail** | **string** | The maintainer&#39;s e-mail address. | 
+ **obsoletesDist** | [**interface{}**](interface{}.md) | A JSON list containing names of a distutils project&#39;s distribution which this distribution renders obsolete, meaning that the two projects should not be installed at the same time. | 
+ **projectUrl** | **string** | A browsable URL for the project and a label for it, separated by a comma. | 
+ **projectUrls** | [**interface{}**](interface{}.md) | A dictionary of labels and URLs for the project. | 
+ **providesDist** | [**interface{}**](interface{}.md) | A JSON list containing names of a Distutils project which is contained within this distribution. | 
+ **requiresExternal** | [**interface{}**](interface{}.md) | A JSON list containing some dependency in the system that the distribution is to be used. | 
+ **requiresDist** | [**interface{}**](interface{}.md) | A JSON list containing names of some other distutils project required by this distribution. | 
+ **requiresPython** | **string** | The Python version(s) that the distribution is guaranteed to be compatible with. | 
+ **descriptionContentType** | **string** | A string stating the markup syntax (if any) used in the distribution&#39;s description, so that tools can intelligently render the description. | 
+ **providesExtras** | [**interface{}**](interface{}.md) | A JSON list containing names of optional features provided by the package. | 
+ **dynamic** | [**interface{}**](interface{}.md) | A JSON list containing names of other core metadata fields which are permitted to vary between sdist and bdist packages. Fields NOT marked dynamic MUST be the same between bdist and sdist. | 
+ **licenseExpression** | **string** | Text string that is a valid SPDX license expression. | 
+ **licenseFile** | [**interface{}**](interface{}.md) | A JSON list containing names of the paths to license-related files. | 
+ **sha256** | **string** | The SHA256 digest of this package. | [default to &quot;&quot;]
+ **metadataSha256** | **string** | The SHA256 digest of the package&#39;s METADATA file. | 
+ **attestations** | [**interface{}**](interface{}.md) | A JSON list containing attestations for the package. | 
+
+### Return type
+
+[**PythonPythonPackageContentResponse**](PythonPythonPackageContentResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data, application/x-www-form-urlencoded
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ContentRpmPackagesCreate
 
-> AsyncOperationResponse ContentRpmPackagesCreate(ctx, pulpDomain).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).Execute()
+> AsyncOperationResponse ContentRpmPackagesCreate(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Execute()
 
 Create a package
 
@@ -930,11 +1206,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	repository := "repository_example" // string | A URI of a repository the new content unit should be associated with. (optional)
 	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
 	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
@@ -942,10 +1219,11 @@ func main() {
 	file := os.NewFile(1234, "some_file") // *os.File | An uploaded file that may be turned into the content unit. (optional)
 	upload := "upload_example" // string | An uncommitted upload that may be turned into the content unit. (optional)
 	fileUrl := "fileUrl_example" // string | A url that Pulp can download and turn into the content unit. (optional)
+	downloaderConfig := *openapiclient.NewRemoteNetworkConfig() // RemoteNetworkConfig | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesCreate(context.Background(), pulpDomain).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesCreate(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Repository(repository).PulpLabels(pulpLabels).Artifact(artifact).RelativePath(relativePath).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentRpmPackagesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -971,6 +1249,7 @@ Other parameters are passed through a pointer to a apiContentRpmPackagesCreateRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **repository** | **string** | A URI of a repository the new content unit should be associated with. | 
  **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
  **artifact** | **string** | Artifact file representing the physical content | 
@@ -978,6 +1257,7 @@ Name | Type | Description  | Notes
  **file** | ***os.File** | An uploaded file that may be turned into the content unit. | 
  **upload** | **string** | An uncommitted upload that may be turned into the content unit. | 
  **fileUrl** | **string** | A url that Pulp can download and turn into the content unit. | 
+ **downloaderConfig** | [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | 
 
 ### Return type
 
@@ -999,7 +1279,7 @@ Name | Type | Description  | Notes
 
 ## ContentRpmPackagesList
 
-> PaginatedrpmPackageResponseList ContentRpmPackagesList(ctx, pulpDomain).Arch(arch).ArchContains(archContains).ArchIn(archIn).ArchNe(archNe).ArchStartswith(archStartswith).ChecksumType(checksumType).ChecksumTypeIn(checksumTypeIn).ChecksumTypeNe(checksumTypeNe).Epoch(epoch).EpochIn(epochIn).EpochNe(epochNe).Filename(filename).Limit(limit).Name(name).NameContains(nameContains).NameIn(nameIn).NameNe(nameNe).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PkgId(pkgId).PkgIdIn(pkgIdIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Release(release).ReleaseContains(releaseContains).ReleaseIn(releaseIn).ReleaseNe(releaseNe).ReleaseStartswith(releaseStartswith).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Version(version).VersionIn(versionIn).VersionNe(versionNe).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedrpmPackageResponseList ContentRpmPackagesList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Arch(arch).ArchContains(archContains).ArchIn(archIn).ArchNe(archNe).ArchStartswith(archStartswith).ChecksumType(checksumType).ChecksumTypeIn(checksumTypeIn).ChecksumTypeNe(checksumTypeNe).Epoch(epoch).EpochIn(epochIn).EpochNe(epochNe).Filename(filename).Limit(limit).Name(name).NameContains(nameContains).NameIn(nameIn).NameNe(nameNe).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PkgId(pkgId).PkgIdIn(pkgIdIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Release(release).ReleaseContains(releaseContains).ReleaseIn(releaseIn).ReleaseNe(releaseNe).ReleaseStartswith(releaseStartswith).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Version(version).VersionIn(versionIn).VersionNe(versionNe).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List packages
 
@@ -1014,11 +1294,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	arch := "arch_example" // string | Filter results where arch matches value (optional)
 	archContains := "archContains_example" // string | Filter results where arch contains value (optional)
 	archIn := []string{"Inner_example"} // []string | Filter results where arch is in a comma-separated list of values (optional)
@@ -1064,7 +1345,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesList(context.Background(), pulpDomain).Arch(arch).ArchContains(archContains).ArchIn(archIn).ArchNe(archNe).ArchStartswith(archStartswith).ChecksumType(checksumType).ChecksumTypeIn(checksumTypeIn).ChecksumTypeNe(checksumTypeNe).Epoch(epoch).EpochIn(epochIn).EpochNe(epochNe).Filename(filename).Limit(limit).Name(name).NameContains(nameContains).NameIn(nameIn).NameNe(nameNe).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PkgId(pkgId).PkgIdIn(pkgIdIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Release(release).ReleaseContains(releaseContains).ReleaseIn(releaseIn).ReleaseNe(releaseNe).ReleaseStartswith(releaseStartswith).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Version(version).VersionIn(versionIn).VersionNe(versionNe).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Arch(arch).ArchContains(archContains).ArchIn(archIn).ArchNe(archNe).ArchStartswith(archStartswith).ChecksumType(checksumType).ChecksumTypeIn(checksumTypeIn).ChecksumTypeNe(checksumTypeNe).Epoch(epoch).EpochIn(epochIn).EpochNe(epochNe).Filename(filename).Limit(limit).Name(name).NameContains(nameContains).NameIn(nameIn).NameNe(nameNe).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PkgId(pkgId).PkgIdIn(pkgIdIn).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Release(release).ReleaseContains(releaseContains).ReleaseIn(releaseIn).ReleaseNe(releaseNe).ReleaseStartswith(releaseStartswith).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Version(version).VersionIn(versionIn).VersionNe(versionNe).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentRpmPackagesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1090,6 +1371,7 @@ Other parameters are passed through a pointer to a apiContentRpmPackagesListRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **arch** | **string** | Filter results where arch matches value | 
  **archContains** | **string** | Filter results where arch contains value | 
  **archIn** | **[]string** | Filter results where arch is in a comma-separated list of values | 
@@ -1144,6 +1426,314 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ContentRpmPackagesRead
+
+> RpmPackageResponse ContentRpmPackagesRead(ctx, rpmPackageHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
+
+Inspect a package
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	rpmPackageHref := "rpmPackageHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
+	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesRead(context.Background(), rpmPackageHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentRpmPackagesRead``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContentRpmPackagesRead`: RpmPackageResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentRpmPackagesRead`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**rpmPackageHref** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContentRpmPackagesReadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+ **fields** | **[]string** | A list of fields to include in the response. | 
+ **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
+
+### Return type
+
+[**RpmPackageResponse**](RpmPackageResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ContentRpmPackagesSetLabel
+
+> SetLabelResponse ContentRpmPackagesSetLabel(ctx, rpmPackageHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
+
+Set a label
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	rpmPackageHref := "rpmPackageHref_example" // string | 
+	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesSetLabel(context.Background(), rpmPackageHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentRpmPackagesSetLabel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContentRpmPackagesSetLabel`: SetLabelResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentRpmPackagesSetLabel`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**rpmPackageHref** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContentRpmPackagesSetLabelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+
+### Return type
+
+[**SetLabelResponse**](SetLabelResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ContentRpmPackagesUnsetLabel
+
+> UnsetLabelResponse ContentRpmPackagesUnsetLabel(ctx, rpmPackageHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
+
+Unset a label
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	rpmPackageHref := "rpmPackageHref_example" // string | 
+	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesUnsetLabel(context.Background(), rpmPackageHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentRpmPackagesUnsetLabel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContentRpmPackagesUnsetLabel`: UnsetLabelResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentRpmPackagesUnsetLabel`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**rpmPackageHref** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContentRpmPackagesUnsetLabelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+
+### Return type
+
+[**UnsetLabelResponse**](UnsetLabelResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ContentRpmPackagesUpload
+
+> RpmPackageResponse ContentRpmPackagesUpload(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Execute()
+
+Upload an RPM package synchronously.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+	pulpLabels := map[string]string{"key": "Inner_example"} // map[string]string | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. (optional)
+	artifact := "artifact_example" // string | Artifact file representing the physical content (optional)
+	file := os.NewFile(1234, "some_file") // *os.File | An uploaded file that may be turned into the content unit. (optional)
+	upload := "upload_example" // string | An uncommitted upload that may be turned into the content unit. (optional)
+	fileUrl := "fileUrl_example" // string | A url that Pulp can download and turn into the content unit. (optional)
+	downloaderConfig := *openapiclient.NewRemoteNetworkConfig() // RemoteNetworkConfig | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ContentPackagesAPI.ContentRpmPackagesUpload(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).PulpLabels(pulpLabels).Artifact(artifact).File(file).Upload(upload).FileUrl(fileUrl).DownloaderConfig(downloaderConfig).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ContentPackagesAPI.ContentRpmPackagesUpload``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContentRpmPackagesUpload`: RpmPackageResponse
+	fmt.Fprintf(os.Stdout, "Response from `ContentPackagesAPI.ContentRpmPackagesUpload`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**pulpDomain** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContentRpmPackagesUploadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+ **pulpLabels** | **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | 
+ **artifact** | **string** | Artifact file representing the physical content | 
+ **file** | ***os.File** | An uploaded file that may be turned into the content unit. | 
+ **upload** | **string** | An uncommitted upload that may be turned into the content unit. | 
+ **fileUrl** | **string** | A url that Pulp can download and turn into the content unit. | 
+ **downloaderConfig** | [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | 
+
+### Return type
+
+[**RpmPackageResponse**](RpmPackageResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data, application/x-www-form-urlencoded
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

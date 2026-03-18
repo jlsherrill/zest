@@ -31,10 +31,17 @@ type RemotesFileAPIRemotesFileFileAddRoleRequest struct {
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFileAddRoleRequest) NestedRole(nestedRole NestedRole) RemotesFileAPIRemotesFileFileAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *RemotesFileAPIService) RemotesFileFileAddRoleExecute(r RemotesFileAPIRe
 
 	localVarPath := localBasePath + "/{file_file_remote_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *RemotesFileAPIService) RemotesFileFileAddRoleExecute(r RemotesFileAPIRe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -146,10 +156,17 @@ type RemotesFileAPIRemotesFileFileCreateRequest struct {
 	ApiService *RemotesFileAPIService
 	pulpDomain string
 	fileFileRemote *FileFileRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFileCreateRequest) FileFileRemote(fileFileRemote FileFileRemote) RemotesFileAPIRemotesFileFileCreateRequest {
 	r.fileFileRemote = &fileFileRemote
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *RemotesFileAPIService) RemotesFileFileCreateExecute(r RemotesFileAPIRem
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *RemotesFileAPIService) RemotesFileFileCreateExecute(r RemotesFileAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFileRemote
@@ -260,6 +280,13 @@ type RemotesFileAPIRemotesFileFileDeleteRequest struct {
 	ctx context.Context
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RemotesFileAPIRemotesFileFileDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -300,7 +327,7 @@ func (a *RemotesFileAPIService) RemotesFileFileDeleteExecute(r RemotesFileAPIRem
 
 	localVarPath := localBasePath + "/{file_file_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -322,6 +349,9 @@ func (a *RemotesFileAPIService) RemotesFileFileDeleteExecute(r RemotesFileAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -364,6 +394,7 @@ type RemotesFileAPIRemotesFileFileListRequest struct {
 	ctx context.Context
 	ApiService *RemotesFileAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -390,6 +421,12 @@ type RemotesFileAPIRemotesFileFileListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -586,7 +623,7 @@ func (a *RemotesFileAPIService) RemotesFileFileListExecute(r RemotesFileAPIRemot
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -703,6 +740,9 @@ func (a *RemotesFileAPIService) RemotesFileFileListExecute(r RemotesFileAPIRemot
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -744,8 +784,15 @@ type RemotesFileAPIRemotesFileFileListRolesRequest struct {
 	ctx context.Context
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -798,7 +845,7 @@ func (a *RemotesFileAPIService) RemotesFileFileListRolesExecute(r RemotesFileAPI
 
 	localVarPath := localBasePath + "/{file_file_remote_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -843,6 +890,9 @@ func (a *RemotesFileAPIService) RemotesFileFileListRolesExecute(r RemotesFileAPI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -884,8 +934,15 @@ type RemotesFileAPIRemotesFileFileMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -938,7 +995,7 @@ func (a *RemotesFileAPIService) RemotesFileFileMyPermissionsExecute(r RemotesFil
 
 	localVarPath := localBasePath + "/{file_file_remote_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -983,6 +1040,9 @@ func (a *RemotesFileAPIService) RemotesFileFileMyPermissionsExecute(r RemotesFil
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1025,6 +1085,7 @@ type RemotesFileAPIRemotesFileFilePartialUpdateRequest struct {
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
 	patchedfileFileRemote *PatchedfileFileRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFilePartialUpdateRequest) PatchedfileFileRemote(patchedfileFileRemote PatchedfileFileRemote) RemotesFileAPIRemotesFileFilePartialUpdateRequest {
@@ -1032,14 +1093,20 @@ func (r RemotesFileAPIRemotesFileFilePartialUpdateRequest) PatchedfileFileRemote
 	return r
 }
 
-func (r RemotesFileAPIRemotesFileFilePartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFilePartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFilePartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesFileAPIRemotesFileFilePartialUpdateRequest) Execute() (*FileFileRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesFileFilePartialUpdateExecute(r)
 }
 
 /*
 RemotesFileFilePartialUpdate Update a file remote
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param fileFileRemoteHref
@@ -1054,13 +1121,13 @@ func (a *RemotesFileAPIService) RemotesFileFilePartialUpdate(ctx context.Context
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesFileAPIService) RemotesFileFilePartialUpdateExecute(r RemotesFileAPIRemotesFileFilePartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FileFileRemoteResponse
+func (a *RemotesFileAPIService) RemotesFileFilePartialUpdateExecute(r RemotesFileAPIRemotesFileFilePartialUpdateRequest) (*FileFileRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FileFileRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesFileAPIService.RemotesFileFilePartialUpdate")
@@ -1070,7 +1137,7 @@ func (a *RemotesFileAPIService) RemotesFileFilePartialUpdateExecute(r RemotesFil
 
 	localVarPath := localBasePath + "/{file_file_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1095,6 +1162,9 @@ func (a *RemotesFileAPIService) RemotesFileFilePartialUpdateExecute(r RemotesFil
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedfileFileRemote
@@ -1139,8 +1209,15 @@ type RemotesFileAPIRemotesFileFileReadRequest struct {
 	ctx context.Context
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1193,7 +1270,7 @@ func (a *RemotesFileAPIService) RemotesFileFileReadExecute(r RemotesFileAPIRemot
 
 	localVarPath := localBasePath + "/{file_file_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1238,6 +1315,9 @@ func (a *RemotesFileAPIService) RemotesFileFileReadExecute(r RemotesFileAPIRemot
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1280,10 +1360,17 @@ type RemotesFileAPIRemotesFileFileRemoveRoleRequest struct {
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFileRemoveRoleRequest) NestedRole(nestedRole NestedRole) RemotesFileAPIRemotesFileFileRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1325,7 +1412,7 @@ func (a *RemotesFileAPIService) RemotesFileFileRemoveRoleExecute(r RemotesFileAP
 
 	localVarPath := localBasePath + "/{file_file_remote_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1350,6 +1437,9 @@ func (a *RemotesFileAPIService) RemotesFileFileRemoveRoleExecute(r RemotesFileAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1395,10 +1485,17 @@ type RemotesFileAPIRemotesFileFileSetLabelRequest struct {
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFileSetLabelRequest) SetLabel(setLabel SetLabel) RemotesFileAPIRemotesFileFileSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1440,7 +1537,7 @@ func (a *RemotesFileAPIService) RemotesFileFileSetLabelExecute(r RemotesFileAPIR
 
 	localVarPath := localBasePath + "/{file_file_remote_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1465,6 +1562,9 @@ func (a *RemotesFileAPIService) RemotesFileFileSetLabelExecute(r RemotesFileAPIR
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1510,10 +1610,17 @@ type RemotesFileAPIRemotesFileFileUnsetLabelRequest struct {
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFileUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RemotesFileAPIRemotesFileFileUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1555,7 +1662,7 @@ func (a *RemotesFileAPIService) RemotesFileFileUnsetLabelExecute(r RemotesFileAP
 
 	localVarPath := localBasePath + "/{file_file_remote_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1580,6 +1687,9 @@ func (a *RemotesFileAPIService) RemotesFileFileUnsetLabelExecute(r RemotesFileAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1625,6 +1735,7 @@ type RemotesFileAPIRemotesFileFileUpdateRequest struct {
 	ApiService *RemotesFileAPIService
 	fileFileRemoteHref string
 	fileFileRemote *FileFileRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesFileAPIRemotesFileFileUpdateRequest) FileFileRemote(fileFileRemote FileFileRemote) RemotesFileAPIRemotesFileFileUpdateRequest {
@@ -1632,14 +1743,20 @@ func (r RemotesFileAPIRemotesFileFileUpdateRequest) FileFileRemote(fileFileRemot
 	return r
 }
 
-func (r RemotesFileAPIRemotesFileFileUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesFileAPIRemotesFileFileUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesFileAPIRemotesFileFileUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesFileAPIRemotesFileFileUpdateRequest) Execute() (*FileFileRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesFileFileUpdateExecute(r)
 }
 
 /*
 RemotesFileFileUpdate Update a file remote
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param fileFileRemoteHref
@@ -1654,13 +1771,13 @@ func (a *RemotesFileAPIService) RemotesFileFileUpdate(ctx context.Context, fileF
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesFileAPIService) RemotesFileFileUpdateExecute(r RemotesFileAPIRemotesFileFileUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FileFileRemoteResponse
+func (a *RemotesFileAPIService) RemotesFileFileUpdateExecute(r RemotesFileAPIRemotesFileFileUpdateRequest) (*FileFileRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FileFileRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesFileAPIService.RemotesFileFileUpdate")
@@ -1670,7 +1787,7 @@ func (a *RemotesFileAPIService) RemotesFileFileUpdateExecute(r RemotesFileAPIRem
 
 	localVarPath := localBasePath + "/{file_file_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_remote_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRemoteHref, "fileFileRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1695,6 +1812,9 @@ func (a *RemotesFileAPIService) RemotesFileFileUpdateExecute(r RemotesFileAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFileRemote

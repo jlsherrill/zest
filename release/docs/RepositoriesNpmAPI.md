@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## RepositoriesNpmNpmCreate
 
-> NpmNpmRepositoryResponse RepositoriesNpmNpmCreate(ctx, pulpDomain).NpmNpmRepository(npmNpmRepository).Execute()
+> NpmNpmRepositoryResponse RepositoriesNpmNpmCreate(ctx, pulpDomain).NpmNpmRepository(npmNpmRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a npm repository
 
@@ -34,16 +34,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	npmNpmRepository := *openapiclient.NewNpmNpmRepository("Name_example") // NpmNpmRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmCreate(context.Background(), pulpDomain).NpmNpmRepository(npmNpmRepository).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmCreate(context.Background(), pulpDomain).NpmNpmRepository(npmNpmRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -70,6 +71,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **npmNpmRepository** | [**NpmNpmRepository**](NpmNpmRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -91,7 +93,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmDelete
 
-> AsyncOperationResponse RepositoriesNpmNpmDelete(ctx, npmNpmRepositoryHref).Execute()
+> AsyncOperationResponse RepositoriesNpmNpmDelete(ctx, npmNpmRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a npm repository
 
@@ -106,15 +108,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmDelete(context.Background(), npmNpmRepositoryHref).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmDelete(context.Background(), npmNpmRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -140,6 +143,7 @@ Other parameters are passed through a pointer to a apiRepositoriesNpmNpmDeleteRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -161,7 +165,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmList
 
-> PaginatednpmNpmRepositoryResponseList RepositoriesNpmNpmList(ctx, pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatednpmNpmRepositoryResponseList RepositoriesNpmNpmList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List npm repositorys
 
@@ -176,11 +180,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	latestWithContent := "latestWithContent_example" // string | Content Unit referenced by HREF/PRN (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
@@ -214,7 +219,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmList(context.Background(), pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -240,6 +245,7 @@ Other parameters are passed through a pointer to a apiRepositoriesNpmNpmListRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **latestWithContent** | **string** | Content Unit referenced by HREF/PRN | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
@@ -291,7 +297,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmModify
 
-> AsyncOperationResponse RepositoriesNpmNpmModify(ctx, npmNpmRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).Execute()
+> AsyncOperationResponse RepositoriesNpmNpmModify(ctx, npmNpmRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Modify Repository Content
 
@@ -306,16 +312,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
 	repositoryAddRemoveContent := *openapiclient.NewRepositoryAddRemoveContent() // RepositoryAddRemoveContent | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmModify(context.Background(), npmNpmRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmModify(context.Background(), npmNpmRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmModify``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -342,6 +349,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositoryAddRemoveContent** | [**RepositoryAddRemoveContent**](RepositoryAddRemoveContent.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -363,7 +371,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmPartialUpdate
 
-> AsyncOperationResponse RepositoriesNpmNpmPartialUpdate(ctx, npmNpmRepositoryHref).PatchednpmNpmRepository(patchednpmNpmRepository).Execute()
+> NpmNpmRepositoryResponse RepositoriesNpmNpmPartialUpdate(ctx, npmNpmRepositoryHref).PatchednpmNpmRepository(patchednpmNpmRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a npm repository
 
@@ -378,21 +386,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
 	patchednpmNpmRepository := *openapiclient.NewPatchednpmNpmRepository() // PatchednpmNpmRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmPartialUpdate(context.Background(), npmNpmRepositoryHref).PatchednpmNpmRepository(patchednpmNpmRepository).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmPartialUpdate(context.Background(), npmNpmRepositoryHref).PatchednpmNpmRepository(patchednpmNpmRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesNpmNpmPartialUpdate`: AsyncOperationResponse
+	// response from `RepositoriesNpmNpmPartialUpdate`: NpmNpmRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesNpmAPI.RepositoriesNpmNpmPartialUpdate`: %v\n", resp)
 }
 ```
@@ -414,10 +423,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchednpmNpmRepository** | [**PatchednpmNpmRepository**](PatchednpmNpmRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**NpmNpmRepositoryResponse**](NpmNpmRepositoryResponse.md)
 
 ### Authorization
 
@@ -435,7 +445,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmRead
 
-> NpmNpmRepositoryResponse RepositoriesNpmNpmRead(ctx, npmNpmRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> NpmNpmRepositoryResponse RepositoriesNpmNpmRead(ctx, npmNpmRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a npm repository
 
@@ -450,17 +460,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmRead(context.Background(), npmNpmRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmRead(context.Background(), npmNpmRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -486,6 +497,7 @@ Other parameters are passed through a pointer to a apiRepositoriesNpmNpmReadRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -509,7 +521,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmSetLabel
 
-> SetLabelResponse RepositoriesNpmNpmSetLabel(ctx, npmNpmRepositoryHref).SetLabel(setLabel).Execute()
+> SetLabelResponse RepositoriesNpmNpmSetLabel(ctx, npmNpmRepositoryHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -524,16 +536,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmSetLabel(context.Background(), npmNpmRepositoryHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmSetLabel(context.Background(), npmNpmRepositoryHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -560,6 +573,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -581,7 +595,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmSync
 
-> AsyncOperationResponse RepositoriesNpmNpmSync(ctx, npmNpmRepositoryHref).RepositorySyncURL(repositorySyncURL).Execute()
+> AsyncOperationResponse RepositoriesNpmNpmSync(ctx, npmNpmRepositoryHref).RepositorySyncURL(repositorySyncURL).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Sync from remote
 
@@ -596,16 +610,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
 	repositorySyncURL := *openapiclient.NewRepositorySyncURL() // RepositorySyncURL | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmSync(context.Background(), npmNpmRepositoryHref).RepositorySyncURL(repositorySyncURL).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmSync(context.Background(), npmNpmRepositoryHref).RepositorySyncURL(repositorySyncURL).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmSync``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -632,6 +647,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositorySyncURL** | [**RepositorySyncURL**](RepositorySyncURL.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -653,7 +669,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmUnsetLabel
 
-> UnsetLabelResponse RepositoriesNpmNpmUnsetLabel(ctx, npmNpmRepositoryHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse RepositoriesNpmNpmUnsetLabel(ctx, npmNpmRepositoryHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -668,16 +684,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmUnsetLabel(context.Background(), npmNpmRepositoryHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmUnsetLabel(context.Background(), npmNpmRepositoryHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -704,6 +721,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -725,7 +743,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesNpmNpmUpdate
 
-> AsyncOperationResponse RepositoriesNpmNpmUpdate(ctx, npmNpmRepositoryHref).NpmNpmRepository(npmNpmRepository).Execute()
+> NpmNpmRepositoryResponse RepositoriesNpmNpmUpdate(ctx, npmNpmRepositoryHref).NpmNpmRepository(npmNpmRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a npm repository
 
@@ -740,21 +758,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	npmNpmRepositoryHref := "npmNpmRepositoryHref_example" // string | 
 	npmNpmRepository := *openapiclient.NewNpmNpmRepository("Name_example") // NpmNpmRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmUpdate(context.Background(), npmNpmRepositoryHref).NpmNpmRepository(npmNpmRepository).Execute()
+	resp, r, err := apiClient.RepositoriesNpmAPI.RepositoriesNpmNpmUpdate(context.Background(), npmNpmRepositoryHref).NpmNpmRepository(npmNpmRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesNpmAPI.RepositoriesNpmNpmUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesNpmNpmUpdate`: AsyncOperationResponse
+	// response from `RepositoriesNpmNpmUpdate`: NpmNpmRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesNpmAPI.RepositoriesNpmNpmUpdate`: %v\n", resp)
 }
 ```
@@ -776,10 +795,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **npmNpmRepository** | [**NpmNpmRepository**](NpmNpmRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**NpmNpmRepositoryResponse**](NpmNpmRepositoryResponse.md)
 
 ### Authorization
 

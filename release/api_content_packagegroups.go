@@ -29,6 +29,7 @@ type ContentPackagegroupsAPIContentRpmPackagegroupsListRequest struct {
 	ctx context.Context
 	ApiService *ContentPackagegroupsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	offset *int32
 	ordering *[]string
@@ -43,6 +44,12 @@ type ContentPackagegroupsAPIContentRpmPackagegroupsListRequest struct {
 	repositoryVersionRemoved *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentPackagegroupsAPIContentRpmPackagegroupsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentPackagegroupsAPIContentRpmPackagegroupsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -167,7 +174,7 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsListExecute(r Co
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/rpm/packagegroups/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -248,6 +255,9 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsListExecute(r Co
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -289,8 +299,15 @@ type ContentPackagegroupsAPIContentRpmPackagegroupsReadRequest struct {
 	ctx context.Context
 	ApiService *ContentPackagegroupsAPIService
 	rpmPackageGroupHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentPackagegroupsAPIContentRpmPackagegroupsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentPackagegroupsAPIContentRpmPackagegroupsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -343,7 +360,7 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsReadExecute(r Co
 
 	localVarPath := localBasePath + "/{rpm_package_group_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_package_group_href"+"}", url.PathEscape(parameterValueToString(r.rpmPackageGroupHref, "rpmPackageGroupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -388,6 +405,9 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsReadExecute(r Co
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -430,10 +450,17 @@ type ContentPackagegroupsAPIContentRpmPackagegroupsSetLabelRequest struct {
 	ApiService *ContentPackagegroupsAPIService
 	rpmPackageGroupHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentPackagegroupsAPIContentRpmPackagegroupsSetLabelRequest) SetLabel(setLabel SetLabel) ContentPackagegroupsAPIContentRpmPackagegroupsSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentPackagegroupsAPIContentRpmPackagegroupsSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentPackagegroupsAPIContentRpmPackagegroupsSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -475,7 +502,7 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsSetLabelExecute(
 
 	localVarPath := localBasePath + "/{rpm_package_group_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_package_group_href"+"}", url.PathEscape(parameterValueToString(r.rpmPackageGroupHref, "rpmPackageGroupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -500,6 +527,9 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsSetLabelExecute(
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -545,10 +575,17 @@ type ContentPackagegroupsAPIContentRpmPackagegroupsUnsetLabelRequest struct {
 	ApiService *ContentPackagegroupsAPIService
 	rpmPackageGroupHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentPackagegroupsAPIContentRpmPackagegroupsUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentPackagegroupsAPIContentRpmPackagegroupsUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentPackagegroupsAPIContentRpmPackagegroupsUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentPackagegroupsAPIContentRpmPackagegroupsUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -590,7 +627,7 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsUnsetLabelExecut
 
 	localVarPath := localBasePath + "/{rpm_package_group_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_package_group_href"+"}", url.PathEscape(parameterValueToString(r.rpmPackageGroupHref, "rpmPackageGroupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -615,6 +652,9 @@ func (a *ContentPackagegroupsAPIService) ContentRpmPackagegroupsUnsetLabelExecut
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

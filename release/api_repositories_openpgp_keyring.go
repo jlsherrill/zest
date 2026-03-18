@@ -30,10 +30,17 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringAddRoleRequest s
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringAddRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringAdd
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringAdd
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringCreateRequest st
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	pulpDomain string
 	openPGPKeyring *OpenPGPKeyring
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringCreateRequest) OpenPGPKeyring(openPGPKeyring OpenPGPKeyring) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringCreateRequest {
 	r.openPGPKeyring = &openPGPKeyring
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringCre
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/core/openpgp_keyring/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringCre
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.openPGPKeyring
@@ -259,6 +279,13 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringDeleteRequest st
 	ctx context.Context
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -299,7 +326,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringDel
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,6 +348,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringDel
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -363,6 +393,7 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRequest stru
 	ctx context.Context
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	latestWithContent *string
 	limit *int32
 	name *string
@@ -393,6 +424,12 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRequest stru
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Content Unit referenced by HREF/PRN
@@ -613,7 +650,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringLis
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/core/openpgp_keyring/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -742,6 +779,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringLis
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -783,8 +823,15 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRolesRequest
 	ctx context.Context
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -837,7 +884,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringLis
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -882,6 +929,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringLis
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -924,10 +974,17 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringModifyRequest st
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	repositoryAddRemoveContent *RepositoryAddRemoveContent
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringModifyRequest) RepositoryAddRemoveContent(repositoryAddRemoveContent RepositoryAddRemoveContent) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringModifyRequest {
 	r.repositoryAddRemoveContent = &repositoryAddRemoveContent
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringModifyRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringModifyRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -969,7 +1026,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringMod
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}modify/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -994,6 +1051,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringMod
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositoryAddRemoveContent
@@ -1038,8 +1098,15 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringMyPermissionsReq
 	ctx context.Context
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1092,7 +1159,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringMyP
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1137,6 +1204,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringMyP
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1179,6 +1249,7 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateReq
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	patchedOpenPGPKeyring *PatchedOpenPGPKeyring
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest) PatchedOpenPGPKeyring(patchedOpenPGPKeyring PatchedOpenPGPKeyring) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest {
@@ -1186,14 +1257,20 @@ func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdate
 	return r
 }
 
-func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest) Execute() (*OpenPGPKeyringResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesCoreOpenpgpKeyringPartialUpdateExecute(r)
 }
 
 /*
 RepositoriesCoreOpenpgpKeyringPartialUpdate Update an open pgp keyring
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param openPGPKeyringHref
@@ -1208,13 +1285,13 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringPar
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringPartialUpdateExecute(r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return OpenPGPKeyringResponse
+func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringPartialUpdateExecute(r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringPartialUpdateRequest) (*OpenPGPKeyringResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *OpenPGPKeyringResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesOpenpgpKeyringAPIService.RepositoriesCoreOpenpgpKeyringPartialUpdate")
@@ -1224,7 +1301,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringPar
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1249,6 +1326,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringPar
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedOpenPGPKeyring
@@ -1293,8 +1373,15 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringReadRequest stru
 	ctx context.Context
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1347,7 +1434,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringRea
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1392,6 +1479,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringRea
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1434,10 +1524,17 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringRemoveRoleReques
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringRemoveRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1479,7 +1576,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringRem
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1504,6 +1601,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1549,10 +1649,17 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringSetLabelRequest 
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringSetLabelRequest) SetLabel(setLabel SetLabel) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1594,7 +1701,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringSet
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1619,6 +1726,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringSet
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1664,10 +1774,17 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUnsetLabelReques
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1709,7 +1826,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUns
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1734,6 +1851,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUns
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1779,6 +1899,7 @@ type RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest st
 	ApiService *RepositoriesOpenpgpKeyringAPIService
 	openPGPKeyringHref string
 	openPGPKeyring *OpenPGPKeyring
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest) OpenPGPKeyring(openPGPKeyring OpenPGPKeyring) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest {
@@ -1786,14 +1907,20 @@ func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest
 	return r
 }
 
-func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest) Execute() (*OpenPGPKeyringResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesCoreOpenpgpKeyringUpdateExecute(r)
 }
 
 /*
 RepositoriesCoreOpenpgpKeyringUpdate Update an open pgp keyring
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param openPGPKeyringHref
@@ -1808,13 +1935,13 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUpd
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUpdateExecute(r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return OpenPGPKeyringResponse
+func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUpdateExecute(r RepositoriesOpenpgpKeyringAPIRepositoriesCoreOpenpgpKeyringUpdateRequest) (*OpenPGPKeyringResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *OpenPGPKeyringResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesOpenpgpKeyringAPIService.RepositoriesCoreOpenpgpKeyringUpdate")
@@ -1824,7 +1951,7 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUpd
 
 	localVarPath := localBasePath + "/{open_p_g_p_keyring_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_keyring_href"+"}", url.PathEscape(parameterValueToString(r.openPGPKeyringHref, "openPGPKeyringHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1849,6 +1976,9 @@ func (a *RepositoriesOpenpgpKeyringAPIService) RepositoriesCoreOpenpgpKeyringUpd
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.openPGPKeyring

@@ -39,8 +39,8 @@ type MinimalTaskResponse struct {
 	StartedAt *time.Time `json:"started_at,omitempty"`
 	// Timestamp of when this task stopped execution.
 	FinishedAt *time.Time `json:"finished_at,omitempty"`
-	// The worker associated with this task. This field is empty if a worker is not yet assigned.
-	Worker *string `json:"worker,omitempty"`
+	// DEPRECATED - Always null
+	Worker NullableString `json:"worker,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -344,36 +344,46 @@ func (o *MinimalTaskResponse) SetFinishedAt(v time.Time) {
 	o.FinishedAt = &v
 }
 
-// GetWorker returns the Worker field value if set, zero value otherwise.
+// GetWorker returns the Worker field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *MinimalTaskResponse) GetWorker() string {
-	if o == nil || IsNil(o.Worker) {
+	if o == nil || IsNil(o.Worker.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Worker
+	return *o.Worker.Get()
 }
 
 // GetWorkerOk returns a tuple with the Worker field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *MinimalTaskResponse) GetWorkerOk() (*string, bool) {
-	if o == nil || IsNil(o.Worker) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Worker, true
+	return o.Worker.Get(), o.Worker.IsSet()
 }
 
 // HasWorker returns a boolean if a field has been set.
 func (o *MinimalTaskResponse) HasWorker() bool {
-	if o != nil && !IsNil(o.Worker) {
+	if o != nil && o.Worker.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetWorker gets a reference to the given string and assigns it to the Worker field.
+// SetWorker gets a reference to the given NullableString and assigns it to the Worker field.
 func (o *MinimalTaskResponse) SetWorker(v string) {
-	o.Worker = &v
+	o.Worker.Set(&v)
+}
+// SetWorkerNil sets the value for Worker to be an explicit nil
+func (o *MinimalTaskResponse) SetWorkerNil() {
+	o.Worker.Set(nil)
+}
+
+// UnsetWorker ensures that no value is present for Worker, not even an explicit nil
+func (o *MinimalTaskResponse) UnsetWorker() {
+	o.Worker.Unset()
 }
 
 func (o MinimalTaskResponse) MarshalJSON() ([]byte, error) {
@@ -411,8 +421,8 @@ func (o MinimalTaskResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.FinishedAt) {
 		toSerialize["finished_at"] = o.FinishedAt
 	}
-	if !IsNil(o.Worker) {
-		toSerialize["worker"] = o.Worker
+	if o.Worker.IsSet() {
+		toSerialize["worker"] = o.Worker.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {

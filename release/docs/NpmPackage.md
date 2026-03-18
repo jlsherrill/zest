@@ -7,18 +7,19 @@ Name | Type | Description | Notes
 **Repository** | Pointer to **string** | A URI of a repository the new content unit should be associated with. | [optional] 
 **PulpLabels** | Pointer to **map[string]string** | A dictionary of arbitrary key/value pairs used to describe a specific Content instance. | [optional] 
 **Artifact** | Pointer to **string** | Artifact file representing the physical content | [optional] 
-**RelativePath** | **string** |  | 
+**RelativePath** | Pointer to **string** | Path where the artifact is located relative to distributions base_path. If not provided, it will be computed from name and version. | [optional] 
 **File** | Pointer to ***os.File** | An uploaded file that may be turned into the content unit. | [optional] 
 **Upload** | Pointer to **string** | An uncommitted upload that may be turned into the content unit. | [optional] 
 **FileUrl** | Pointer to **string** | A url that Pulp can download and turn into the content unit. | [optional] 
-**Name** | **string** |  | 
-**Version** | **string** |  | 
+**DownloaderConfig** | Pointer to [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | [optional] 
+**Name** | Pointer to **string** | The name of the npm package. | [optional] 
+**Version** | Pointer to **string** | The version of the npm package. | [optional] 
 
 ## Methods
 
 ### NewNpmPackage
 
-`func NewNpmPackage(relativePath string, name string, version string, ) *NpmPackage`
+`func NewNpmPackage() *NpmPackage`
 
 NewNpmPackage instantiates a new NpmPackage object
 This constructor will assign default values to properties that have it defined,
@@ -127,6 +128,11 @@ and a boolean to check if the value has been set.
 
 SetRelativePath sets RelativePath field to given value.
 
+### HasRelativePath
+
+`func (o *NpmPackage) HasRelativePath() bool`
+
+HasRelativePath returns a boolean if a field has been set.
 
 ### GetFile
 
@@ -203,6 +209,31 @@ SetFileUrl sets FileUrl field to given value.
 
 HasFileUrl returns a boolean if a field has been set.
 
+### GetDownloaderConfig
+
+`func (o *NpmPackage) GetDownloaderConfig() RemoteNetworkConfig`
+
+GetDownloaderConfig returns the DownloaderConfig field if non-nil, zero value otherwise.
+
+### GetDownloaderConfigOk
+
+`func (o *NpmPackage) GetDownloaderConfigOk() (*RemoteNetworkConfig, bool)`
+
+GetDownloaderConfigOk returns a tuple with the DownloaderConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDownloaderConfig
+
+`func (o *NpmPackage) SetDownloaderConfig(v RemoteNetworkConfig)`
+
+SetDownloaderConfig sets DownloaderConfig field to given value.
+
+### HasDownloaderConfig
+
+`func (o *NpmPackage) HasDownloaderConfig() bool`
+
+HasDownloaderConfig returns a boolean if a field has been set.
+
 ### GetName
 
 `func (o *NpmPackage) GetName() string`
@@ -222,6 +253,11 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
+### HasName
+
+`func (o *NpmPackage) HasName() bool`
+
+HasName returns a boolean if a field has been set.
 
 ### GetVersion
 
@@ -242,6 +278,11 @@ and a boolean to check if the value has been set.
 
 SetVersion sets Version field to given value.
 
+### HasVersion
+
+`func (o *NpmPackage) HasVersion() bool`
+
+HasVersion returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

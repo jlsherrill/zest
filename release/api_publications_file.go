@@ -31,10 +31,17 @@ type PublicationsFileAPIPublicationsFileFileAddRoleRequest struct {
 	ApiService *PublicationsFileAPIService
 	fileFilePublicationHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r PublicationsFileAPIPublicationsFileFileAddRoleRequest) NestedRole(nestedRole NestedRole) PublicationsFileAPIPublicationsFileFileAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileAddRoleExecute(r Public
 
 	localVarPath := localBasePath + "/{file_file_publication_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_publication_href"+"}", url.PathEscape(parameterValueToString(r.fileFilePublicationHref, "fileFilePublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileAddRoleExecute(r Public
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -146,10 +156,17 @@ type PublicationsFileAPIPublicationsFileFileCreateRequest struct {
 	ApiService *PublicationsFileAPIService
 	pulpDomain string
 	fileFilePublication *FileFilePublication
+	xTaskDiagnostics *[]string
 }
 
 func (r PublicationsFileAPIPublicationsFileFileCreateRequest) FileFilePublication(fileFilePublication FileFilePublication) PublicationsFileAPIPublicationsFileFileCreateRequest {
 	r.fileFilePublication = &fileFilePublication
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileCreateExecute(r Publica
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/publications/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileCreateExecute(r Publica
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFilePublication
@@ -260,6 +280,13 @@ type PublicationsFileAPIPublicationsFileFileDeleteRequest struct {
 	ctx context.Context
 	ApiService *PublicationsFileAPIService
 	fileFilePublicationHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r PublicationsFileAPIPublicationsFileFileDeleteRequest) Execute() (*http.Response, error) {
@@ -298,7 +325,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileDeleteExecute(r Publica
 
 	localVarPath := localBasePath + "/{file_file_publication_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_publication_href"+"}", url.PathEscape(parameterValueToString(r.fileFilePublicationHref, "fileFilePublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -320,6 +347,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileDeleteExecute(r Publica
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -353,6 +383,7 @@ type PublicationsFileAPIPublicationsFileFileListRequest struct {
 	ctx context.Context
 	ApiService *PublicationsFileAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	checkpoint *bool
 	content *string
 	contentIn *[]string
@@ -374,6 +405,12 @@ type PublicationsFileAPIPublicationsFileFileListRequest struct {
 	repositoryVersion *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileListRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where checkpoint matches value
@@ -540,7 +577,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileListExecute(r Publicati
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/publications/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -642,6 +679,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileListExecute(r Publicati
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -683,8 +723,15 @@ type PublicationsFileAPIPublicationsFileFileListRolesRequest struct {
 	ctx context.Context
 	ApiService *PublicationsFileAPIService
 	fileFilePublicationHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -737,7 +784,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileListRolesExecute(r Publ
 
 	localVarPath := localBasePath + "/{file_file_publication_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_publication_href"+"}", url.PathEscape(parameterValueToString(r.fileFilePublicationHref, "fileFilePublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -782,6 +829,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileListRolesExecute(r Publ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -823,8 +873,15 @@ type PublicationsFileAPIPublicationsFileFileMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *PublicationsFileAPIService
 	fileFilePublicationHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -877,7 +934,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileMyPermissionsExecute(r 
 
 	localVarPath := localBasePath + "/{file_file_publication_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_publication_href"+"}", url.PathEscape(parameterValueToString(r.fileFilePublicationHref, "fileFilePublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -922,6 +979,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileMyPermissionsExecute(r 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -963,8 +1023,15 @@ type PublicationsFileAPIPublicationsFileFileReadRequest struct {
 	ctx context.Context
 	ApiService *PublicationsFileAPIService
 	fileFilePublicationHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1017,7 +1084,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileReadExecute(r Publicati
 
 	localVarPath := localBasePath + "/{file_file_publication_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_publication_href"+"}", url.PathEscape(parameterValueToString(r.fileFilePublicationHref, "fileFilePublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1062,6 +1129,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileReadExecute(r Publicati
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1104,10 +1174,17 @@ type PublicationsFileAPIPublicationsFileFileRemoveRoleRequest struct {
 	ApiService *PublicationsFileAPIService
 	fileFilePublicationHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r PublicationsFileAPIPublicationsFileFileRemoveRoleRequest) NestedRole(nestedRole NestedRole) PublicationsFileAPIPublicationsFileFileRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PublicationsFileAPIPublicationsFileFileRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) PublicationsFileAPIPublicationsFileFileRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1149,7 +1226,7 @@ func (a *PublicationsFileAPIService) PublicationsFileFileRemoveRoleExecute(r Pub
 
 	localVarPath := localBasePath + "/{file_file_publication_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_publication_href"+"}", url.PathEscape(parameterValueToString(r.fileFilePublicationHref, "fileFilePublicationHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1174,6 +1251,9 @@ func (a *PublicationsFileAPIService) PublicationsFileFileRemoveRoleExecute(r Pub
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole

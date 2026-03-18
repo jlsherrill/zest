@@ -30,10 +30,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonAddRoleRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonAddRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesPythonAPIRepositoriesPythonPythonAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonAddRoleExecute(r 
 
 	localVarPath := localBasePath + "/{python_python_repository_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonAddRoleExecute(r 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonCreateRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pulpDomain string
 	pythonPythonRepository *PythonPythonRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonCreateRequest) PythonPythonRepository(pythonPythonRepository PythonPythonRepository) RepositoriesPythonAPIRepositoriesPythonPythonCreateRequest {
 	r.pythonPythonRepository = &pythonPythonRepository
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonCreateExecute(r R
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/python/python/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonCreateExecute(r R
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.pythonPythonRepository
@@ -259,6 +279,13 @@ type RepositoriesPythonAPIRepositoriesPythonPythonDeleteRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -299,7 +326,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonDeleteExecute(r R
 
 	localVarPath := localBasePath + "/{python_python_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,6 +348,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonDeleteExecute(r R
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -363,6 +393,7 @@ type RepositoriesPythonAPIRepositoriesPythonPythonListRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesPythonAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	latestWithContent *string
 	limit *int32
 	name *string
@@ -393,6 +424,12 @@ type RepositoriesPythonAPIRepositoriesPythonPythonListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Content Unit referenced by HREF/PRN
@@ -613,7 +650,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonListExecute(r Rep
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/python/python/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -742,6 +779,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonListExecute(r Rep
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -783,8 +823,15 @@ type RepositoriesPythonAPIRepositoriesPythonPythonListRolesRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -837,7 +884,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonListRolesExecute(
 
 	localVarPath := localBasePath + "/{python_python_repository_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -882,6 +929,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonListRolesExecute(
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -924,10 +974,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonModifyRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	repositoryAddRemoveContent *RepositoryAddRemoveContent
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonModifyRequest) RepositoryAddRemoveContent(repositoryAddRemoveContent RepositoryAddRemoveContent) RepositoriesPythonAPIRepositoriesPythonPythonModifyRequest {
 	r.repositoryAddRemoveContent = &repositoryAddRemoveContent
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonModifyRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonModifyRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -969,7 +1026,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonModifyExecute(r R
 
 	localVarPath := localBasePath + "/{python_python_repository_href}modify/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -994,6 +1051,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonModifyExecute(r R
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositoryAddRemoveContent
@@ -1038,8 +1098,15 @@ type RepositoriesPythonAPIRepositoriesPythonPythonMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1092,7 +1159,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonMyPermissionsExec
 
 	localVarPath := localBasePath + "/{python_python_repository_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1137,6 +1204,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonMyPermissionsExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1179,6 +1249,7 @@ type RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	patchedpythonPythonRepository *PatchedpythonPythonRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) PatchedpythonPythonRepository(patchedpythonPythonRepository PatchedpythonPythonRepository) RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest {
@@ -1186,14 +1257,20 @@ func (r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) Patch
 	return r
 }
 
-func (r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) Execute() (*PythonPythonRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesPythonPythonPartialUpdateExecute(r)
 }
 
 /*
 RepositoriesPythonPythonPartialUpdate Update a python repository
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param pythonPythonRepositoryHref
@@ -1208,13 +1285,13 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonPartialUpdate(ctx
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonPartialUpdateExecute(r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return PythonPythonRepositoryResponse
+func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonPartialUpdateExecute(r RepositoriesPythonAPIRepositoriesPythonPythonPartialUpdateRequest) (*PythonPythonRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *PythonPythonRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesPythonAPIService.RepositoriesPythonPythonPartialUpdate")
@@ -1224,7 +1301,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonPartialUpdateExec
 
 	localVarPath := localBasePath + "/{python_python_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1249,6 +1326,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonPartialUpdateExec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedpythonPythonRepository
@@ -1293,8 +1373,15 @@ type RepositoriesPythonAPIRepositoriesPythonPythonReadRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1347,7 +1434,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonReadExecute(r Rep
 
 	localVarPath := localBasePath + "/{python_python_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1392,6 +1479,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonReadExecute(r Rep
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1434,10 +1524,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonRemoveRoleRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonRemoveRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesPythonAPIRepositoriesPythonPythonRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1479,7 +1576,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonRemoveRoleExecute
 
 	localVarPath := localBasePath + "/{python_python_repository_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1505,8 +1602,125 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonRemoveRoleExecute
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	// body params
 	localVarPostBody = r.nestedRole
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest struct {
+	ctx context.Context
+	ApiService *RepositoriesPythonAPIService
+	pythonPythonRepositoryHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+	return r.ApiService.RepositoriesPythonPythonRepairMetadataExecute(r)
+}
+
+/*
+RepositoriesPythonPythonRepairMetadata Repair metadata
+
+Trigger an asynchronous task to repair Python metadata. This task will repair metadataof all packages for the specified `Repository`, without creating a new `RepositoryVersion`.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pythonPythonRepositoryHref
+ @return RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest
+*/
+func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonRepairMetadata(ctx context.Context, pythonPythonRepositoryHref string) RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest {
+	return RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest{
+		ApiService: a,
+		ctx: ctx,
+		pythonPythonRepositoryHref: pythonPythonRepositoryHref,
+	}
+}
+
+// Execute executes the request
+//  @return AsyncOperationResponse
+func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonRepairMetadataExecute(r RepositoriesPythonAPIRepositoriesPythonPythonRepairMetadataRequest) (*AsyncOperationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AsyncOperationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesPythonAPIService.RepositoriesPythonPythonRepairMetadata")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/{python_python_repository_href}repair_metadata/"
+	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1549,10 +1763,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonSetLabelRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonSetLabelRequest) SetLabel(setLabel SetLabel) RepositoriesPythonAPIRepositoriesPythonPythonSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1594,7 +1815,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonSetLabelExecute(r
 
 	localVarPath := localBasePath + "/{python_python_repository_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1619,6 +1840,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonSetLabelExecute(r
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1664,10 +1888,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonSyncRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	repositorySyncURL *RepositorySyncURL
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonSyncRequest) RepositorySyncURL(repositorySyncURL RepositorySyncURL) RepositoriesPythonAPIRepositoriesPythonPythonSyncRequest {
 	r.repositorySyncURL = &repositorySyncURL
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonSyncRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonSyncRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1709,7 +1940,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonSyncExecute(r Rep
 
 	localVarPath := localBasePath + "/{python_python_repository_href}sync/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1734,6 +1965,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonSyncExecute(r Rep
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositorySyncURL
@@ -1779,10 +2013,17 @@ type RepositoriesPythonAPIRepositoriesPythonPythonUnsetLabelRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RepositoriesPythonAPIRepositoriesPythonPythonUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1824,7 +2065,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUnsetLabelExecute
 
 	localVarPath := localBasePath + "/{python_python_repository_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1849,6 +2090,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUnsetLabelExecute
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1894,6 +2138,7 @@ type RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest struct {
 	ApiService *RepositoriesPythonAPIService
 	pythonPythonRepositoryHref string
 	pythonPythonRepository *PythonPythonRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) PythonPythonRepository(pythonPythonRepository PythonPythonRepository) RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest {
@@ -1901,14 +2146,20 @@ func (r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) PythonPython
 	return r
 }
 
-func (r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) Execute() (*PythonPythonRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesPythonPythonUpdateExecute(r)
 }
 
 /*
 RepositoriesPythonPythonUpdate Update a python repository
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param pythonPythonRepositoryHref
@@ -1923,13 +2174,13 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUpdate(ctx contex
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUpdateExecute(r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return PythonPythonRepositoryResponse
+func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUpdateExecute(r RepositoriesPythonAPIRepositoriesPythonPythonUpdateRequest) (*PythonPythonRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *PythonPythonRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesPythonAPIService.RepositoriesPythonPythonUpdate")
@@ -1939,7 +2190,7 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUpdateExecute(r R
 
 	localVarPath := localBasePath + "/{python_python_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"python_python_repository_href"+"}", url.PathEscape(parameterValueToString(r.pythonPythonRepositoryHref, "pythonPythonRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1964,6 +2215,9 @@ func (a *RepositoriesPythonAPIService) RepositoriesPythonPythonUpdateExecute(r R
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.pythonPythonRepository

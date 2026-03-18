@@ -30,10 +30,17 @@ type RepositoriesMavenAPIRepositoriesMavenMavenAddCachedContentRequest struct {
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
 	repositoryAddCachedContent *RepositoryAddCachedContent
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenAddCachedContentRequest) RepositoryAddCachedContent(repositoryAddCachedContent RepositoryAddCachedContent) RepositoriesMavenAPIRepositoriesMavenMavenAddCachedContentRequest {
 	r.repositoryAddCachedContent = &repositoryAddCachedContent
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenAddCachedContentRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenAddCachedContentRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenAddCachedContentExec
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}add_cached_content/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenAddCachedContentExec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositoryAddCachedContent
@@ -145,10 +155,17 @@ type RepositoriesMavenAPIRepositoriesMavenMavenCreateRequest struct {
 	ApiService *RepositoriesMavenAPIService
 	pulpDomain string
 	mavenMavenRepository *MavenMavenRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenCreateRequest) MavenMavenRepository(mavenMavenRepository MavenMavenRepository) RepositoriesMavenAPIRepositoriesMavenMavenCreateRequest {
 	r.mavenMavenRepository = &mavenMavenRepository
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenCreateExecute(r Repo
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/maven/maven/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenCreateExecute(r Repo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenRepository
@@ -259,6 +279,13 @@ type RepositoriesMavenAPIRepositoriesMavenMavenDeleteRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -299,7 +326,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenDeleteExecute(r Repo
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,6 +348,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenDeleteExecute(r Repo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -363,6 +393,7 @@ type RepositoriesMavenAPIRepositoriesMavenMavenListRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesMavenAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	latestWithContent *string
 	limit *int32
 	name *string
@@ -393,6 +424,12 @@ type RepositoriesMavenAPIRepositoriesMavenMavenListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Content Unit referenced by HREF/PRN
@@ -613,7 +650,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenListExecute(r Reposi
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/maven/maven/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -742,6 +779,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenListExecute(r Reposi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -784,6 +824,7 @@ type RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest struct {
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
 	patchedmavenMavenRepository *PatchedmavenMavenRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) PatchedmavenMavenRepository(patchedmavenMavenRepository PatchedmavenMavenRepository) RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest {
@@ -791,14 +832,20 @@ func (r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) Patchedm
 	return r
 }
 
-func (r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) Execute() (*MavenMavenRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesMavenMavenPartialUpdateExecute(r)
 }
 
 /*
 RepositoriesMavenMavenPartialUpdate Update a maven repository
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param mavenMavenRepositoryHref
@@ -813,13 +860,13 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenPartialUpdate(ctx co
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenPartialUpdateExecute(r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return MavenMavenRepositoryResponse
+func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenPartialUpdateExecute(r RepositoriesMavenAPIRepositoriesMavenMavenPartialUpdateRequest) (*MavenMavenRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *MavenMavenRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesMavenAPIService.RepositoriesMavenMavenPartialUpdate")
@@ -829,7 +876,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenPartialUpdateExecute
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -854,6 +901,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenPartialUpdateExecute
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedmavenMavenRepository
@@ -898,8 +948,15 @@ type RepositoriesMavenAPIRepositoriesMavenMavenReadRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -952,7 +1009,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenReadExecute(r Reposi
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -997,6 +1054,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenReadExecute(r Reposi
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1039,10 +1099,17 @@ type RepositoriesMavenAPIRepositoriesMavenMavenSetLabelRequest struct {
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenSetLabelRequest) SetLabel(setLabel SetLabel) RepositoriesMavenAPIRepositoriesMavenMavenSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1084,7 +1151,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenSetLabelExecute(r Re
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1109,6 +1176,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenSetLabelExecute(r Re
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1154,10 +1224,17 @@ type RepositoriesMavenAPIRepositoriesMavenMavenUnsetLabelRequest struct {
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RepositoriesMavenAPIRepositoriesMavenMavenUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1199,7 +1276,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUnsetLabelExecute(r 
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1224,6 +1301,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUnsetLabelExecute(r 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1269,6 +1349,7 @@ type RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest struct {
 	ApiService *RepositoriesMavenAPIService
 	mavenMavenRepositoryHref string
 	mavenMavenRepository *MavenMavenRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) MavenMavenRepository(mavenMavenRepository MavenMavenRepository) RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest {
@@ -1276,14 +1357,20 @@ func (r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) MavenMavenRepos
 	return r
 }
 
-func (r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) Execute() (*MavenMavenRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesMavenMavenUpdateExecute(r)
 }
 
 /*
 RepositoriesMavenMavenUpdate Update a maven repository
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param mavenMavenRepositoryHref
@@ -1298,13 +1385,13 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUpdate(ctx context.C
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUpdateExecute(r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return MavenMavenRepositoryResponse
+func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUpdateExecute(r RepositoriesMavenAPIRepositoriesMavenMavenUpdateRequest) (*MavenMavenRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *MavenMavenRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesMavenAPIService.RepositoriesMavenMavenUpdate")
@@ -1314,7 +1401,7 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUpdateExecute(r Repo
 
 	localVarPath := localBasePath + "/{maven_maven_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_repository_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRepositoryHref, "mavenMavenRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1339,6 +1426,9 @@ func (a *RepositoriesMavenAPIService) RepositoriesMavenMavenUpdateExecute(r Repo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenRepository

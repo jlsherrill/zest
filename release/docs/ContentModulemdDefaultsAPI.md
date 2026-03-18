@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## ContentRpmModulemdDefaultsCreate
 
-> AsyncOperationResponse ContentRpmModulemdDefaultsCreate(ctx, pulpDomain).RpmModulemdDefaults(rpmModulemdDefaults).Execute()
+> AsyncOperationResponse ContentRpmModulemdDefaultsCreate(ctx, pulpDomain).RpmModulemdDefaults(rpmModulemdDefaults).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a modulemd defaults
 
@@ -29,16 +29,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	rpmModulemdDefaults := *openapiclient.NewRpmModulemdDefaults("Module_example", "Stream_example", interface{}(123), "Snippet_example") // RpmModulemdDefaults | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsCreate(context.Background(), pulpDomain).RpmModulemdDefaults(rpmModulemdDefaults).Execute()
+	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsCreate(context.Background(), pulpDomain).RpmModulemdDefaults(rpmModulemdDefaults).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -65,6 +66,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **rpmModulemdDefaults** | [**RpmModulemdDefaults**](RpmModulemdDefaults.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## ContentRpmModulemdDefaultsList
 
-> PaginatedrpmModulemdDefaultsResponseList ContentRpmModulemdDefaultsList(ctx, pulpDomain).Limit(limit).Module(module).ModuleIn(moduleIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Stream(stream).StreamIn(streamIn).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedrpmModulemdDefaultsResponseList ContentRpmModulemdDefaultsList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Module(module).ModuleIn(moduleIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Stream(stream).StreamIn(streamIn).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List modulemd defaultss
 
@@ -101,11 +103,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	module := "module_example" // string | Filter results where module matches value (optional)
 	moduleIn := []string{"Inner_example"} // []string | Filter results where module is in a comma-separated list of values (optional)
@@ -128,7 +131,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsList(context.Background(), pulpDomain).Limit(limit).Module(module).ModuleIn(moduleIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Stream(stream).StreamIn(streamIn).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Limit(limit).Module(module).ModuleIn(moduleIn).Offset(offset).Ordering(ordering).OrphanedFor(orphanedFor).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).RepositoryVersion(repositoryVersion).RepositoryVersionAdded(repositoryVersionAdded).RepositoryVersionRemoved(repositoryVersionRemoved).Sha256(sha256).Stream(stream).StreamIn(streamIn).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -154,6 +157,7 @@ Other parameters are passed through a pointer to a apiContentRpmModulemdDefaults
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **limit** | **int32** | Number of results to return per page. | 
  **module** | **string** | Filter results where module matches value | 
  **moduleIn** | **[]string** | Filter results where module is in a comma-separated list of values | 
@@ -194,7 +198,7 @@ Name | Type | Description  | Notes
 
 ## ContentRpmModulemdDefaultsRead
 
-> RpmModulemdDefaultsResponse ContentRpmModulemdDefaultsRead(ctx, rpmModulemdDefaultsHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> RpmModulemdDefaultsResponse ContentRpmModulemdDefaultsRead(ctx, rpmModulemdDefaultsHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a modulemd defaults
 
@@ -209,17 +213,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	rpmModulemdDefaultsHref := "rpmModulemdDefaultsHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsRead(context.Background(), rpmModulemdDefaultsHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsRead(context.Background(), rpmModulemdDefaultsHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -245,6 +250,7 @@ Other parameters are passed through a pointer to a apiContentRpmModulemdDefaults
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -268,7 +274,7 @@ Name | Type | Description  | Notes
 
 ## ContentRpmModulemdDefaultsSetLabel
 
-> SetLabelResponse ContentRpmModulemdDefaultsSetLabel(ctx, rpmModulemdDefaultsHref).SetLabel(setLabel).Execute()
+> SetLabelResponse ContentRpmModulemdDefaultsSetLabel(ctx, rpmModulemdDefaultsHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -283,16 +289,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	rpmModulemdDefaultsHref := "rpmModulemdDefaultsHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsSetLabel(context.Background(), rpmModulemdDefaultsHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsSetLabel(context.Background(), rpmModulemdDefaultsHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -319,6 +326,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -340,7 +348,7 @@ Name | Type | Description  | Notes
 
 ## ContentRpmModulemdDefaultsUnsetLabel
 
-> UnsetLabelResponse ContentRpmModulemdDefaultsUnsetLabel(ctx, rpmModulemdDefaultsHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse ContentRpmModulemdDefaultsUnsetLabel(ctx, rpmModulemdDefaultsHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -355,16 +363,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	rpmModulemdDefaultsHref := "rpmModulemdDefaultsHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsUnsetLabel(context.Background(), rpmModulemdDefaultsHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsUnsetLabel(context.Background(), rpmModulemdDefaultsHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ContentModulemdDefaultsAPI.ContentRpmModulemdDefaultsUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -391,6 +400,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

@@ -30,10 +30,17 @@ type AcsFileAPIAcsFileFileAddRoleRequest struct {
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r AcsFileAPIAcsFileFileAddRoleRequest) NestedRole(nestedRole NestedRole) AcsFileAPIAcsFileFileAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *AcsFileAPIService) AcsFileFileAddRoleExecute(r AcsFileAPIAcsFileFileAdd
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *AcsFileAPIService) AcsFileFileAddRoleExecute(r AcsFileAPIAcsFileFileAdd
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type AcsFileAPIAcsFileFileCreateRequest struct {
 	ApiService *AcsFileAPIService
 	pulpDomain string
 	fileFileAlternateContentSource *FileFileAlternateContentSource
+	xTaskDiagnostics *[]string
 }
 
 func (r AcsFileAPIAcsFileFileCreateRequest) FileFileAlternateContentSource(fileFileAlternateContentSource FileFileAlternateContentSource) AcsFileAPIAcsFileFileCreateRequest {
 	r.fileFileAlternateContentSource = &fileFileAlternateContentSource
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *AcsFileAPIService) AcsFileFileCreateExecute(r AcsFileAPIAcsFileFileCrea
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/acs/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *AcsFileAPIService) AcsFileFileCreateExecute(r AcsFileAPIAcsFileFileCrea
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFileAlternateContentSource
@@ -259,6 +279,13 @@ type AcsFileAPIAcsFileFileDeleteRequest struct {
 	ctx context.Context
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r AcsFileAPIAcsFileFileDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -299,7 +326,7 @@ func (a *AcsFileAPIService) AcsFileFileDeleteExecute(r AcsFileAPIAcsFileFileDele
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,6 +348,9 @@ func (a *AcsFileAPIService) AcsFileFileDeleteExecute(r AcsFileAPIAcsFileFileDele
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -363,6 +393,7 @@ type AcsFileAPIAcsFileFileListRequest struct {
 	ctx context.Context
 	ApiService *AcsFileAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -381,6 +412,12 @@ type AcsFileAPIAcsFileFileListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileListRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -529,7 +566,7 @@ func (a *AcsFileAPIService) AcsFileFileListExecute(r AcsFileAPIAcsFileFileListRe
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/acs/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -622,6 +659,9 @@ func (a *AcsFileAPIService) AcsFileFileListExecute(r AcsFileAPIAcsFileFileListRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -663,8 +703,15 @@ type AcsFileAPIAcsFileFileListRolesRequest struct {
 	ctx context.Context
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -717,7 +764,7 @@ func (a *AcsFileAPIService) AcsFileFileListRolesExecute(r AcsFileAPIAcsFileFileL
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -762,6 +809,9 @@ func (a *AcsFileAPIService) AcsFileFileListRolesExecute(r AcsFileAPIAcsFileFileL
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -803,8 +853,15 @@ type AcsFileAPIAcsFileFileMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -857,7 +914,7 @@ func (a *AcsFileAPIService) AcsFileFileMyPermissionsExecute(r AcsFileAPIAcsFileF
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -902,6 +959,9 @@ func (a *AcsFileAPIService) AcsFileFileMyPermissionsExecute(r AcsFileAPIAcsFileF
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -944,6 +1004,7 @@ type AcsFileAPIAcsFileFilePartialUpdateRequest struct {
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
 	patchedfileFileAlternateContentSource *PatchedfileFileAlternateContentSource
+	xTaskDiagnostics *[]string
 }
 
 func (r AcsFileAPIAcsFileFilePartialUpdateRequest) PatchedfileFileAlternateContentSource(patchedfileFileAlternateContentSource PatchedfileFileAlternateContentSource) AcsFileAPIAcsFileFilePartialUpdateRequest {
@@ -951,14 +1012,20 @@ func (r AcsFileAPIAcsFileFilePartialUpdateRequest) PatchedfileFileAlternateConte
 	return r
 }
 
-func (r AcsFileAPIAcsFileFilePartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFilePartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFilePartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r AcsFileAPIAcsFileFilePartialUpdateRequest) Execute() (*FileFileAlternateContentSourceResponse, *http.Response, error) {
 	return r.ApiService.AcsFileFilePartialUpdateExecute(r)
 }
 
 /*
 AcsFileFilePartialUpdate Update a file alternate content source
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param fileFileAlternateContentSourceHref
@@ -973,13 +1040,13 @@ func (a *AcsFileAPIService) AcsFileFilePartialUpdate(ctx context.Context, fileFi
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *AcsFileAPIService) AcsFileFilePartialUpdateExecute(r AcsFileAPIAcsFileFilePartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FileFileAlternateContentSourceResponse
+func (a *AcsFileAPIService) AcsFileFilePartialUpdateExecute(r AcsFileAPIAcsFileFilePartialUpdateRequest) (*FileFileAlternateContentSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FileFileAlternateContentSourceResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AcsFileAPIService.AcsFileFilePartialUpdate")
@@ -989,7 +1056,7 @@ func (a *AcsFileAPIService) AcsFileFilePartialUpdateExecute(r AcsFileAPIAcsFileF
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1014,6 +1081,9 @@ func (a *AcsFileAPIService) AcsFileFilePartialUpdateExecute(r AcsFileAPIAcsFileF
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedfileFileAlternateContentSource
@@ -1058,8 +1128,15 @@ type AcsFileAPIAcsFileFileReadRequest struct {
 	ctx context.Context
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1112,7 +1189,7 @@ func (a *AcsFileAPIService) AcsFileFileReadExecute(r AcsFileAPIAcsFileFileReadRe
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1157,6 +1234,9 @@ func (a *AcsFileAPIService) AcsFileFileReadExecute(r AcsFileAPIAcsFileFileReadRe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1198,6 +1278,13 @@ type AcsFileAPIAcsFileFileRefreshRequest struct {
 	ctx context.Context
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileRefreshRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileRefreshRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r AcsFileAPIAcsFileFileRefreshRequest) Execute() (*TaskGroupOperationResponse, *http.Response, error) {
@@ -1238,7 +1325,7 @@ func (a *AcsFileAPIService) AcsFileFileRefreshExecute(r AcsFileAPIAcsFileFileRef
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}refresh/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1260,6 +1347,9 @@ func (a *AcsFileAPIService) AcsFileFileRefreshExecute(r AcsFileAPIAcsFileFileRef
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1303,10 +1393,17 @@ type AcsFileAPIAcsFileFileRemoveRoleRequest struct {
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r AcsFileAPIAcsFileFileRemoveRoleRequest) NestedRole(nestedRole NestedRole) AcsFileAPIAcsFileFileRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1348,7 +1445,7 @@ func (a *AcsFileAPIService) AcsFileFileRemoveRoleExecute(r AcsFileAPIAcsFileFile
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1373,6 +1470,9 @@ func (a *AcsFileAPIService) AcsFileFileRemoveRoleExecute(r AcsFileAPIAcsFileFile
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1418,6 +1518,7 @@ type AcsFileAPIAcsFileFileUpdateRequest struct {
 	ApiService *AcsFileAPIService
 	fileFileAlternateContentSourceHref string
 	fileFileAlternateContentSource *FileFileAlternateContentSource
+	xTaskDiagnostics *[]string
 }
 
 func (r AcsFileAPIAcsFileFileUpdateRequest) FileFileAlternateContentSource(fileFileAlternateContentSource FileFileAlternateContentSource) AcsFileAPIAcsFileFileUpdateRequest {
@@ -1425,14 +1526,20 @@ func (r AcsFileAPIAcsFileFileUpdateRequest) FileFileAlternateContentSource(fileF
 	return r
 }
 
-func (r AcsFileAPIAcsFileFileUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r AcsFileAPIAcsFileFileUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) AcsFileAPIAcsFileFileUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r AcsFileAPIAcsFileFileUpdateRequest) Execute() (*FileFileAlternateContentSourceResponse, *http.Response, error) {
 	return r.ApiService.AcsFileFileUpdateExecute(r)
 }
 
 /*
 AcsFileFileUpdate Update a file alternate content source
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param fileFileAlternateContentSourceHref
@@ -1447,13 +1554,13 @@ func (a *AcsFileAPIService) AcsFileFileUpdate(ctx context.Context, fileFileAlter
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *AcsFileAPIService) AcsFileFileUpdateExecute(r AcsFileAPIAcsFileFileUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FileFileAlternateContentSourceResponse
+func (a *AcsFileAPIService) AcsFileFileUpdateExecute(r AcsFileAPIAcsFileFileUpdateRequest) (*FileFileAlternateContentSourceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FileFileAlternateContentSourceResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AcsFileAPIService.AcsFileFileUpdate")
@@ -1463,7 +1570,7 @@ func (a *AcsFileAPIService) AcsFileFileUpdateExecute(r AcsFileAPIAcsFileFileUpda
 
 	localVarPath := localBasePath + "/{file_file_alternate_content_source_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_alternate_content_source_href"+"}", url.PathEscape(parameterValueToString(r.fileFileAlternateContentSourceHref, "fileFileAlternateContentSourceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1488,6 +1595,9 @@ func (a *AcsFileAPIService) AcsFileFileUpdateExecute(r AcsFileAPIAcsFileFileUpda
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFileAlternateContentSource

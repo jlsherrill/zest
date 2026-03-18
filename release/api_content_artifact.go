@@ -30,10 +30,17 @@ type ContentArtifactAPIContentMavenArtifactCreateRequest struct {
 	ApiService *ContentArtifactAPIService
 	pulpDomain string
 	mavenMavenArtifact *MavenMavenArtifact
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentArtifactAPIContentMavenArtifactCreateRequest) MavenMavenArtifact(mavenMavenArtifact MavenMavenArtifact) ContentArtifactAPIContentMavenArtifactCreateRequest {
 	r.mavenMavenArtifact = &mavenMavenArtifact
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentArtifactAPIContentMavenArtifactCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentArtifactAPIContentMavenArtifactCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactCreateExecute(r ContentA
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/maven/artifact/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactCreateExecute(r ContentA
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenArtifact
@@ -144,6 +154,7 @@ type ContentArtifactAPIContentMavenArtifactListRequest struct {
 	ctx context.Context
 	ApiService *ContentArtifactAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	artifactId *string
 	filename *string
 	groupId *string
@@ -162,6 +173,12 @@ type ContentArtifactAPIContentMavenArtifactListRequest struct {
 	version *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentArtifactAPIContentMavenArtifactListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentArtifactAPIContentMavenArtifactListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where artifact_id matches value
@@ -310,7 +327,7 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactListExecute(r ContentArt
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/maven/artifact/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -403,6 +420,9 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactListExecute(r ContentArt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -444,8 +464,15 @@ type ContentArtifactAPIContentMavenArtifactReadRequest struct {
 	ctx context.Context
 	ApiService *ContentArtifactAPIService
 	mavenMavenArtifactHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentArtifactAPIContentMavenArtifactReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentArtifactAPIContentMavenArtifactReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -498,7 +525,7 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactReadExecute(r ContentArt
 
 	localVarPath := localBasePath + "/{maven_maven_artifact_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_artifact_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenArtifactHref, "mavenMavenArtifactHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -543,6 +570,9 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactReadExecute(r ContentArt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -585,10 +615,17 @@ type ContentArtifactAPIContentMavenArtifactSetLabelRequest struct {
 	ApiService *ContentArtifactAPIService
 	mavenMavenArtifactHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentArtifactAPIContentMavenArtifactSetLabelRequest) SetLabel(setLabel SetLabel) ContentArtifactAPIContentMavenArtifactSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentArtifactAPIContentMavenArtifactSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentArtifactAPIContentMavenArtifactSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -630,7 +667,7 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactSetLabelExecute(r Conten
 
 	localVarPath := localBasePath + "/{maven_maven_artifact_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_artifact_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenArtifactHref, "mavenMavenArtifactHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -655,6 +692,9 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactSetLabelExecute(r Conten
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -700,10 +740,17 @@ type ContentArtifactAPIContentMavenArtifactUnsetLabelRequest struct {
 	ApiService *ContentArtifactAPIService
 	mavenMavenArtifactHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentArtifactAPIContentMavenArtifactUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentArtifactAPIContentMavenArtifactUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentArtifactAPIContentMavenArtifactUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentArtifactAPIContentMavenArtifactUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -745,7 +792,7 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactUnsetLabelExecute(r Cont
 
 	localVarPath := localBasePath + "/{maven_maven_artifact_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_artifact_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenArtifactHref, "mavenMavenArtifactHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -770,6 +817,9 @@ func (a *ContentArtifactAPIService) ContentMavenArtifactUnsetLabelExecute(r Cont
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

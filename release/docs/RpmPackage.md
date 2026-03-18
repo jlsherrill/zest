@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **File** | Pointer to ***os.File** | An uploaded file that may be turned into the content unit. | [optional] 
 **Upload** | Pointer to **string** | An uncommitted upload that may be turned into the content unit. | [optional] 
 **FileUrl** | Pointer to **string** | A url that Pulp can download and turn into the content unit. | [optional] 
+**DownloaderConfig** | Pointer to [**RemoteNetworkConfig**](RemoteNetworkConfig.md) | Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a &#39;file_url. | [optional] 
 
 ## Methods
 
@@ -205,6 +206,31 @@ SetFileUrl sets FileUrl field to given value.
 `func (o *RpmPackage) HasFileUrl() bool`
 
 HasFileUrl returns a boolean if a field has been set.
+
+### GetDownloaderConfig
+
+`func (o *RpmPackage) GetDownloaderConfig() RemoteNetworkConfig`
+
+GetDownloaderConfig returns the DownloaderConfig field if non-nil, zero value otherwise.
+
+### GetDownloaderConfigOk
+
+`func (o *RpmPackage) GetDownloaderConfigOk() (*RemoteNetworkConfig, bool)`
+
+GetDownloaderConfigOk returns a tuple with the DownloaderConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDownloaderConfig
+
+`func (o *RpmPackage) SetDownloaderConfig(v RemoteNetworkConfig)`
+
+SetDownloaderConfig sets DownloaderConfig field to given value.
+
+### HasDownloaderConfig
+
+`func (o *RpmPackage) HasDownloaderConfig() bool`
+
+HasDownloaderConfig returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

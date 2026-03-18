@@ -30,10 +30,17 @@ type RepositoriesFileAPIRepositoriesFileFileAddRoleRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileAddRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesFileAPIRepositoriesFileFileAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileAddRoleExecute(r Reposi
 
 	localVarPath := localBasePath + "/{file_file_repository_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileAddRoleExecute(r Reposi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type RepositoriesFileAPIRepositoriesFileFileCreateRequest struct {
 	ApiService *RepositoriesFileAPIService
 	pulpDomain string
 	fileFileRepository *FileFileRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileCreateRequest) FileFileRepository(fileFileRepository FileFileRepository) RepositoriesFileAPIRepositoriesFileFileCreateRequest {
 	r.fileFileRepository = &fileFileRepository
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileCreateExecute(r Reposit
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileCreateExecute(r Reposit
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFileRepository
@@ -259,6 +279,13 @@ type RepositoriesFileAPIRepositoriesFileFileDeleteRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -299,7 +326,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileDeleteExecute(r Reposit
 
 	localVarPath := localBasePath + "/{file_file_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,6 +348,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileDeleteExecute(r Reposit
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -363,6 +393,7 @@ type RepositoriesFileAPIRepositoriesFileFileListRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesFileAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	latestWithContent *string
 	limit *int32
 	name *string
@@ -393,6 +424,12 @@ type RepositoriesFileAPIRepositoriesFileFileListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Content Unit referenced by HREF/PRN
@@ -613,7 +650,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileListExecute(r Repositor
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/repositories/file/file/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -742,6 +779,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileListExecute(r Repositor
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -783,8 +823,15 @@ type RepositoriesFileAPIRepositoriesFileFileListRolesRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -837,7 +884,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileListRolesExecute(r Repo
 
 	localVarPath := localBasePath + "/{file_file_repository_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -882,6 +929,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileListRolesExecute(r Repo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -924,10 +974,17 @@ type RepositoriesFileAPIRepositoriesFileFileModifyRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	repositoryAddRemoveContent *RepositoryAddRemoveContent
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileModifyRequest) RepositoryAddRemoveContent(repositoryAddRemoveContent RepositoryAddRemoveContent) RepositoriesFileAPIRepositoriesFileFileModifyRequest {
 	r.repositoryAddRemoveContent = &repositoryAddRemoveContent
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileModifyRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileModifyRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -969,7 +1026,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileModifyExecute(r Reposit
 
 	localVarPath := localBasePath + "/{file_file_repository_href}modify/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -994,6 +1051,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileModifyExecute(r Reposit
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositoryAddRemoveContent
@@ -1038,8 +1098,15 @@ type RepositoriesFileAPIRepositoriesFileFileMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1092,7 +1159,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileMyPermissionsExecute(r 
 
 	localVarPath := localBasePath + "/{file_file_repository_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1137,6 +1204,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileMyPermissionsExecute(r 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1179,6 +1249,7 @@ type RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	patchedfileFileRepository *PatchedfileFileRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) PatchedfileFileRepository(patchedfileFileRepository PatchedfileFileRepository) RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest {
@@ -1186,14 +1257,20 @@ func (r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) Patchedfile
 	return r
 }
 
-func (r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) Execute() (*FileFileRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesFileFilePartialUpdateExecute(r)
 }
 
 /*
 RepositoriesFileFilePartialUpdate Update a file repository
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param fileFileRepositoryHref
@@ -1208,13 +1285,13 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFilePartialUpdate(ctx conte
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesFileAPIService) RepositoriesFileFilePartialUpdateExecute(r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FileFileRepositoryResponse
+func (a *RepositoriesFileAPIService) RepositoriesFileFilePartialUpdateExecute(r RepositoriesFileAPIRepositoriesFileFilePartialUpdateRequest) (*FileFileRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FileFileRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesFileAPIService.RepositoriesFileFilePartialUpdate")
@@ -1224,7 +1301,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFilePartialUpdateExecute(r 
 
 	localVarPath := localBasePath + "/{file_file_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1249,6 +1326,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFilePartialUpdateExecute(r 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedfileFileRepository
@@ -1293,8 +1373,15 @@ type RepositoriesFileAPIRepositoriesFileFileReadRequest struct {
 	ctx context.Context
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1347,7 +1434,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileReadExecute(r Repositor
 
 	localVarPath := localBasePath + "/{file_file_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1392,6 +1479,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileReadExecute(r Repositor
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1434,10 +1524,17 @@ type RepositoriesFileAPIRepositoriesFileFileRemoveRoleRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileRemoveRoleRequest) NestedRole(nestedRole NestedRole) RepositoriesFileAPIRepositoriesFileFileRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1479,7 +1576,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileRemoveRoleExecute(r Rep
 
 	localVarPath := localBasePath + "/{file_file_repository_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1504,6 +1601,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileRemoveRoleExecute(r Rep
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1549,10 +1649,17 @@ type RepositoriesFileAPIRepositoriesFileFileSetLabelRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileSetLabelRequest) SetLabel(setLabel SetLabel) RepositoriesFileAPIRepositoriesFileFileSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1594,7 +1701,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileSetLabelExecute(r Repos
 
 	localVarPath := localBasePath + "/{file_file_repository_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1619,6 +1726,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileSetLabelExecute(r Repos
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1664,10 +1774,17 @@ type RepositoriesFileAPIRepositoriesFileFileSyncRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	repositorySyncURL *RepositorySyncURL
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileSyncRequest) RepositorySyncURL(repositorySyncURL RepositorySyncURL) RepositoriesFileAPIRepositoriesFileFileSyncRequest {
 	r.repositorySyncURL = &repositorySyncURL
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileSyncRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileSyncRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1709,7 +1826,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileSyncExecute(r Repositor
 
 	localVarPath := localBasePath + "/{file_file_repository_href}sync/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1734,6 +1851,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileSyncExecute(r Repositor
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.repositorySyncURL
@@ -1779,10 +1899,17 @@ type RepositoriesFileAPIRepositoriesFileFileUnsetLabelRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RepositoriesFileAPIRepositoriesFileFileUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1824,7 +1951,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileUnsetLabelExecute(r Rep
 
 	localVarPath := localBasePath + "/{file_file_repository_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1849,6 +1976,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileUnsetLabelExecute(r Rep
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1894,6 +2024,7 @@ type RepositoriesFileAPIRepositoriesFileFileUpdateRequest struct {
 	ApiService *RepositoriesFileAPIService
 	fileFileRepositoryHref string
 	fileFileRepository *FileFileRepository
+	xTaskDiagnostics *[]string
 }
 
 func (r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) FileFileRepository(fileFileRepository FileFileRepository) RepositoriesFileAPIRepositoriesFileFileUpdateRequest {
@@ -1901,14 +2032,20 @@ func (r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) FileFileRepository
 	return r
 }
 
-func (r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RepositoriesFileAPIRepositoriesFileFileUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) Execute() (*FileFileRepositoryResponse, *http.Response, error) {
 	return r.ApiService.RepositoriesFileFileUpdateExecute(r)
 }
 
 /*
 RepositoriesFileFileUpdate Update a file repository
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param fileFileRepositoryHref
@@ -1923,13 +2060,13 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileUpdate(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RepositoriesFileAPIService) RepositoriesFileFileUpdateExecute(r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FileFileRepositoryResponse
+func (a *RepositoriesFileAPIService) RepositoriesFileFileUpdateExecute(r RepositoriesFileAPIRepositoriesFileFileUpdateRequest) (*FileFileRepositoryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FileFileRepositoryResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RepositoriesFileAPIService.RepositoriesFileFileUpdate")
@@ -1939,7 +2076,7 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileUpdateExecute(r Reposit
 
 	localVarPath := localBasePath + "/{file_file_repository_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"file_file_repository_href"+"}", url.PathEscape(parameterValueToString(r.fileFileRepositoryHref, "fileFileRepositoryHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1964,6 +2101,9 @@ func (a *RepositoriesFileAPIService) RepositoriesFileFileUpdateExecute(r Reposit
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.fileFileRepository

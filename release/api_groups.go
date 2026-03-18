@@ -30,10 +30,17 @@ type GroupsAPIGroupsAddRoleRequest struct {
 	ApiService *GroupsAPIService
 	groupHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r GroupsAPIGroupsAddRoleRequest) NestedRole(nestedRole NestedRole) GroupsAPIGroupsAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *GroupsAPIService) GroupsAddRoleExecute(r GroupsAPIGroupsAddRoleRequest)
 
 	localVarPath := localBasePath + "/{group_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *GroupsAPIService) GroupsAddRoleExecute(r GroupsAPIGroupsAddRoleRequest)
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type GroupsAPIGroupsCreateRequest struct {
 	ApiService *GroupsAPIService
 	pulpDomain string
 	group *Group
+	xTaskDiagnostics *[]string
 }
 
 func (r GroupsAPIGroupsCreateRequest) Group(group Group) GroupsAPIGroupsCreateRequest {
 	r.group = &group
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *GroupsAPIService) GroupsCreateExecute(r GroupsAPIGroupsCreateRequest) (
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/groups/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *GroupsAPIService) GroupsCreateExecute(r GroupsAPIGroupsCreateRequest) (
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.group
@@ -259,6 +279,13 @@ type GroupsAPIGroupsDeleteRequest struct {
 	ctx context.Context
 	ApiService *GroupsAPIService
 	groupHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r GroupsAPIGroupsDeleteRequest) Execute() (*http.Response, error) {
@@ -297,7 +324,7 @@ func (a *GroupsAPIService) GroupsDeleteExecute(r GroupsAPIGroupsDeleteRequest) (
 
 	localVarPath := localBasePath + "/{group_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -319,6 +346,9 @@ func (a *GroupsAPIService) GroupsDeleteExecute(r GroupsAPIGroupsDeleteRequest) (
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -352,6 +382,7 @@ type GroupsAPIGroupsListRequest struct {
 	ctx context.Context
 	ApiService *GroupsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	id *int32
 	idIn *[]int32
 	limit *int32
@@ -368,6 +399,12 @@ type GroupsAPIGroupsListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where id matches value
@@ -504,7 +541,7 @@ func (a *GroupsAPIService) GroupsListExecute(r GroupsAPIGroupsListRequest) (*Pag
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/groups/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -591,6 +628,9 @@ func (a *GroupsAPIService) GroupsListExecute(r GroupsAPIGroupsListRequest) (*Pag
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -632,8 +672,15 @@ type GroupsAPIGroupsListRolesRequest struct {
 	ctx context.Context
 	ApiService *GroupsAPIService
 	groupHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -686,7 +733,7 @@ func (a *GroupsAPIService) GroupsListRolesExecute(r GroupsAPIGroupsListRolesRequ
 
 	localVarPath := localBasePath + "/{group_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -731,6 +778,9 @@ func (a *GroupsAPIService) GroupsListRolesExecute(r GroupsAPIGroupsListRolesRequ
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -772,8 +822,15 @@ type GroupsAPIGroupsMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *GroupsAPIService
 	groupHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -826,7 +883,7 @@ func (a *GroupsAPIService) GroupsMyPermissionsExecute(r GroupsAPIGroupsMyPermiss
 
 	localVarPath := localBasePath + "/{group_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -871,6 +928,9 @@ func (a *GroupsAPIService) GroupsMyPermissionsExecute(r GroupsAPIGroupsMyPermiss
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -913,10 +973,17 @@ type GroupsAPIGroupsPartialUpdateRequest struct {
 	ApiService *GroupsAPIService
 	groupHref string
 	patchedGroup *PatchedGroup
+	xTaskDiagnostics *[]string
 }
 
 func (r GroupsAPIGroupsPartialUpdateRequest) PatchedGroup(patchedGroup PatchedGroup) GroupsAPIGroupsPartialUpdateRequest {
 	r.patchedGroup = &patchedGroup
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -958,7 +1025,7 @@ func (a *GroupsAPIService) GroupsPartialUpdateExecute(r GroupsAPIGroupsPartialUp
 
 	localVarPath := localBasePath + "/{group_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -983,6 +1050,9 @@ func (a *GroupsAPIService) GroupsPartialUpdateExecute(r GroupsAPIGroupsPartialUp
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedGroup
@@ -1027,8 +1097,15 @@ type GroupsAPIGroupsReadRequest struct {
 	ctx context.Context
 	ApiService *GroupsAPIService
 	groupHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1081,7 +1158,7 @@ func (a *GroupsAPIService) GroupsReadExecute(r GroupsAPIGroupsReadRequest) (*Gro
 
 	localVarPath := localBasePath + "/{group_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1126,6 +1203,9 @@ func (a *GroupsAPIService) GroupsReadExecute(r GroupsAPIGroupsReadRequest) (*Gro
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1168,10 +1248,17 @@ type GroupsAPIGroupsRemoveRoleRequest struct {
 	ApiService *GroupsAPIService
 	groupHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r GroupsAPIGroupsRemoveRoleRequest) NestedRole(nestedRole NestedRole) GroupsAPIGroupsRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1213,7 +1300,7 @@ func (a *GroupsAPIService) GroupsRemoveRoleExecute(r GroupsAPIGroupsRemoveRoleRe
 
 	localVarPath := localBasePath + "/{group_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1238,6 +1325,9 @@ func (a *GroupsAPIService) GroupsRemoveRoleExecute(r GroupsAPIGroupsRemoveRoleRe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1283,10 +1373,17 @@ type GroupsAPIGroupsUpdateRequest struct {
 	ApiService *GroupsAPIService
 	groupHref string
 	group *Group
+	xTaskDiagnostics *[]string
 }
 
 func (r GroupsAPIGroupsUpdateRequest) Group(group Group) GroupsAPIGroupsUpdateRequest {
 	r.group = &group
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r GroupsAPIGroupsUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsAPIGroupsUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1328,7 +1425,7 @@ func (a *GroupsAPIService) GroupsUpdateExecute(r GroupsAPIGroupsUpdateRequest) (
 
 	localVarPath := localBasePath + "/{group_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1353,6 +1450,9 @@ func (a *GroupsAPIService) GroupsUpdateExecute(r GroupsAPIGroupsUpdateRequest) (
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.group

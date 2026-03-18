@@ -29,10 +29,17 @@ type RpmPruneAPIRpmPrunePrunePackagesRequest struct {
 	ApiService *RpmPruneAPIService
 	pulpDomain string
 	prunePackages *PrunePackages
+	xTaskDiagnostics *[]string
 }
 
 func (r RpmPruneAPIRpmPrunePrunePackagesRequest) PrunePackages(prunePackages PrunePackages) RpmPruneAPIRpmPrunePrunePackagesRequest {
 	r.prunePackages = &prunePackages
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RpmPruneAPIRpmPrunePrunePackagesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RpmPruneAPIRpmPrunePrunePackagesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -74,7 +81,7 @@ func (a *RpmPruneAPIService) RpmPrunePrunePackagesExecute(r RpmPruneAPIRpmPruneP
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/rpm/prune/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -99,6 +106,9 @@ func (a *RpmPruneAPIService) RpmPrunePrunePackagesExecute(r RpmPruneAPIRpmPruneP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.prunePackages

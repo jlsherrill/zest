@@ -29,6 +29,7 @@ type SigningServicesAPISigningServicesListRequest struct {
 	ctx context.Context
 	ApiService *SigningServicesAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	offset *int32
@@ -39,6 +40,12 @@ type SigningServicesAPISigningServicesListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r SigningServicesAPISigningServicesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) SigningServicesAPISigningServicesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -139,7 +146,7 @@ func (a *SigningServicesAPIService) SigningServicesListExecute(r SigningServices
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/signing-services/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -208,6 +215,9 @@ func (a *SigningServicesAPIService) SigningServicesListExecute(r SigningServices
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -249,8 +259,15 @@ type SigningServicesAPISigningServicesReadRequest struct {
 	ctx context.Context
 	ApiService *SigningServicesAPIService
 	signingServiceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r SigningServicesAPISigningServicesReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) SigningServicesAPISigningServicesReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -303,7 +320,7 @@ func (a *SigningServicesAPIService) SigningServicesReadExecute(r SigningServices
 
 	localVarPath := localBasePath + "/{signing_service_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"signing_service_href"+"}", url.PathEscape(parameterValueToString(r.signingServiceHref, "signingServiceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -347,6 +364,9 @@ func (a *SigningServicesAPIService) SigningServicesReadExecute(r SigningServices
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

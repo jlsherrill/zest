@@ -25,43 +25,50 @@ import (
 // ApiPypiAPIService ApiPypiAPI service
 type ApiPypiAPIService service
 
-type ApiPypiAPIApiPulpPypiReadRequest struct {
+type ApiPypiAPIApiPypiReadRequest struct {
 	ctx context.Context
 	ApiService *ApiPypiAPIService
 	path string
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
 }
 
+// List of profilers to use on tasks.
+func (r ApiPypiAPIApiPypiReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ApiPypiAPIApiPypiReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
 // A list of fields to include in the response.
-func (r ApiPypiAPIApiPulpPypiReadRequest) Fields(fields []string) ApiPypiAPIApiPulpPypiReadRequest {
+func (r ApiPypiAPIApiPypiReadRequest) Fields(fields []string) ApiPypiAPIApiPypiReadRequest {
 	r.fields = &fields
 	return r
 }
 
 // A list of fields to exclude from the response.
-func (r ApiPypiAPIApiPulpPypiReadRequest) ExcludeFields(excludeFields []string) ApiPypiAPIApiPulpPypiReadRequest {
+func (r ApiPypiAPIApiPypiReadRequest) ExcludeFields(excludeFields []string) ApiPypiAPIApiPypiReadRequest {
 	r.excludeFields = &excludeFields
 	return r
 }
 
-func (r ApiPypiAPIApiPulpPypiReadRequest) Execute() (*SummaryResponse, *http.Response, error) {
-	return r.ApiService.ApiPulpPypiReadExecute(r)
+func (r ApiPypiAPIApiPypiReadRequest) Execute() (*SummaryResponse, *http.Response, error) {
+	return r.ApiService.ApiPypiReadExecute(r)
 }
 
 /*
-ApiPulpPypiRead Get index summary
+ApiPypiRead Get index summary
 
 Gets package summary stats of index.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param path
  @param pulpDomain
- @return ApiPypiAPIApiPulpPypiReadRequest
+ @return ApiPypiAPIApiPypiReadRequest
 */
-func (a *ApiPypiAPIService) ApiPulpPypiRead(ctx context.Context, path string, pulpDomain string) ApiPypiAPIApiPulpPypiReadRequest {
-	return ApiPypiAPIApiPulpPypiReadRequest{
+func (a *ApiPypiAPIService) ApiPypiRead(ctx context.Context, path string, pulpDomain string) ApiPypiAPIApiPypiReadRequest {
+	return ApiPypiAPIApiPypiReadRequest{
 		ApiService: a,
 		ctx: ctx,
 		path: path,
@@ -71,7 +78,7 @@ func (a *ApiPypiAPIService) ApiPulpPypiRead(ctx context.Context, path string, pu
 
 // Execute executes the request
 //  @return SummaryResponse
-func (a *ApiPypiAPIService) ApiPulpPypiReadExecute(r ApiPypiAPIApiPulpPypiReadRequest) (*SummaryResponse, *http.Response, error) {
+func (a *ApiPypiAPIService) ApiPypiReadExecute(r ApiPypiAPIApiPypiReadRequest) (*SummaryResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -79,17 +86,15 @@ func (a *ApiPypiAPIService) ApiPulpPypiReadExecute(r ApiPypiAPIApiPulpPypiReadRe
 		localVarReturnValue  *SummaryResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApiPypiAPIService.ApiPulpPypiRead")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ApiPypiAPIService.ApiPypiRead")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/pulp/pypi/{pulp_domain}/{path}/"
+	localVarPath := localBasePath + "/api/pypi/{pulp_domain}/{path}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"path"+"}", url.PathEscape(parameterValueToString(r.path, "path")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
-
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -133,6 +138,9 @@ func (a *ApiPypiAPIService) ApiPulpPypiReadExecute(r ApiPypiAPIApiPulpPypiReadRe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

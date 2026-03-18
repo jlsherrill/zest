@@ -28,6 +28,13 @@ type OrphansAPIOrphansDeleteRequest struct {
 	ctx context.Context
 	ApiService *OrphansAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r OrphansAPIOrphansDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) OrphansAPIOrphansDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r OrphansAPIOrphansDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -68,7 +75,7 @@ func (a *OrphansAPIService) OrphansDeleteExecute(r OrphansAPIOrphansDeleteReques
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/orphans/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -90,6 +97,9 @@ func (a *OrphansAPIService) OrphansDeleteExecute(r OrphansAPIOrphansDeleteReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

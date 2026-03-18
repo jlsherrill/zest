@@ -31,6 +31,7 @@ type ContainerManifestSignatureResponse struct {
 	PulpLastUpdated *time.Time `json:"pulp_last_updated,omitempty"`
 	// A dictionary of arbitrary key/value pairs used to describe a specific Content instance.
 	PulpLabels *map[string]string `json:"pulp_labels,omitempty"`
+	VulnReport *string `json:"vuln_report,omitempty"`
 	// Signature name in the format of `digest_algo:manifest_digest@random_32_chars`
 	Name string `json:"name"`
 	// sha256 digest of the signature blob
@@ -234,6 +235,38 @@ func (o *ContainerManifestSignatureResponse) SetPulpLabels(v map[string]string) 
 	o.PulpLabels = &v
 }
 
+// GetVulnReport returns the VulnReport field value if set, zero value otherwise.
+func (o *ContainerManifestSignatureResponse) GetVulnReport() string {
+	if o == nil || IsNil(o.VulnReport) {
+		var ret string
+		return ret
+	}
+	return *o.VulnReport
+}
+
+// GetVulnReportOk returns a tuple with the VulnReport field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ContainerManifestSignatureResponse) GetVulnReportOk() (*string, bool) {
+	if o == nil || IsNil(o.VulnReport) {
+		return nil, false
+	}
+	return o.VulnReport, true
+}
+
+// HasVulnReport returns a boolean if a field has been set.
+func (o *ContainerManifestSignatureResponse) HasVulnReport() bool {
+	if o != nil && !IsNil(o.VulnReport) {
+		return true
+	}
+
+	return false
+}
+
+// SetVulnReport gets a reference to the given string and assigns it to the VulnReport field.
+func (o *ContainerManifestSignatureResponse) SetVulnReport(v string) {
+	o.VulnReport = &v
+}
+
 // GetName returns the Name field value
 func (o *ContainerManifestSignatureResponse) GetName() string {
 	if o == nil {
@@ -427,6 +460,9 @@ func (o ContainerManifestSignatureResponse) ToMap() (map[string]interface{}, err
 	if !IsNil(o.PulpLabels) {
 		toSerialize["pulp_labels"] = o.PulpLabels
 	}
+	if !IsNil(o.VulnReport) {
+		toSerialize["vuln_report"] = o.VulnReport
+	}
 	toSerialize["name"] = o.Name
 	toSerialize["digest"] = o.Digest
 	toSerialize["type"] = o.Type
@@ -488,6 +524,7 @@ func (o *ContainerManifestSignatureResponse) UnmarshalJSON(data []byte) (err err
 		delete(additionalProperties, "pulp_created")
 		delete(additionalProperties, "pulp_last_updated")
 		delete(additionalProperties, "pulp_labels")
+		delete(additionalProperties, "vuln_report")
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "digest")
 		delete(additionalProperties, "type")

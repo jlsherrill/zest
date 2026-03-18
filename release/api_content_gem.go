@@ -30,10 +30,17 @@ type ContentGemAPIContentGemGemCreateRequest struct {
 	ctx context.Context
 	ApiService *ContentGemAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	repository *string
 	pulpLabels *map[string]string
 	artifact *string
 	file *os.File
+}
+
+// List of profilers to use on tasks.
+func (r ContentGemAPIContentGemGemCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentGemAPIContentGemGemCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A URI of a repository the new content unit should be associated with.
@@ -98,7 +105,7 @@ func (a *ContentGemAPIService) ContentGemGemCreateExecute(r ContentGemAPIContent
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/gem/gem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -120,6 +127,9 @@ func (a *ContentGemAPIService) ContentGemGemCreateExecute(r ContentGemAPIContent
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	if r.repository != nil {
 		parameterAddToHeaderOrQuery(localVarFormParams, "repository", r.repository, "", "")
@@ -188,6 +198,7 @@ type ContentGemAPIContentGemGemListRequest struct {
 	ctx context.Context
 	ApiService *ContentGemAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	checksum *string
 	limit *int32
 	name *string
@@ -206,6 +217,12 @@ type ContentGemAPIContentGemGemListRequest struct {
 	version *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentGemAPIContentGemGemListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentGemAPIContentGemGemListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where checksum matches value
@@ -354,7 +371,7 @@ func (a *ContentGemAPIService) ContentGemGemListExecute(r ContentGemAPIContentGe
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/gem/gem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -447,6 +464,9 @@ func (a *ContentGemAPIService) ContentGemGemListExecute(r ContentGemAPIContentGe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -488,8 +508,15 @@ type ContentGemAPIContentGemGemReadRequest struct {
 	ctx context.Context
 	ApiService *ContentGemAPIService
 	gemGemContentHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentGemAPIContentGemGemReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentGemAPIContentGemGemReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -542,7 +569,7 @@ func (a *ContentGemAPIService) ContentGemGemReadExecute(r ContentGemAPIContentGe
 
 	localVarPath := localBasePath + "/{gem_gem_content_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_content_href"+"}", url.PathEscape(parameterValueToString(r.gemGemContentHref, "gemGemContentHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -587,6 +614,9 @@ func (a *ContentGemAPIService) ContentGemGemReadExecute(r ContentGemAPIContentGe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -629,10 +659,17 @@ type ContentGemAPIContentGemGemSetLabelRequest struct {
 	ApiService *ContentGemAPIService
 	gemGemContentHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentGemAPIContentGemGemSetLabelRequest) SetLabel(setLabel SetLabel) ContentGemAPIContentGemGemSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentGemAPIContentGemGemSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentGemAPIContentGemGemSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -674,7 +711,7 @@ func (a *ContentGemAPIService) ContentGemGemSetLabelExecute(r ContentGemAPIConte
 
 	localVarPath := localBasePath + "/{gem_gem_content_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_content_href"+"}", url.PathEscape(parameterValueToString(r.gemGemContentHref, "gemGemContentHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -699,6 +736,9 @@ func (a *ContentGemAPIService) ContentGemGemSetLabelExecute(r ContentGemAPIConte
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -744,10 +784,17 @@ type ContentGemAPIContentGemGemUnsetLabelRequest struct {
 	ApiService *ContentGemAPIService
 	gemGemContentHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentGemAPIContentGemGemUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentGemAPIContentGemGemUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentGemAPIContentGemGemUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentGemAPIContentGemGemUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -789,7 +836,7 @@ func (a *ContentGemAPIService) ContentGemGemUnsetLabelExecute(r ContentGemAPICon
 
 	localVarPath := localBasePath + "/{gem_gem_content_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_content_href"+"}", url.PathEscape(parameterValueToString(r.gemGemContentHref, "gemGemContentHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -814,6 +861,9 @@ func (a *ContentGemAPIService) ContentGemGemUnsetLabelExecute(r ContentGemAPICon
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

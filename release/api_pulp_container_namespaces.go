@@ -30,10 +30,17 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesAddRoleRequest struct {
 	ApiService *PulpContainerNamespacesAPIService
 	containerContainerNamespaceHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r PulpContainerNamespacesAPIPulpContainerNamespacesAddRoleRequest) NestedRole(nestedRole NestedRole) PulpContainerNamespacesAPIPulpContainerNamespacesAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesAddRoleExecut
 
 	localVarPath := localBasePath + "/{container_container_namespace_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_namespace_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerNamespaceHref, "containerContainerNamespaceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesAddRoleExecut
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesCreateRequest struct {
 	ApiService *PulpContainerNamespacesAPIService
 	pulpDomain string
 	containerContainerNamespace *ContainerContainerNamespace
+	xTaskDiagnostics *[]string
 }
 
 func (r PulpContainerNamespacesAPIPulpContainerNamespacesCreateRequest) ContainerContainerNamespace(containerContainerNamespace ContainerContainerNamespace) PulpContainerNamespacesAPIPulpContainerNamespacesCreateRequest {
 	r.containerContainerNamespace = &containerContainerNamespace
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesCreateExecute
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/pulp_container/namespaces/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesCreateExecute
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.containerContainerNamespace
@@ -259,6 +279,13 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesDeleteRequest struct {
 	ctx context.Context
 	ApiService *PulpContainerNamespacesAPIService
 	containerContainerNamespaceHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r PulpContainerNamespacesAPIPulpContainerNamespacesDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -299,7 +326,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesDeleteExecute
 
 	localVarPath := localBasePath + "/{container_container_namespace_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_namespace_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerNamespaceHref, "containerContainerNamespaceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -321,6 +348,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesDeleteExecute
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -363,6 +393,7 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesListRequest struct {
 	ctx context.Context
 	ApiService *PulpContainerNamespacesAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -381,6 +412,12 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -529,7 +566,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesListExecute(r
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/pulp_container/namespaces/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -622,6 +659,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesListExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -663,8 +703,15 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesListRolesRequest struct {
 	ctx context.Context
 	ApiService *PulpContainerNamespacesAPIService
 	containerContainerNamespaceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -717,7 +764,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesListRolesExec
 
 	localVarPath := localBasePath + "/{container_container_namespace_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_namespace_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerNamespaceHref, "containerContainerNamespaceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -762,6 +809,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesListRolesExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -803,8 +853,15 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesMyPermissionsRequest struc
 	ctx context.Context
 	ApiService *PulpContainerNamespacesAPIService
 	containerContainerNamespaceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -857,7 +914,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesMyPermissions
 
 	localVarPath := localBasePath + "/{container_container_namespace_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_namespace_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerNamespaceHref, "containerContainerNamespaceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -902,6 +959,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesMyPermissions
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -943,8 +1003,15 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesReadRequest struct {
 	ctx context.Context
 	ApiService *PulpContainerNamespacesAPIService
 	containerContainerNamespaceHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -997,7 +1064,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesReadExecute(r
 
 	localVarPath := localBasePath + "/{container_container_namespace_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_namespace_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerNamespaceHref, "containerContainerNamespaceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1042,6 +1109,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesReadExecute(r
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1084,10 +1154,17 @@ type PulpContainerNamespacesAPIPulpContainerNamespacesRemoveRoleRequest struct {
 	ApiService *PulpContainerNamespacesAPIService
 	containerContainerNamespaceHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r PulpContainerNamespacesAPIPulpContainerNamespacesRemoveRoleRequest) NestedRole(nestedRole NestedRole) PulpContainerNamespacesAPIPulpContainerNamespacesRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r PulpContainerNamespacesAPIPulpContainerNamespacesRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) PulpContainerNamespacesAPIPulpContainerNamespacesRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1129,7 +1206,7 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesRemoveRoleExe
 
 	localVarPath := localBasePath + "/{container_container_namespace_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_container_namespace_href"+"}", url.PathEscape(parameterValueToString(r.containerContainerNamespaceHref, "containerContainerNamespaceHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1154,6 +1231,9 @@ func (a *PulpContainerNamespacesAPIService) PulpContainerNamespacesRemoveRoleExe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole

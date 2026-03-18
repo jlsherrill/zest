@@ -30,10 +30,17 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectAddRoleReque
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectAddRoleRequest) NestedRole(nestedRole NestedRole) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -145,10 +155,17 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectCreateReques
 	ApiService *ContentguardsContentRedirectAPIService
 	pulpDomain string
 	contentRedirectContentGuard *ContentRedirectContentGuard
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectCreateRequest) ContentRedirectContentGuard(contentRedirectContentGuard ContentRedirectContentGuard) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectCreateRequest {
 	r.contentRedirectContentGuard = &contentRedirectContentGuard
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -190,7 +207,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/contentguards/core/content_redirect/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,6 +232,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.contentRedirectContentGuard
@@ -259,6 +279,13 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectDeleteReques
 	ctx context.Context
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectDeleteRequest) Execute() (*http.Response, error) {
@@ -297,7 +324,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -319,6 +346,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -352,6 +382,7 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRequest 
 	ctx context.Context
 	ApiService *ContentguardsContentRedirectAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -370,6 +401,12 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRequest 
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -518,7 +555,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/contentguards/core/content_redirect/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -611,6 +648,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -652,8 +692,15 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRolesReq
 	ctx context.Context
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -706,7 +753,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -751,6 +798,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -792,8 +842,15 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectMyPermission
 	ctx context.Context
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -846,7 +903,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -891,6 +948,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -933,10 +993,17 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectPartialUpdat
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
 	patchedContentRedirectContentGuard *PatchedContentRedirectContentGuard
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectPartialUpdateRequest) PatchedContentRedirectContentGuard(patchedContentRedirectContentGuard PatchedContentRedirectContentGuard) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectPartialUpdateRequest {
 	r.patchedContentRedirectContentGuard = &patchedContentRedirectContentGuard
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -978,7 +1045,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1003,6 +1070,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedContentRedirectContentGuard
@@ -1047,8 +1117,15 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectReadRequest 
 	ctx context.Context
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1101,7 +1178,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1146,6 +1223,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1188,10 +1268,17 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectRemoveRoleRe
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectRemoveRoleRequest) NestedRole(nestedRole NestedRole) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1233,7 +1320,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1258,6 +1345,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1303,10 +1393,17 @@ type ContentguardsContentRedirectAPIContentguardsCoreContentRedirectUpdateReques
 	ApiService *ContentguardsContentRedirectAPIService
 	contentRedirectContentGuardHref string
 	contentRedirectContentGuard *ContentRedirectContentGuard
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectUpdateRequest) ContentRedirectContentGuard(contentRedirectContentGuard ContentRedirectContentGuard) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectUpdateRequest {
 	r.contentRedirectContentGuard = &contentRedirectContentGuard
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentguardsContentRedirectAPIContentguardsCoreContentRedirectUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentguardsContentRedirectAPIContentguardsCoreContentRedirectUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1348,7 +1445,7 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 
 	localVarPath := localBasePath + "/{content_redirect_content_guard_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"content_redirect_content_guard_href"+"}", url.PathEscape(parameterValueToString(r.contentRedirectContentGuardHref, "contentRedirectContentGuardHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1373,6 +1470,9 @@ func (a *ContentguardsContentRedirectAPIService) ContentguardsCoreContentRedirec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.contentRedirectContentGuard

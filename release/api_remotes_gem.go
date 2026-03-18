@@ -31,10 +31,17 @@ type RemotesGemAPIRemotesGemGemAddRoleRequest struct {
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemAddRoleRequest) NestedRole(nestedRole NestedRole) RemotesGemAPIRemotesGemGemAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *RemotesGemAPIService) RemotesGemGemAddRoleExecute(r RemotesGemAPIRemote
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *RemotesGemAPIService) RemotesGemGemAddRoleExecute(r RemotesGemAPIRemote
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -146,10 +156,17 @@ type RemotesGemAPIRemotesGemGemCreateRequest struct {
 	ApiService *RemotesGemAPIService
 	pulpDomain string
 	gemGemRemote *GemGemRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemCreateRequest) GemGemRemote(gemGemRemote GemGemRemote) RemotesGemAPIRemotesGemGemCreateRequest {
 	r.gemGemRemote = &gemGemRemote
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *RemotesGemAPIService) RemotesGemGemCreateExecute(r RemotesGemAPIRemotes
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/gem/gem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *RemotesGemAPIService) RemotesGemGemCreateExecute(r RemotesGemAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.gemGemRemote
@@ -260,6 +280,13 @@ type RemotesGemAPIRemotesGemGemDeleteRequest struct {
 	ctx context.Context
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RemotesGemAPIRemotesGemGemDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -300,7 +327,7 @@ func (a *RemotesGemAPIService) RemotesGemGemDeleteExecute(r RemotesGemAPIRemotes
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -322,6 +349,9 @@ func (a *RemotesGemAPIService) RemotesGemGemDeleteExecute(r RemotesGemAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -364,6 +394,7 @@ type RemotesGemAPIRemotesGemGemListRequest struct {
 	ctx context.Context
 	ApiService *RemotesGemAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -390,6 +421,12 @@ type RemotesGemAPIRemotesGemGemListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -586,7 +623,7 @@ func (a *RemotesGemAPIService) RemotesGemGemListExecute(r RemotesGemAPIRemotesGe
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/gem/gem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -703,6 +740,9 @@ func (a *RemotesGemAPIService) RemotesGemGemListExecute(r RemotesGemAPIRemotesGe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -744,8 +784,15 @@ type RemotesGemAPIRemotesGemGemListRolesRequest struct {
 	ctx context.Context
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -798,7 +845,7 @@ func (a *RemotesGemAPIService) RemotesGemGemListRolesExecute(r RemotesGemAPIRemo
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -843,6 +890,9 @@ func (a *RemotesGemAPIService) RemotesGemGemListRolesExecute(r RemotesGemAPIRemo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -884,8 +934,15 @@ type RemotesGemAPIRemotesGemGemMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -938,7 +995,7 @@ func (a *RemotesGemAPIService) RemotesGemGemMyPermissionsExecute(r RemotesGemAPI
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -983,6 +1040,9 @@ func (a *RemotesGemAPIService) RemotesGemGemMyPermissionsExecute(r RemotesGemAPI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1025,6 +1085,7 @@ type RemotesGemAPIRemotesGemGemPartialUpdateRequest struct {
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
 	patchedgemGemRemote *PatchedgemGemRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemPartialUpdateRequest) PatchedgemGemRemote(patchedgemGemRemote PatchedgemGemRemote) RemotesGemAPIRemotesGemGemPartialUpdateRequest {
@@ -1032,14 +1093,20 @@ func (r RemotesGemAPIRemotesGemGemPartialUpdateRequest) PatchedgemGemRemote(patc
 	return r
 }
 
-func (r RemotesGemAPIRemotesGemGemPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesGemAPIRemotesGemGemPartialUpdateRequest) Execute() (*GemGemRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesGemGemPartialUpdateExecute(r)
 }
 
 /*
 RemotesGemGemPartialUpdate Update a gem remote
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param gemGemRemoteHref
@@ -1054,13 +1121,13 @@ func (a *RemotesGemAPIService) RemotesGemGemPartialUpdate(ctx context.Context, g
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesGemAPIService) RemotesGemGemPartialUpdateExecute(r RemotesGemAPIRemotesGemGemPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return GemGemRemoteResponse
+func (a *RemotesGemAPIService) RemotesGemGemPartialUpdateExecute(r RemotesGemAPIRemotesGemGemPartialUpdateRequest) (*GemGemRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *GemGemRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesGemAPIService.RemotesGemGemPartialUpdate")
@@ -1070,7 +1137,7 @@ func (a *RemotesGemAPIService) RemotesGemGemPartialUpdateExecute(r RemotesGemAPI
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1095,6 +1162,9 @@ func (a *RemotesGemAPIService) RemotesGemGemPartialUpdateExecute(r RemotesGemAPI
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedgemGemRemote
@@ -1139,8 +1209,15 @@ type RemotesGemAPIRemotesGemGemReadRequest struct {
 	ctx context.Context
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1193,7 +1270,7 @@ func (a *RemotesGemAPIService) RemotesGemGemReadExecute(r RemotesGemAPIRemotesGe
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1238,6 +1315,9 @@ func (a *RemotesGemAPIService) RemotesGemGemReadExecute(r RemotesGemAPIRemotesGe
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1280,10 +1360,17 @@ type RemotesGemAPIRemotesGemGemRemoveRoleRequest struct {
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemRemoveRoleRequest) NestedRole(nestedRole NestedRole) RemotesGemAPIRemotesGemGemRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1325,7 +1412,7 @@ func (a *RemotesGemAPIService) RemotesGemGemRemoveRoleExecute(r RemotesGemAPIRem
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1350,6 +1437,9 @@ func (a *RemotesGemAPIService) RemotesGemGemRemoveRoleExecute(r RemotesGemAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1395,10 +1485,17 @@ type RemotesGemAPIRemotesGemGemSetLabelRequest struct {
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemSetLabelRequest) SetLabel(setLabel SetLabel) RemotesGemAPIRemotesGemGemSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1440,7 +1537,7 @@ func (a *RemotesGemAPIService) RemotesGemGemSetLabelExecute(r RemotesGemAPIRemot
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1465,6 +1562,9 @@ func (a *RemotesGemAPIService) RemotesGemGemSetLabelExecute(r RemotesGemAPIRemot
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1510,10 +1610,17 @@ type RemotesGemAPIRemotesGemGemUnsetLabelRequest struct {
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RemotesGemAPIRemotesGemGemUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1555,7 +1662,7 @@ func (a *RemotesGemAPIService) RemotesGemGemUnsetLabelExecute(r RemotesGemAPIRem
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1580,6 +1687,9 @@ func (a *RemotesGemAPIService) RemotesGemGemUnsetLabelExecute(r RemotesGemAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1625,6 +1735,7 @@ type RemotesGemAPIRemotesGemGemUpdateRequest struct {
 	ApiService *RemotesGemAPIService
 	gemGemRemoteHref string
 	gemGemRemote *GemGemRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesGemAPIRemotesGemGemUpdateRequest) GemGemRemote(gemGemRemote GemGemRemote) RemotesGemAPIRemotesGemGemUpdateRequest {
@@ -1632,14 +1743,20 @@ func (r RemotesGemAPIRemotesGemGemUpdateRequest) GemGemRemote(gemGemRemote GemGe
 	return r
 }
 
-func (r RemotesGemAPIRemotesGemGemUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesGemAPIRemotesGemGemUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesGemAPIRemotesGemGemUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesGemAPIRemotesGemGemUpdateRequest) Execute() (*GemGemRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesGemGemUpdateExecute(r)
 }
 
 /*
 RemotesGemGemUpdate Update a gem remote
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param gemGemRemoteHref
@@ -1654,13 +1771,13 @@ func (a *RemotesGemAPIService) RemotesGemGemUpdate(ctx context.Context, gemGemRe
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesGemAPIService) RemotesGemGemUpdateExecute(r RemotesGemAPIRemotesGemGemUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return GemGemRemoteResponse
+func (a *RemotesGemAPIService) RemotesGemGemUpdateExecute(r RemotesGemAPIRemotesGemGemUpdateRequest) (*GemGemRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *GemGemRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesGemAPIService.RemotesGemGemUpdate")
@@ -1670,7 +1787,7 @@ func (a *RemotesGemAPIService) RemotesGemGemUpdateExecute(r RemotesGemAPIRemotes
 
 	localVarPath := localBasePath + "/{gem_gem_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"gem_gem_remote_href"+"}", url.PathEscape(parameterValueToString(r.gemGemRemoteHref, "gemGemRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1695,6 +1812,9 @@ func (a *RemotesGemAPIService) RemotesGemGemUpdateExecute(r RemotesGemAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.gemGemRemote

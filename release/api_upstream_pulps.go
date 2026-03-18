@@ -31,10 +31,17 @@ type UpstreamPulpsAPIUpstreamPulpsAddRoleRequest struct {
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsAddRoleRequest) NestedRole(nestedRole NestedRole) UpstreamPulpsAPIUpstreamPulpsAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsAddRoleExecute(r UpstreamPulpsAPI
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsAddRoleExecute(r UpstreamPulpsAPI
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -146,10 +156,17 @@ type UpstreamPulpsAPIUpstreamPulpsCreateRequest struct {
 	ApiService *UpstreamPulpsAPIService
 	pulpDomain string
 	upstreamPulp *UpstreamPulp
+	xTaskDiagnostics *[]string
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsCreateRequest) UpstreamPulp(upstreamPulp UpstreamPulp) UpstreamPulpsAPIUpstreamPulpsCreateRequest {
 	r.upstreamPulp = &upstreamPulp
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsCreateExecute(r UpstreamPulpsAPIU
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/upstream-pulps/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsCreateExecute(r UpstreamPulpsAPIU
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.upstreamPulp
@@ -260,6 +280,13 @@ type UpstreamPulpsAPIUpstreamPulpsDeleteRequest struct {
 	ctx context.Context
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsDeleteRequest) Execute() (*http.Response, error) {
@@ -298,7 +325,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsDeleteExecute(r UpstreamPulpsAPIU
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -320,6 +347,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsDeleteExecute(r UpstreamPulpsAPIU
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -353,6 +383,7 @@ type UpstreamPulpsAPIUpstreamPulpsListRequest struct {
 	ctx context.Context
 	ApiService *UpstreamPulpsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	baseUrl *string
 	baseUrlContains *string
 	baseUrlIcontains *string
@@ -387,6 +418,12 @@ type UpstreamPulpsAPIUpstreamPulpsListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where base_url matches value
@@ -631,7 +668,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsListExecute(r UpstreamPulpsAPIUps
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/upstream-pulps/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -772,6 +809,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsListExecute(r UpstreamPulpsAPIUps
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -813,8 +853,15 @@ type UpstreamPulpsAPIUpstreamPulpsListRolesRequest struct {
 	ctx context.Context
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -867,7 +914,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsListRolesExecute(r UpstreamPulpsA
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -912,6 +959,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsListRolesExecute(r UpstreamPulpsA
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -953,8 +1003,15 @@ type UpstreamPulpsAPIUpstreamPulpsMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1007,7 +1064,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsMyPermissionsExecute(r UpstreamPu
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1052,6 +1109,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsMyPermissionsExecute(r UpstreamPu
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1094,10 +1154,17 @@ type UpstreamPulpsAPIUpstreamPulpsPartialUpdateRequest struct {
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
 	patchedUpstreamPulp *PatchedUpstreamPulp
+	xTaskDiagnostics *[]string
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsPartialUpdateRequest) PatchedUpstreamPulp(patchedUpstreamPulp PatchedUpstreamPulp) UpstreamPulpsAPIUpstreamPulpsPartialUpdateRequest {
 	r.patchedUpstreamPulp = &patchedUpstreamPulp
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1139,7 +1206,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsPartialUpdateExecute(r UpstreamPu
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1164,6 +1231,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsPartialUpdateExecute(r UpstreamPu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedUpstreamPulp
@@ -1208,8 +1278,15 @@ type UpstreamPulpsAPIUpstreamPulpsReadRequest struct {
 	ctx context.Context
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1262,7 +1339,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsReadExecute(r UpstreamPulpsAPIUps
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1307,6 +1384,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsReadExecute(r UpstreamPulpsAPIUps
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1349,10 +1429,17 @@ type UpstreamPulpsAPIUpstreamPulpsRemoveRoleRequest struct {
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsRemoveRoleRequest) NestedRole(nestedRole NestedRole) UpstreamPulpsAPIUpstreamPulpsRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1394,7 +1481,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsRemoveRoleExecute(r UpstreamPulps
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1419,6 +1506,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsRemoveRoleExecute(r UpstreamPulps
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1463,6 +1553,13 @@ type UpstreamPulpsAPIUpstreamPulpsReplicateRequest struct {
 	ctx context.Context
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsReplicateRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsReplicateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsReplicateRequest) Execute() (*TaskGroupOperationResponse, *http.Response, error) {
@@ -1503,7 +1600,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsReplicateExecute(r UpstreamPulpsA
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}replicate/"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1525,6 +1622,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsReplicateExecute(r UpstreamPulpsA
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1568,10 +1668,17 @@ type UpstreamPulpsAPIUpstreamPulpsUpdateRequest struct {
 	ApiService *UpstreamPulpsAPIService
 	upstreamPulpHref string
 	upstreamPulp *UpstreamPulp
+	xTaskDiagnostics *[]string
 }
 
 func (r UpstreamPulpsAPIUpstreamPulpsUpdateRequest) UpstreamPulp(upstreamPulp UpstreamPulp) UpstreamPulpsAPIUpstreamPulpsUpdateRequest {
 	r.upstreamPulp = &upstreamPulp
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r UpstreamPulpsAPIUpstreamPulpsUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) UpstreamPulpsAPIUpstreamPulpsUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1613,7 +1720,7 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsUpdateExecute(r UpstreamPulpsAPIU
 
 	localVarPath := localBasePath + "/{upstream_pulp_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"upstream_pulp_href"+"}", url.PathEscape(parameterValueToString(r.upstreamPulpHref, "upstreamPulpHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1638,6 +1745,9 @@ func (a *UpstreamPulpsAPIService) UpstreamPulpsUpdateExecute(r UpstreamPulpsAPIU
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.upstreamPulp

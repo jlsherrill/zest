@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**RepositoriesPythonPythonPartialUpdate**](RepositoriesPythonAPI.md#RepositoriesPythonPythonPartialUpdate) | **Patch** /{python_python_repository_href} | Update a python repository
 [**RepositoriesPythonPythonRead**](RepositoriesPythonAPI.md#RepositoriesPythonPythonRead) | **Get** /{python_python_repository_href} | Inspect a python repository
 [**RepositoriesPythonPythonRemoveRole**](RepositoriesPythonAPI.md#RepositoriesPythonPythonRemoveRole) | **Post** /{python_python_repository_href}remove_role/ | Remove a role
+[**RepositoriesPythonPythonRepairMetadata**](RepositoriesPythonAPI.md#RepositoriesPythonPythonRepairMetadata) | **Post** /{python_python_repository_href}repair_metadata/ | Repair metadata
 [**RepositoriesPythonPythonSetLabel**](RepositoriesPythonAPI.md#RepositoriesPythonPythonSetLabel) | **Post** /{python_python_repository_href}set_label/ | Set a label
 [**RepositoriesPythonPythonSync**](RepositoriesPythonAPI.md#RepositoriesPythonPythonSync) | **Post** /{python_python_repository_href}sync/ | Sync from remote
 [**RepositoriesPythonPythonUnsetLabel**](RepositoriesPythonAPI.md#RepositoriesPythonPythonUnsetLabel) | **Post** /{python_python_repository_href}unset_label/ | Unset a label
@@ -23,7 +24,7 @@ Method | HTTP request | Description
 
 ## RepositoriesPythonPythonAddRole
 
-> NestedRoleResponse RepositoriesPythonPythonAddRole(ctx, pythonPythonRepositoryHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse RepositoriesPythonPythonAddRole(ctx, pythonPythonRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Add a role
 
@@ -38,16 +39,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonAddRole(context.Background(), pythonPythonRepositoryHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonAddRole(context.Background(), pythonPythonRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -74,6 +76,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -95,7 +98,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonCreate
 
-> PythonPythonRepositoryResponse RepositoriesPythonPythonCreate(ctx, pulpDomain).PythonPythonRepository(pythonPythonRepository).Execute()
+> PythonPythonRepositoryResponse RepositoriesPythonPythonCreate(ctx, pulpDomain).PythonPythonRepository(pythonPythonRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a python repository
 
@@ -110,16 +113,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	pythonPythonRepository := *openapiclient.NewPythonPythonRepository("Name_example") // PythonPythonRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonCreate(context.Background(), pulpDomain).PythonPythonRepository(pythonPythonRepository).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonCreate(context.Background(), pulpDomain).PythonPythonRepository(pythonPythonRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -146,6 +150,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **pythonPythonRepository** | [**PythonPythonRepository**](PythonPythonRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -167,7 +172,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonDelete
 
-> AsyncOperationResponse RepositoriesPythonPythonDelete(ctx, pythonPythonRepositoryHref).Execute()
+> AsyncOperationResponse RepositoriesPythonPythonDelete(ctx, pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a python repository
 
@@ -182,15 +187,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonDelete(context.Background(), pythonPythonRepositoryHref).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonDelete(context.Background(), pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -216,6 +222,7 @@ Other parameters are passed through a pointer to a apiRepositoriesPythonPythonDe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -237,7 +244,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonList
 
-> PaginatedpythonPythonRepositoryResponseList RepositoriesPythonPythonList(ctx, pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedpythonPythonRepositoryResponseList RepositoriesPythonPythonList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List python repositorys
 
@@ -252,11 +259,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	latestWithContent := "latestWithContent_example" // string | Content Unit referenced by HREF/PRN (optional)
 	limit := int32(56) // int32 | Number of results to return per page. (optional)
 	name := "name_example" // string | Filter results where name matches value (optional)
@@ -290,7 +298,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonList(context.Background(), pulpDomain).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).LatestWithContent(latestWithContent).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Remote(remote).RetainRepoVersions(retainRepoVersions).RetainRepoVersionsGt(retainRepoVersionsGt).RetainRepoVersionsGte(retainRepoVersionsGte).RetainRepoVersionsIsnull(retainRepoVersionsIsnull).RetainRepoVersionsLt(retainRepoVersionsLt).RetainRepoVersionsLte(retainRepoVersionsLte).RetainRepoVersionsNe(retainRepoVersionsNe).RetainRepoVersionsRange(retainRepoVersionsRange).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -316,6 +324,7 @@ Other parameters are passed through a pointer to a apiRepositoriesPythonPythonLi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **latestWithContent** | **string** | Content Unit referenced by HREF/PRN | 
  **limit** | **int32** | Number of results to return per page. | 
  **name** | **string** | Filter results where name matches value | 
@@ -367,7 +376,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonListRoles
 
-> ObjectRolesResponse RepositoriesPythonPythonListRoles(ctx, pythonPythonRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ObjectRolesResponse RepositoriesPythonPythonListRoles(ctx, pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List roles
 
@@ -382,17 +391,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonListRoles(context.Background(), pythonPythonRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonListRoles(context.Background(), pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonListRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -418,6 +428,7 @@ Other parameters are passed through a pointer to a apiRepositoriesPythonPythonLi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -441,7 +452,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonModify
 
-> AsyncOperationResponse RepositoriesPythonPythonModify(ctx, pythonPythonRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).Execute()
+> AsyncOperationResponse RepositoriesPythonPythonModify(ctx, pythonPythonRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Modify Repository Content
 
@@ -456,16 +467,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	repositoryAddRemoveContent := *openapiclient.NewRepositoryAddRemoveContent() // RepositoryAddRemoveContent | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonModify(context.Background(), pythonPythonRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonModify(context.Background(), pythonPythonRepositoryHref).RepositoryAddRemoveContent(repositoryAddRemoveContent).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonModify``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -492,6 +504,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositoryAddRemoveContent** | [**RepositoryAddRemoveContent**](RepositoryAddRemoveContent.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -513,7 +526,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonMyPermissions
 
-> MyPermissionsResponse RepositoriesPythonPythonMyPermissions(ctx, pythonPythonRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MyPermissionsResponse RepositoriesPythonPythonMyPermissions(ctx, pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List user permissions
 
@@ -528,17 +541,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonMyPermissions(context.Background(), pythonPythonRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonMyPermissions(context.Background(), pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonMyPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -564,6 +578,7 @@ Other parameters are passed through a pointer to a apiRepositoriesPythonPythonMy
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -587,7 +602,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonPartialUpdate
 
-> AsyncOperationResponse RepositoriesPythonPythonPartialUpdate(ctx, pythonPythonRepositoryHref).PatchedpythonPythonRepository(patchedpythonPythonRepository).Execute()
+> PythonPythonRepositoryResponse RepositoriesPythonPythonPartialUpdate(ctx, pythonPythonRepositoryHref).PatchedpythonPythonRepository(patchedpythonPythonRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a python repository
 
@@ -602,21 +617,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	patchedpythonPythonRepository := *openapiclient.NewPatchedpythonPythonRepository() // PatchedpythonPythonRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonPartialUpdate(context.Background(), pythonPythonRepositoryHref).PatchedpythonPythonRepository(patchedpythonPythonRepository).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonPartialUpdate(context.Background(), pythonPythonRepositoryHref).PatchedpythonPythonRepository(patchedpythonPythonRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesPythonPythonPartialUpdate`: AsyncOperationResponse
+	// response from `RepositoriesPythonPythonPartialUpdate`: PythonPythonRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesPythonAPI.RepositoriesPythonPythonPartialUpdate`: %v\n", resp)
 }
 ```
@@ -638,10 +654,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedpythonPythonRepository** | [**PatchedpythonPythonRepository**](PatchedpythonPythonRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**PythonPythonRepositoryResponse**](PythonPythonRepositoryResponse.md)
 
 ### Authorization
 
@@ -659,7 +676,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonRead
 
-> PythonPythonRepositoryResponse RepositoriesPythonPythonRead(ctx, pythonPythonRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PythonPythonRepositoryResponse RepositoriesPythonPythonRead(ctx, pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a python repository
 
@@ -674,17 +691,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonRead(context.Background(), pythonPythonRepositoryHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonRead(context.Background(), pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -710,6 +728,7 @@ Other parameters are passed through a pointer to a apiRepositoriesPythonPythonRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -733,7 +752,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonRemoveRole
 
-> NestedRoleResponse RepositoriesPythonPythonRemoveRole(ctx, pythonPythonRepositoryHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse RepositoriesPythonPythonRemoveRole(ctx, pythonPythonRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Remove a role
 
@@ -748,16 +767,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonRemoveRole(context.Background(), pythonPythonRepositoryHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonRemoveRole(context.Background(), pythonPythonRepositoryHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -784,6 +804,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -803,9 +824,81 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## RepositoriesPythonPythonRepairMetadata
+
+> AsyncOperationResponse RepositoriesPythonPythonRepairMetadata(ctx, pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
+
+Repair metadata
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/content-services/zest/release/v2024"
+)
+
+func main() {
+	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonRepairMetadata(context.Background(), pythonPythonRepositoryHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonRepairMetadata``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RepositoriesPythonPythonRepairMetadata`: AsyncOperationResponse
+	fmt.Fprintf(os.Stdout, "Response from `RepositoriesPythonAPI.RepositoriesPythonPythonRepairMetadata`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**pythonPythonRepositoryHref** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRepositoriesPythonPythonRepairMetadataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
+
+### Return type
+
+[**AsyncOperationResponse**](AsyncOperationResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth), [cookieAuth](../README.md#cookieAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RepositoriesPythonPythonSetLabel
 
-> SetLabelResponse RepositoriesPythonPythonSetLabel(ctx, pythonPythonRepositoryHref).SetLabel(setLabel).Execute()
+> SetLabelResponse RepositoriesPythonPythonSetLabel(ctx, pythonPythonRepositoryHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -820,16 +913,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonSetLabel(context.Background(), pythonPythonRepositoryHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonSetLabel(context.Background(), pythonPythonRepositoryHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -856,6 +950,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -877,7 +972,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonSync
 
-> AsyncOperationResponse RepositoriesPythonPythonSync(ctx, pythonPythonRepositoryHref).RepositorySyncURL(repositorySyncURL).Execute()
+> AsyncOperationResponse RepositoriesPythonPythonSync(ctx, pythonPythonRepositoryHref).RepositorySyncURL(repositorySyncURL).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Sync from remote
 
@@ -892,16 +987,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	repositorySyncURL := *openapiclient.NewRepositorySyncURL() // RepositorySyncURL | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonSync(context.Background(), pythonPythonRepositoryHref).RepositorySyncURL(repositorySyncURL).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonSync(context.Background(), pythonPythonRepositoryHref).RepositorySyncURL(repositorySyncURL).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonSync``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -928,6 +1024,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **repositorySyncURL** | [**RepositorySyncURL**](RepositorySyncURL.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -949,7 +1046,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonUnsetLabel
 
-> UnsetLabelResponse RepositoriesPythonPythonUnsetLabel(ctx, pythonPythonRepositoryHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse RepositoriesPythonPythonUnsetLabel(ctx, pythonPythonRepositoryHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -964,16 +1061,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonUnsetLabel(context.Background(), pythonPythonRepositoryHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonUnsetLabel(context.Background(), pythonPythonRepositoryHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1000,6 +1098,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -1021,7 +1120,7 @@ Name | Type | Description  | Notes
 
 ## RepositoriesPythonPythonUpdate
 
-> AsyncOperationResponse RepositoriesPythonPythonUpdate(ctx, pythonPythonRepositoryHref).PythonPythonRepository(pythonPythonRepository).Execute()
+> PythonPythonRepositoryResponse RepositoriesPythonPythonUpdate(ctx, pythonPythonRepositoryHref).PythonPythonRepository(pythonPythonRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a python repository
 
@@ -1036,21 +1135,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pythonPythonRepositoryHref := "pythonPythonRepositoryHref_example" // string | 
 	pythonPythonRepository := *openapiclient.NewPythonPythonRepository("Name_example") // PythonPythonRepository | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonUpdate(context.Background(), pythonPythonRepositoryHref).PythonPythonRepository(pythonPythonRepository).Execute()
+	resp, r, err := apiClient.RepositoriesPythonAPI.RepositoriesPythonPythonUpdate(context.Background(), pythonPythonRepositoryHref).PythonPythonRepository(pythonPythonRepository).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesPythonAPI.RepositoriesPythonPythonUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `RepositoriesPythonPythonUpdate`: AsyncOperationResponse
+	// response from `RepositoriesPythonPythonUpdate`: PythonPythonRepositoryResponse
 	fmt.Fprintf(os.Stdout, "Response from `RepositoriesPythonAPI.RepositoriesPythonPythonUpdate`: %v\n", resp)
 }
 ```
@@ -1072,10 +1172,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **pythonPythonRepository** | [**PythonPythonRepository**](PythonPythonRepository.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**PythonPythonRepositoryResponse**](PythonPythonRepositoryResponse.md)
 
 ### Authorization
 

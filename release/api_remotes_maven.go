@@ -31,10 +31,17 @@ type RemotesMavenAPIRemotesMavenMavenCreateRequest struct {
 	ApiService *RemotesMavenAPIService
 	pulpDomain string
 	mavenMavenRemote *MavenMavenRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesMavenAPIRemotesMavenMavenCreateRequest) MavenMavenRemote(mavenMavenRemote MavenMavenRemote) RemotesMavenAPIRemotesMavenMavenCreateRequest {
 	r.mavenMavenRemote = &mavenMavenRemote
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenCreateExecute(r RemotesMavenAP
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/maven/maven/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenCreateExecute(r RemotesMavenAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenRemote
@@ -145,6 +155,13 @@ type RemotesMavenAPIRemotesMavenMavenDeleteRequest struct {
 	ctx context.Context
 	ApiService *RemotesMavenAPIService
 	mavenMavenRemoteHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RemotesMavenAPIRemotesMavenMavenDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -185,7 +202,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenDeleteExecute(r RemotesMavenAP
 
 	localVarPath := localBasePath + "/{maven_maven_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_remote_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRemoteHref, "mavenMavenRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -207,6 +224,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenDeleteExecute(r RemotesMavenAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -249,6 +269,7 @@ type RemotesMavenAPIRemotesMavenMavenListRequest struct {
 	ctx context.Context
 	ApiService *RemotesMavenAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -275,6 +296,12 @@ type RemotesMavenAPIRemotesMavenMavenListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -471,7 +498,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenListExecute(r RemotesMavenAPIR
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/maven/maven/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -588,6 +615,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenListExecute(r RemotesMavenAPIR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -630,6 +660,7 @@ type RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest struct {
 	ApiService *RemotesMavenAPIService
 	mavenMavenRemoteHref string
 	patchedmavenMavenRemote *PatchedmavenMavenRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) PatchedmavenMavenRemote(patchedmavenMavenRemote PatchedmavenMavenRemote) RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest {
@@ -637,14 +668,20 @@ func (r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) PatchedmavenMavenR
 	return r
 }
 
-func (r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) Execute() (*MavenMavenRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesMavenMavenPartialUpdateExecute(r)
 }
 
 /*
 RemotesMavenMavenPartialUpdate Update a maven remote
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param mavenMavenRemoteHref
@@ -659,13 +696,13 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenPartialUpdate(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesMavenAPIService) RemotesMavenMavenPartialUpdateExecute(r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return MavenMavenRemoteResponse
+func (a *RemotesMavenAPIService) RemotesMavenMavenPartialUpdateExecute(r RemotesMavenAPIRemotesMavenMavenPartialUpdateRequest) (*MavenMavenRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *MavenMavenRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesMavenAPIService.RemotesMavenMavenPartialUpdate")
@@ -675,7 +712,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenPartialUpdateExecute(r Remotes
 
 	localVarPath := localBasePath + "/{maven_maven_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_remote_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRemoteHref, "mavenMavenRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -700,6 +737,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenPartialUpdateExecute(r Remotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedmavenMavenRemote
@@ -744,8 +784,15 @@ type RemotesMavenAPIRemotesMavenMavenReadRequest struct {
 	ctx context.Context
 	ApiService *RemotesMavenAPIService
 	mavenMavenRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -798,7 +845,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenReadExecute(r RemotesMavenAPIR
 
 	localVarPath := localBasePath + "/{maven_maven_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_remote_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRemoteHref, "mavenMavenRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -843,6 +890,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenReadExecute(r RemotesMavenAPIR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -885,10 +935,17 @@ type RemotesMavenAPIRemotesMavenMavenSetLabelRequest struct {
 	ApiService *RemotesMavenAPIService
 	mavenMavenRemoteHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesMavenAPIRemotesMavenMavenSetLabelRequest) SetLabel(setLabel SetLabel) RemotesMavenAPIRemotesMavenMavenSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -930,7 +987,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenSetLabelExecute(r RemotesMaven
 
 	localVarPath := localBasePath + "/{maven_maven_remote_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_remote_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRemoteHref, "mavenMavenRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -955,6 +1012,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenSetLabelExecute(r RemotesMaven
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1000,10 +1060,17 @@ type RemotesMavenAPIRemotesMavenMavenUnsetLabelRequest struct {
 	ApiService *RemotesMavenAPIService
 	mavenMavenRemoteHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesMavenAPIRemotesMavenMavenUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RemotesMavenAPIRemotesMavenMavenUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1045,7 +1112,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenUnsetLabelExecute(r RemotesMav
 
 	localVarPath := localBasePath + "/{maven_maven_remote_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_remote_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRemoteHref, "mavenMavenRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1070,6 +1137,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenUnsetLabelExecute(r RemotesMav
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1115,6 +1185,7 @@ type RemotesMavenAPIRemotesMavenMavenUpdateRequest struct {
 	ApiService *RemotesMavenAPIService
 	mavenMavenRemoteHref string
 	mavenMavenRemote *MavenMavenRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesMavenAPIRemotesMavenMavenUpdateRequest) MavenMavenRemote(mavenMavenRemote MavenMavenRemote) RemotesMavenAPIRemotesMavenMavenUpdateRequest {
@@ -1122,14 +1193,20 @@ func (r RemotesMavenAPIRemotesMavenMavenUpdateRequest) MavenMavenRemote(mavenMav
 	return r
 }
 
-func (r RemotesMavenAPIRemotesMavenMavenUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesMavenAPIRemotesMavenMavenUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesMavenAPIRemotesMavenMavenUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesMavenAPIRemotesMavenMavenUpdateRequest) Execute() (*MavenMavenRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesMavenMavenUpdateExecute(r)
 }
 
 /*
 RemotesMavenMavenUpdate Update a maven remote
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param mavenMavenRemoteHref
@@ -1144,13 +1221,13 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenUpdate(ctx context.Context, ma
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesMavenAPIService) RemotesMavenMavenUpdateExecute(r RemotesMavenAPIRemotesMavenMavenUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return MavenMavenRemoteResponse
+func (a *RemotesMavenAPIService) RemotesMavenMavenUpdateExecute(r RemotesMavenAPIRemotesMavenMavenUpdateRequest) (*MavenMavenRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *MavenMavenRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesMavenAPIService.RemotesMavenMavenUpdate")
@@ -1160,7 +1237,7 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenUpdateExecute(r RemotesMavenAP
 
 	localVarPath := localBasePath + "/{maven_maven_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"maven_maven_remote_href"+"}", url.PathEscape(parameterValueToString(r.mavenMavenRemoteHref, "mavenMavenRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1185,6 +1262,9 @@ func (a *RemotesMavenAPIService) RemotesMavenMavenUpdateExecute(r RemotesMavenAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.mavenMavenRemote

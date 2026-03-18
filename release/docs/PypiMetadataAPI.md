@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ApiPulpPypiPypiRead**](PypiMetadataAPI.md#ApiPulpPypiPypiRead) | **Get** /api/pulp/pypi/{pulp_domain}/{path}/pypi/{meta}/ | Get package metadata
+[**ApiPypiPypiRead**](PypiMetadataAPI.md#ApiPypiPypiRead) | **Get** /api/pypi/{pulp_domain}/{path}/pypi/{meta}/ | Get package metadata
 
 
 
-## ApiPulpPypiPypiRead
+## ApiPypiPypiRead
 
-> PackageMetadataResponse ApiPulpPypiPypiRead(ctx, meta, path, pulpDomain).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PackageMetadataResponse ApiPypiPypiRead(ctx, meta, path, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Get package metadata
 
@@ -25,25 +25,26 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	meta := "meta_example" // string | 
 	path := "path_example" // string | 
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PypiMetadataAPI.ApiPulpPypiPypiRead(context.Background(), meta, path, pulpDomain).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.PypiMetadataAPI.ApiPypiPypiRead(context.Background(), meta, path, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `PypiMetadataAPI.ApiPulpPypiPypiRead``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `PypiMetadataAPI.ApiPypiPypiRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ApiPulpPypiPypiRead`: PackageMetadataResponse
-	fmt.Fprintf(os.Stdout, "Response from `PypiMetadataAPI.ApiPulpPypiPypiRead`: %v\n", resp)
+	// response from `ApiPypiPypiRead`: PackageMetadataResponse
+	fmt.Fprintf(os.Stdout, "Response from `PypiMetadataAPI.ApiPypiPypiRead`: %v\n", resp)
 }
 ```
 
@@ -59,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiApiPulpPypiPypiReadRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiApiPypiPypiReadRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -67,6 +68,7 @@ Name | Type | Description  | Notes
 
 
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 

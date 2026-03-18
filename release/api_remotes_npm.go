@@ -31,10 +31,17 @@ type RemotesNpmAPIRemotesNpmNpmCreateRequest struct {
 	ApiService *RemotesNpmAPIService
 	pulpDomain string
 	npmNpmRemote *NpmNpmRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesNpmAPIRemotesNpmNpmCreateRequest) NpmNpmRemote(npmNpmRemote NpmNpmRemote) RemotesNpmAPIRemotesNpmNpmCreateRequest {
 	r.npmNpmRemote = &npmNpmRemote
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -45,7 +52,7 @@ func (r RemotesNpmAPIRemotesNpmNpmCreateRequest) Execute() (*NpmNpmRemoteRespons
 /*
 RemotesNpmNpmCreate Create a npm remote
 
-A ViewSet for NpmRemote.Similar to the PackageViewSet above, define endpoint_name,queryset and serializer, at a minimum.
+A ViewSet for NpmRemote.Similar to the NpmPackageViewSet above, define endpoint_name,queryset and serializer, at a minimum.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param pulpDomain
@@ -76,7 +83,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmCreateExecute(r RemotesNpmAPIRemotes
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/npm/npm/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmCreateExecute(r RemotesNpmAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.npmNpmRemote
@@ -145,6 +155,13 @@ type RemotesNpmAPIRemotesNpmNpmDeleteRequest struct {
 	ctx context.Context
 	ApiService *RemotesNpmAPIService
 	npmNpmRemoteHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RemotesNpmAPIRemotesNpmNpmDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -185,7 +202,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmDeleteExecute(r RemotesNpmAPIRemotes
 
 	localVarPath := localBasePath + "/{npm_npm_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_remote_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmRemoteHref, "npmNpmRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -207,6 +224,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmDeleteExecute(r RemotesNpmAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -249,6 +269,7 @@ type RemotesNpmAPIRemotesNpmNpmListRequest struct {
 	ctx context.Context
 	ApiService *RemotesNpmAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -275,6 +296,12 @@ type RemotesNpmAPIRemotesNpmNpmListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -440,7 +467,7 @@ func (r RemotesNpmAPIRemotesNpmNpmListRequest) Execute() (*PaginatednpmNpmRemote
 /*
 RemotesNpmNpmList List npm remotes
 
-A ViewSet for NpmRemote.Similar to the PackageViewSet above, define endpoint_name,queryset and serializer, at a minimum.
+A ViewSet for NpmRemote.Similar to the NpmPackageViewSet above, define endpoint_name,queryset and serializer, at a minimum.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param pulpDomain
@@ -471,7 +498,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmListExecute(r RemotesNpmAPIRemotesNp
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/npm/npm/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -588,6 +615,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmListExecute(r RemotesNpmAPIRemotesNp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -630,6 +660,7 @@ type RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest struct {
 	ApiService *RemotesNpmAPIService
 	npmNpmRemoteHref string
 	patchednpmNpmRemote *PatchednpmNpmRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) PatchednpmNpmRemote(patchednpmNpmRemote PatchednpmNpmRemote) RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest {
@@ -637,14 +668,20 @@ func (r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) PatchednpmNpmRemote(patc
 	return r
 }
 
-func (r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) Execute() (*NpmNpmRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesNpmNpmPartialUpdateExecute(r)
 }
 
 /*
 RemotesNpmNpmPartialUpdate Update a npm remote
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param npmNpmRemoteHref
@@ -659,13 +696,13 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmPartialUpdate(ctx context.Context, n
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesNpmAPIService) RemotesNpmNpmPartialUpdateExecute(r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return NpmNpmRemoteResponse
+func (a *RemotesNpmAPIService) RemotesNpmNpmPartialUpdateExecute(r RemotesNpmAPIRemotesNpmNpmPartialUpdateRequest) (*NpmNpmRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *NpmNpmRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesNpmAPIService.RemotesNpmNpmPartialUpdate")
@@ -675,7 +712,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmPartialUpdateExecute(r RemotesNpmAPI
 
 	localVarPath := localBasePath + "/{npm_npm_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_remote_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmRemoteHref, "npmNpmRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -700,6 +737,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmPartialUpdateExecute(r RemotesNpmAPI
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchednpmNpmRemote
@@ -744,8 +784,15 @@ type RemotesNpmAPIRemotesNpmNpmReadRequest struct {
 	ctx context.Context
 	ApiService *RemotesNpmAPIService
 	npmNpmRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -767,7 +814,7 @@ func (r RemotesNpmAPIRemotesNpmNpmReadRequest) Execute() (*NpmNpmRemoteResponse,
 /*
 RemotesNpmNpmRead Inspect a npm remote
 
-A ViewSet for NpmRemote.Similar to the PackageViewSet above, define endpoint_name,queryset and serializer, at a minimum.
+A ViewSet for NpmRemote.Similar to the NpmPackageViewSet above, define endpoint_name,queryset and serializer, at a minimum.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param npmNpmRemoteHref
@@ -798,7 +845,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmReadExecute(r RemotesNpmAPIRemotesNp
 
 	localVarPath := localBasePath + "/{npm_npm_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_remote_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmRemoteHref, "npmNpmRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -843,6 +890,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmReadExecute(r RemotesNpmAPIRemotesNp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -885,10 +935,17 @@ type RemotesNpmAPIRemotesNpmNpmSetLabelRequest struct {
 	ApiService *RemotesNpmAPIService
 	npmNpmRemoteHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesNpmAPIRemotesNpmNpmSetLabelRequest) SetLabel(setLabel SetLabel) RemotesNpmAPIRemotesNpmNpmSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -930,7 +987,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmSetLabelExecute(r RemotesNpmAPIRemot
 
 	localVarPath := localBasePath + "/{npm_npm_remote_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_remote_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmRemoteHref, "npmNpmRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -955,6 +1012,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmSetLabelExecute(r RemotesNpmAPIRemot
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1000,10 +1060,17 @@ type RemotesNpmAPIRemotesNpmNpmUnsetLabelRequest struct {
 	ApiService *RemotesNpmAPIService
 	npmNpmRemoteHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesNpmAPIRemotesNpmNpmUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RemotesNpmAPIRemotesNpmNpmUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1045,7 +1112,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmUnsetLabelExecute(r RemotesNpmAPIRem
 
 	localVarPath := localBasePath + "/{npm_npm_remote_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_remote_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmRemoteHref, "npmNpmRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1070,6 +1137,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmUnsetLabelExecute(r RemotesNpmAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1115,6 +1185,7 @@ type RemotesNpmAPIRemotesNpmNpmUpdateRequest struct {
 	ApiService *RemotesNpmAPIService
 	npmNpmRemoteHref string
 	npmNpmRemote *NpmNpmRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesNpmAPIRemotesNpmNpmUpdateRequest) NpmNpmRemote(npmNpmRemote NpmNpmRemote) RemotesNpmAPIRemotesNpmNpmUpdateRequest {
@@ -1122,14 +1193,20 @@ func (r RemotesNpmAPIRemotesNpmNpmUpdateRequest) NpmNpmRemote(npmNpmRemote NpmNp
 	return r
 }
 
-func (r RemotesNpmAPIRemotesNpmNpmUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesNpmAPIRemotesNpmNpmUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesNpmAPIRemotesNpmNpmUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesNpmAPIRemotesNpmNpmUpdateRequest) Execute() (*NpmNpmRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesNpmNpmUpdateExecute(r)
 }
 
 /*
 RemotesNpmNpmUpdate Update a npm remote
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param npmNpmRemoteHref
@@ -1144,13 +1221,13 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmUpdate(ctx context.Context, npmNpmRe
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesNpmAPIService) RemotesNpmNpmUpdateExecute(r RemotesNpmAPIRemotesNpmNpmUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return NpmNpmRemoteResponse
+func (a *RemotesNpmAPIService) RemotesNpmNpmUpdateExecute(r RemotesNpmAPIRemotesNpmNpmUpdateRequest) (*NpmNpmRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *NpmNpmRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesNpmAPIService.RemotesNpmNpmUpdate")
@@ -1160,7 +1237,7 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmUpdateExecute(r RemotesNpmAPIRemotes
 
 	localVarPath := localBasePath + "/{npm_npm_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"npm_npm_remote_href"+"}", url.PathEscape(parameterValueToString(r.npmNpmRemoteHref, "npmNpmRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1185,6 +1262,9 @@ func (a *RemotesNpmAPIService) RemotesNpmNpmUpdateExecute(r RemotesNpmAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.npmNpmRemote

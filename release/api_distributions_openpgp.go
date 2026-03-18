@@ -30,10 +30,17 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpCreateRequest struct {
 	ApiService *DistributionsOpenpgpAPIService
 	pulpDomain string
 	openPGPDistribution *OpenPGPDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpCreateRequest) OpenPGPDistribution(openPGPDistribution OpenPGPDistribution) DistributionsOpenpgpAPIDistributionsCoreOpenpgpCreateRequest {
 	r.openPGPDistribution = &openPGPDistribution
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpCreateExecute(r
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/distributions/core/openpgp/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpCreateExecute(r
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.openPGPDistribution
@@ -144,6 +154,13 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpDeleteRequest struct {
 	ctx context.Context
 	ApiService *DistributionsOpenpgpAPIService
 	openPGPDistributionHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -184,7 +201,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpDeleteExecute(r
 
 	localVarPath := localBasePath + "/{open_p_g_p_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_distribution_href"+"}", url.PathEscape(parameterValueToString(r.openPGPDistributionHref, "openPGPDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -206,6 +223,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpDeleteExecute(r
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -248,6 +268,7 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpListRequest struct {
 	ctx context.Context
 	ApiService *DistributionsOpenpgpAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	offset *int32
 	ordering *[]string
@@ -260,6 +281,12 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpListRequest struct {
 	withContent *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpListRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -372,7 +399,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpListExecute(r D
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/distributions/core/openpgp/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -447,6 +474,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpListExecute(r D
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -489,6 +519,7 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest struct 
 	ApiService *DistributionsOpenpgpAPIService
 	openPGPDistributionHref string
 	patchedOpenPGPDistribution *PatchedOpenPGPDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) PatchedOpenPGPDistribution(patchedOpenPGPDistribution PatchedOpenPGPDistribution) DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest {
@@ -496,14 +527,20 @@ func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) Pat
 	return r
 }
 
-func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) Execute() (*OpenPGPDistributionResponse, *http.Response, error) {
 	return r.ApiService.DistributionsCoreOpenpgpPartialUpdateExecute(r)
 }
 
 /*
 DistributionsCoreOpenpgpPartialUpdate Update an open pgp distribution
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param openPGPDistributionHref
@@ -518,13 +555,13 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpPartialUpdate(c
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpPartialUpdateExecute(r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return OpenPGPDistributionResponse
+func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpPartialUpdateExecute(r DistributionsOpenpgpAPIDistributionsCoreOpenpgpPartialUpdateRequest) (*OpenPGPDistributionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *OpenPGPDistributionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DistributionsOpenpgpAPIService.DistributionsCoreOpenpgpPartialUpdate")
@@ -534,7 +571,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpPartialUpdateEx
 
 	localVarPath := localBasePath + "/{open_p_g_p_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_distribution_href"+"}", url.PathEscape(parameterValueToString(r.openPGPDistributionHref, "openPGPDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -559,6 +596,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpPartialUpdateEx
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedOpenPGPDistribution
@@ -603,8 +643,15 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpReadRequest struct {
 	ctx context.Context
 	ApiService *DistributionsOpenpgpAPIService
 	openPGPDistributionHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -657,7 +704,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpReadExecute(r D
 
 	localVarPath := localBasePath + "/{open_p_g_p_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_distribution_href"+"}", url.PathEscape(parameterValueToString(r.openPGPDistributionHref, "openPGPDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -702,6 +749,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpReadExecute(r D
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -744,10 +794,17 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpSetLabelRequest struct {
 	ApiService *DistributionsOpenpgpAPIService
 	openPGPDistributionHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpSetLabelRequest) SetLabel(setLabel SetLabel) DistributionsOpenpgpAPIDistributionsCoreOpenpgpSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -789,7 +846,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpSetLabelExecute
 
 	localVarPath := localBasePath + "/{open_p_g_p_distribution_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_distribution_href"+"}", url.PathEscape(parameterValueToString(r.openPGPDistributionHref, "openPGPDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -814,6 +871,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpSetLabelExecute
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -859,10 +919,17 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpUnsetLabelRequest struct {
 	ApiService *DistributionsOpenpgpAPIService
 	openPGPDistributionHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) DistributionsOpenpgpAPIDistributionsCoreOpenpgpUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -904,7 +971,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUnsetLabelExecu
 
 	localVarPath := localBasePath + "/{open_p_g_p_distribution_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_distribution_href"+"}", url.PathEscape(parameterValueToString(r.openPGPDistributionHref, "openPGPDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -929,6 +996,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUnsetLabelExecu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -974,6 +1044,7 @@ type DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest struct {
 	ApiService *DistributionsOpenpgpAPIService
 	openPGPDistributionHref string
 	openPGPDistribution *OpenPGPDistribution
+	xTaskDiagnostics *[]string
 }
 
 func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) OpenPGPDistribution(openPGPDistribution OpenPGPDistribution) DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest {
@@ -981,14 +1052,20 @@ func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) OpenPGPDis
 	return r
 }
 
-func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) Execute() (*OpenPGPDistributionResponse, *http.Response, error) {
 	return r.ApiService.DistributionsCoreOpenpgpUpdateExecute(r)
 }
 
 /*
 DistributionsCoreOpenpgpUpdate Update an open pgp distribution
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param openPGPDistributionHref
@@ -1003,13 +1080,13 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUpdate(ctx cont
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUpdateExecute(r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return OpenPGPDistributionResponse
+func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUpdateExecute(r DistributionsOpenpgpAPIDistributionsCoreOpenpgpUpdateRequest) (*OpenPGPDistributionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *OpenPGPDistributionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DistributionsOpenpgpAPIService.DistributionsCoreOpenpgpUpdate")
@@ -1019,7 +1096,7 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUpdateExecute(r
 
 	localVarPath := localBasePath + "/{open_p_g_p_distribution_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_distribution_href"+"}", url.PathEscape(parameterValueToString(r.openPGPDistributionHref, "openPGPDistributionHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1044,6 +1121,9 @@ func (a *DistributionsOpenpgpAPIService) DistributionsCoreOpenpgpUpdateExecute(r
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.openPGPDistribution

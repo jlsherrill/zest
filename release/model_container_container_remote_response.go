@@ -33,6 +33,11 @@ type ContainerContainerRemoteResponse struct {
 	Name string `json:"name"`
 	// The URL of an external content source.
 	Url string `json:"url"`
+	PulpLabels *map[string]string `json:"pulp_labels,omitempty"`
+	//         immediate - All manifests and blobs are downloaded and saved during a sync.        on_demand - Only tags and manifests are downloaded. Blobs are not                    downloaded until they are requested for the first time by a client.        streamed - Blobs are streamed to the client with every request and never saved.        * `immediate` - When syncing, download all metadata and content now.* `on_demand` - When syncing, download metadata, but do not download content now. Instead, download content as clients request it, and save it in Pulp to be served for future client requests.* `streamed` - When syncing, download metadata, but do not download content now. Instead,download content as clients request it, but never save it in Pulp. This causes future requests for that same content to have to be downloaded again.
+	Policy *Policy692Enum `json:"policy,omitempty"`
+	// List of hidden (write only) fields
+	HiddenFields []GenericRemoteResponseHiddenFieldsInner `json:"hidden_fields,omitempty"`
 	// A PEM encoded CA certificate used to validate the server certificate presented by the remote server.
 	CaCert NullableString `json:"ca_cert,omitempty"`
 	// A PEM encoded client certificate used for authentication.
@@ -41,13 +46,8 @@ type ContainerContainerRemoteResponse struct {
 	TlsValidation *bool `json:"tls_validation,omitempty"`
 	// The proxy URL. Format: scheme://host:port
 	ProxyUrl NullableString `json:"proxy_url,omitempty"`
-	PulpLabels *map[string]string `json:"pulp_labels,omitempty"`
-	// Total number of simultaneous connections. If not set then the default value will be used.
-	DownloadConcurrency NullableInt64 `json:"download_concurrency,omitempty"`
 	// Maximum number of retry attempts after a download failure. If not set then the default value (3) will be used.
 	MaxRetries NullableInt64 `json:"max_retries,omitempty"`
-	//         immediate - All manifests and blobs are downloaded and saved during a sync.        on_demand - Only tags and manifests are downloaded. Blobs are not                    downloaded until they are requested for the first time by a client.        streamed - Blobs are streamed to the client with every request and never saved.        * `immediate` - When syncing, download all metadata and content now.* `on_demand` - When syncing, download metadata, but do not download content now. Instead, download content as clients request it, and save it in Pulp to be served for future client requests.* `streamed` - When syncing, download metadata, but do not download content now. Instead,download content as clients request it, but never save it in Pulp. This causes future requests for that same content to have to be downloaded again.
-	Policy *Policy692Enum `json:"policy,omitempty"`
 	// aiohttp.ClientTimeout.total (q.v.) for download-connections. The default is null, which will cause the default from the aiohttp library to be used.
 	TotalTimeout NullableFloat64 `json:"total_timeout,omitempty"`
 	// aiohttp.ClientTimeout.connect (q.v.) for download-connections. The default is null, which will cause the default from the aiohttp library to be used.
@@ -58,10 +58,10 @@ type ContainerContainerRemoteResponse struct {
 	SockReadTimeout NullableFloat64 `json:"sock_read_timeout,omitempty"`
 	// Headers for aiohttp.Clientsession
 	Headers []map[string]interface{} `json:"headers,omitempty"`
+	// Total number of simultaneous connections. If not set then the default value will be used.
+	DownloadConcurrency NullableInt64 `json:"download_concurrency,omitempty"`
 	// Limits requests per second for each concurrent downloader
 	RateLimit NullableInt64 `json:"rate_limit,omitempty"`
-	// List of hidden (write only) fields
-	HiddenFields []GenericRemoteResponseHiddenFieldsInner `json:"hidden_fields,omitempty"`
 	// Name of the upstream repository
 	UpstreamName string `json:"upstream_name"`
 	//             A list of tags to include during sync.            Wildcards *, ? are recognized.            'include_tags' is evaluated before 'exclude_tags'.            
@@ -275,6 +275,102 @@ func (o *ContainerContainerRemoteResponse) SetUrl(v string) {
 	o.Url = v
 }
 
+// GetPulpLabels returns the PulpLabels field value if set, zero value otherwise.
+func (o *ContainerContainerRemoteResponse) GetPulpLabels() map[string]string {
+	if o == nil || IsNil(o.PulpLabels) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.PulpLabels
+}
+
+// GetPulpLabelsOk returns a tuple with the PulpLabels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ContainerContainerRemoteResponse) GetPulpLabelsOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.PulpLabels) {
+		return nil, false
+	}
+	return o.PulpLabels, true
+}
+
+// HasPulpLabels returns a boolean if a field has been set.
+func (o *ContainerContainerRemoteResponse) HasPulpLabels() bool {
+	if o != nil && !IsNil(o.PulpLabels) {
+		return true
+	}
+
+	return false
+}
+
+// SetPulpLabels gets a reference to the given map[string]string and assigns it to the PulpLabels field.
+func (o *ContainerContainerRemoteResponse) SetPulpLabels(v map[string]string) {
+	o.PulpLabels = &v
+}
+
+// GetPolicy returns the Policy field value if set, zero value otherwise.
+func (o *ContainerContainerRemoteResponse) GetPolicy() Policy692Enum {
+	if o == nil || IsNil(o.Policy) {
+		var ret Policy692Enum
+		return ret
+	}
+	return *o.Policy
+}
+
+// GetPolicyOk returns a tuple with the Policy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ContainerContainerRemoteResponse) GetPolicyOk() (*Policy692Enum, bool) {
+	if o == nil || IsNil(o.Policy) {
+		return nil, false
+	}
+	return o.Policy, true
+}
+
+// HasPolicy returns a boolean if a field has been set.
+func (o *ContainerContainerRemoteResponse) HasPolicy() bool {
+	if o != nil && !IsNil(o.Policy) {
+		return true
+	}
+
+	return false
+}
+
+// SetPolicy gets a reference to the given Policy692Enum and assigns it to the Policy field.
+func (o *ContainerContainerRemoteResponse) SetPolicy(v Policy692Enum) {
+	o.Policy = &v
+}
+
+// GetHiddenFields returns the HiddenFields field value if set, zero value otherwise.
+func (o *ContainerContainerRemoteResponse) GetHiddenFields() []GenericRemoteResponseHiddenFieldsInner {
+	if o == nil || IsNil(o.HiddenFields) {
+		var ret []GenericRemoteResponseHiddenFieldsInner
+		return ret
+	}
+	return o.HiddenFields
+}
+
+// GetHiddenFieldsOk returns a tuple with the HiddenFields field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ContainerContainerRemoteResponse) GetHiddenFieldsOk() ([]GenericRemoteResponseHiddenFieldsInner, bool) {
+	if o == nil || IsNil(o.HiddenFields) {
+		return nil, false
+	}
+	return o.HiddenFields, true
+}
+
+// HasHiddenFields returns a boolean if a field has been set.
+func (o *ContainerContainerRemoteResponse) HasHiddenFields() bool {
+	if o != nil && !IsNil(o.HiddenFields) {
+		return true
+	}
+
+	return false
+}
+
+// SetHiddenFields gets a reference to the given []GenericRemoteResponseHiddenFieldsInner and assigns it to the HiddenFields field.
+func (o *ContainerContainerRemoteResponse) SetHiddenFields(v []GenericRemoteResponseHiddenFieldsInner) {
+	o.HiddenFields = v
+}
+
 // GetCaCert returns the CaCert field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ContainerContainerRemoteResponse) GetCaCert() string {
 	if o == nil || IsNil(o.CaCert.Get()) {
@@ -433,80 +529,6 @@ func (o *ContainerContainerRemoteResponse) UnsetProxyUrl() {
 	o.ProxyUrl.Unset()
 }
 
-// GetPulpLabels returns the PulpLabels field value if set, zero value otherwise.
-func (o *ContainerContainerRemoteResponse) GetPulpLabels() map[string]string {
-	if o == nil || IsNil(o.PulpLabels) {
-		var ret map[string]string
-		return ret
-	}
-	return *o.PulpLabels
-}
-
-// GetPulpLabelsOk returns a tuple with the PulpLabels field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ContainerContainerRemoteResponse) GetPulpLabelsOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.PulpLabels) {
-		return nil, false
-	}
-	return o.PulpLabels, true
-}
-
-// HasPulpLabels returns a boolean if a field has been set.
-func (o *ContainerContainerRemoteResponse) HasPulpLabels() bool {
-	if o != nil && !IsNil(o.PulpLabels) {
-		return true
-	}
-
-	return false
-}
-
-// SetPulpLabels gets a reference to the given map[string]string and assigns it to the PulpLabels field.
-func (o *ContainerContainerRemoteResponse) SetPulpLabels(v map[string]string) {
-	o.PulpLabels = &v
-}
-
-// GetDownloadConcurrency returns the DownloadConcurrency field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ContainerContainerRemoteResponse) GetDownloadConcurrency() int64 {
-	if o == nil || IsNil(o.DownloadConcurrency.Get()) {
-		var ret int64
-		return ret
-	}
-	return *o.DownloadConcurrency.Get()
-}
-
-// GetDownloadConcurrencyOk returns a tuple with the DownloadConcurrency field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ContainerContainerRemoteResponse) GetDownloadConcurrencyOk() (*int64, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.DownloadConcurrency.Get(), o.DownloadConcurrency.IsSet()
-}
-
-// HasDownloadConcurrency returns a boolean if a field has been set.
-func (o *ContainerContainerRemoteResponse) HasDownloadConcurrency() bool {
-	if o != nil && o.DownloadConcurrency.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetDownloadConcurrency gets a reference to the given NullableInt64 and assigns it to the DownloadConcurrency field.
-func (o *ContainerContainerRemoteResponse) SetDownloadConcurrency(v int64) {
-	o.DownloadConcurrency.Set(&v)
-}
-// SetDownloadConcurrencyNil sets the value for DownloadConcurrency to be an explicit nil
-func (o *ContainerContainerRemoteResponse) SetDownloadConcurrencyNil() {
-	o.DownloadConcurrency.Set(nil)
-}
-
-// UnsetDownloadConcurrency ensures that no value is present for DownloadConcurrency, not even an explicit nil
-func (o *ContainerContainerRemoteResponse) UnsetDownloadConcurrency() {
-	o.DownloadConcurrency.Unset()
-}
-
 // GetMaxRetries returns the MaxRetries field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ContainerContainerRemoteResponse) GetMaxRetries() int64 {
 	if o == nil || IsNil(o.MaxRetries.Get()) {
@@ -547,38 +569,6 @@ func (o *ContainerContainerRemoteResponse) SetMaxRetriesNil() {
 // UnsetMaxRetries ensures that no value is present for MaxRetries, not even an explicit nil
 func (o *ContainerContainerRemoteResponse) UnsetMaxRetries() {
 	o.MaxRetries.Unset()
-}
-
-// GetPolicy returns the Policy field value if set, zero value otherwise.
-func (o *ContainerContainerRemoteResponse) GetPolicy() Policy692Enum {
-	if o == nil || IsNil(o.Policy) {
-		var ret Policy692Enum
-		return ret
-	}
-	return *o.Policy
-}
-
-// GetPolicyOk returns a tuple with the Policy field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ContainerContainerRemoteResponse) GetPolicyOk() (*Policy692Enum, bool) {
-	if o == nil || IsNil(o.Policy) {
-		return nil, false
-	}
-	return o.Policy, true
-}
-
-// HasPolicy returns a boolean if a field has been set.
-func (o *ContainerContainerRemoteResponse) HasPolicy() bool {
-	if o != nil && !IsNil(o.Policy) {
-		return true
-	}
-
-	return false
-}
-
-// SetPolicy gets a reference to the given Policy692Enum and assigns it to the Policy field.
-func (o *ContainerContainerRemoteResponse) SetPolicy(v Policy692Enum) {
-	o.Policy = &v
 }
 
 // GetTotalTimeout returns the TotalTimeout field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -781,6 +771,48 @@ func (o *ContainerContainerRemoteResponse) SetHeaders(v []map[string]interface{}
 	o.Headers = v
 }
 
+// GetDownloadConcurrency returns the DownloadConcurrency field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ContainerContainerRemoteResponse) GetDownloadConcurrency() int64 {
+	if o == nil || IsNil(o.DownloadConcurrency.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.DownloadConcurrency.Get()
+}
+
+// GetDownloadConcurrencyOk returns a tuple with the DownloadConcurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ContainerContainerRemoteResponse) GetDownloadConcurrencyOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DownloadConcurrency.Get(), o.DownloadConcurrency.IsSet()
+}
+
+// HasDownloadConcurrency returns a boolean if a field has been set.
+func (o *ContainerContainerRemoteResponse) HasDownloadConcurrency() bool {
+	if o != nil && o.DownloadConcurrency.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDownloadConcurrency gets a reference to the given NullableInt64 and assigns it to the DownloadConcurrency field.
+func (o *ContainerContainerRemoteResponse) SetDownloadConcurrency(v int64) {
+	o.DownloadConcurrency.Set(&v)
+}
+// SetDownloadConcurrencyNil sets the value for DownloadConcurrency to be an explicit nil
+func (o *ContainerContainerRemoteResponse) SetDownloadConcurrencyNil() {
+	o.DownloadConcurrency.Set(nil)
+}
+
+// UnsetDownloadConcurrency ensures that no value is present for DownloadConcurrency, not even an explicit nil
+func (o *ContainerContainerRemoteResponse) UnsetDownloadConcurrency() {
+	o.DownloadConcurrency.Unset()
+}
+
 // GetRateLimit returns the RateLimit field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ContainerContainerRemoteResponse) GetRateLimit() int64 {
 	if o == nil || IsNil(o.RateLimit.Get()) {
@@ -821,38 +853,6 @@ func (o *ContainerContainerRemoteResponse) SetRateLimitNil() {
 // UnsetRateLimit ensures that no value is present for RateLimit, not even an explicit nil
 func (o *ContainerContainerRemoteResponse) UnsetRateLimit() {
 	o.RateLimit.Unset()
-}
-
-// GetHiddenFields returns the HiddenFields field value if set, zero value otherwise.
-func (o *ContainerContainerRemoteResponse) GetHiddenFields() []GenericRemoteResponseHiddenFieldsInner {
-	if o == nil || IsNil(o.HiddenFields) {
-		var ret []GenericRemoteResponseHiddenFieldsInner
-		return ret
-	}
-	return o.HiddenFields
-}
-
-// GetHiddenFieldsOk returns a tuple with the HiddenFields field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ContainerContainerRemoteResponse) GetHiddenFieldsOk() ([]GenericRemoteResponseHiddenFieldsInner, bool) {
-	if o == nil || IsNil(o.HiddenFields) {
-		return nil, false
-	}
-	return o.HiddenFields, true
-}
-
-// HasHiddenFields returns a boolean if a field has been set.
-func (o *ContainerContainerRemoteResponse) HasHiddenFields() bool {
-	if o != nil && !IsNil(o.HiddenFields) {
-		return true
-	}
-
-	return false
-}
-
-// SetHiddenFields gets a reference to the given []GenericRemoteResponseHiddenFieldsInner and assigns it to the HiddenFields field.
-func (o *ContainerContainerRemoteResponse) SetHiddenFields(v []GenericRemoteResponseHiddenFieldsInner) {
-	o.HiddenFields = v
 }
 
 // GetUpstreamName returns the UpstreamName field value
@@ -1001,6 +1001,15 @@ func (o ContainerContainerRemoteResponse) ToMap() (map[string]interface{}, error
 	}
 	toSerialize["name"] = o.Name
 	toSerialize["url"] = o.Url
+	if !IsNil(o.PulpLabels) {
+		toSerialize["pulp_labels"] = o.PulpLabels
+	}
+	if !IsNil(o.Policy) {
+		toSerialize["policy"] = o.Policy
+	}
+	if !IsNil(o.HiddenFields) {
+		toSerialize["hidden_fields"] = o.HiddenFields
+	}
 	if o.CaCert.IsSet() {
 		toSerialize["ca_cert"] = o.CaCert.Get()
 	}
@@ -1013,17 +1022,8 @@ func (o ContainerContainerRemoteResponse) ToMap() (map[string]interface{}, error
 	if o.ProxyUrl.IsSet() {
 		toSerialize["proxy_url"] = o.ProxyUrl.Get()
 	}
-	if !IsNil(o.PulpLabels) {
-		toSerialize["pulp_labels"] = o.PulpLabels
-	}
-	if o.DownloadConcurrency.IsSet() {
-		toSerialize["download_concurrency"] = o.DownloadConcurrency.Get()
-	}
 	if o.MaxRetries.IsSet() {
 		toSerialize["max_retries"] = o.MaxRetries.Get()
-	}
-	if !IsNil(o.Policy) {
-		toSerialize["policy"] = o.Policy
 	}
 	if o.TotalTimeout.IsSet() {
 		toSerialize["total_timeout"] = o.TotalTimeout.Get()
@@ -1040,11 +1040,11 @@ func (o ContainerContainerRemoteResponse) ToMap() (map[string]interface{}, error
 	if !IsNil(o.Headers) {
 		toSerialize["headers"] = o.Headers
 	}
+	if o.DownloadConcurrency.IsSet() {
+		toSerialize["download_concurrency"] = o.DownloadConcurrency.Get()
+	}
 	if o.RateLimit.IsSet() {
 		toSerialize["rate_limit"] = o.RateLimit.Get()
-	}
-	if !IsNil(o.HiddenFields) {
-		toSerialize["hidden_fields"] = o.HiddenFields
 	}
 	toSerialize["upstream_name"] = o.UpstreamName
 	if o.IncludeTags != nil {
@@ -1107,21 +1107,21 @@ func (o *ContainerContainerRemoteResponse) UnmarshalJSON(data []byte) (err error
 		delete(additionalProperties, "pulp_last_updated")
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "url")
+		delete(additionalProperties, "pulp_labels")
+		delete(additionalProperties, "policy")
+		delete(additionalProperties, "hidden_fields")
 		delete(additionalProperties, "ca_cert")
 		delete(additionalProperties, "client_cert")
 		delete(additionalProperties, "tls_validation")
 		delete(additionalProperties, "proxy_url")
-		delete(additionalProperties, "pulp_labels")
-		delete(additionalProperties, "download_concurrency")
 		delete(additionalProperties, "max_retries")
-		delete(additionalProperties, "policy")
 		delete(additionalProperties, "total_timeout")
 		delete(additionalProperties, "connect_timeout")
 		delete(additionalProperties, "sock_connect_timeout")
 		delete(additionalProperties, "sock_read_timeout")
 		delete(additionalProperties, "headers")
+		delete(additionalProperties, "download_concurrency")
 		delete(additionalProperties, "rate_limit")
-		delete(additionalProperties, "hidden_fields")
 		delete(additionalProperties, "upstream_name")
 		delete(additionalProperties, "include_tags")
 		delete(additionalProperties, "exclude_tags")

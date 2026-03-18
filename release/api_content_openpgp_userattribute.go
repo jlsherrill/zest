@@ -29,6 +29,7 @@ type ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeListRequest st
 	ctx context.Context
 	ApiService *ContentOpenpgpUserattributeAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	offset *int32
 	ordering *[]string
@@ -44,6 +45,12 @@ type ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeListRequest st
 	sha256 *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -174,7 +181,7 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeL
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/core/openpgp_userattribute/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -258,6 +265,9 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeL
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -299,8 +309,15 @@ type ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeReadRequest st
 	ctx context.Context
 	ApiService *ContentOpenpgpUserattributeAPIService
 	openPGPUserAttributeHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -353,7 +370,7 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeR
 
 	localVarPath := localBasePath + "/{open_p_g_p_user_attribute_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_user_attribute_href"+"}", url.PathEscape(parameterValueToString(r.openPGPUserAttributeHref, "openPGPUserAttributeHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -398,6 +415,9 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -440,10 +460,17 @@ type ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeSetLabelReques
 	ApiService *ContentOpenpgpUserattributeAPIService
 	openPGPUserAttributeHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeSetLabelRequest) SetLabel(setLabel SetLabel) ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -485,7 +512,7 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeS
 
 	localVarPath := localBasePath + "/{open_p_g_p_user_attribute_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_user_attribute_href"+"}", url.PathEscape(parameterValueToString(r.openPGPUserAttributeHref, "openPGPUserAttributeHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -510,6 +537,9 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeS
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -555,10 +585,17 @@ type ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeUnsetLabelRequ
 	ApiService *ContentOpenpgpUserattributeAPIService
 	openPGPUserAttributeHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentOpenpgpUserattributeAPIContentCoreOpenpgpUserattributeUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -600,7 +637,7 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeU
 
 	localVarPath := localBasePath + "/{open_p_g_p_user_attribute_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"open_p_g_p_user_attribute_href"+"}", url.PathEscape(parameterValueToString(r.openPGPUserAttributeHref, "openPGPUserAttributeHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -625,6 +662,9 @@ func (a *ContentOpenpgpUserattributeAPIService) ContentCoreOpenpgpUserattributeU
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

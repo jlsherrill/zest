@@ -35,6 +35,8 @@ type RpmPackage struct {
 	Upload *string `json:"upload,omitempty"`
 	// A url that Pulp can download and turn into the content unit.
 	FileUrl *string `json:"file_url,omitempty"`
+	// Configuration for the download process (e.g., proxies, auth, timeouts). Only applicable when providing a 'file_url.
+	DownloaderConfig *RemoteNetworkConfig `json:"downloader_config,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -281,6 +283,38 @@ func (o *RpmPackage) SetFileUrl(v string) {
 	o.FileUrl = &v
 }
 
+// GetDownloaderConfig returns the DownloaderConfig field value if set, zero value otherwise.
+func (o *RpmPackage) GetDownloaderConfig() RemoteNetworkConfig {
+	if o == nil || IsNil(o.DownloaderConfig) {
+		var ret RemoteNetworkConfig
+		return ret
+	}
+	return *o.DownloaderConfig
+}
+
+// GetDownloaderConfigOk returns a tuple with the DownloaderConfig field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RpmPackage) GetDownloaderConfigOk() (*RemoteNetworkConfig, bool) {
+	if o == nil || IsNil(o.DownloaderConfig) {
+		return nil, false
+	}
+	return o.DownloaderConfig, true
+}
+
+// HasDownloaderConfig returns a boolean if a field has been set.
+func (o *RpmPackage) HasDownloaderConfig() bool {
+	if o != nil && !IsNil(o.DownloaderConfig) {
+		return true
+	}
+
+	return false
+}
+
+// SetDownloaderConfig gets a reference to the given RemoteNetworkConfig and assigns it to the DownloaderConfig field.
+func (o *RpmPackage) SetDownloaderConfig(v RemoteNetworkConfig) {
+	o.DownloaderConfig = &v
+}
+
 func (o RpmPackage) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -312,6 +346,9 @@ func (o RpmPackage) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.FileUrl) {
 		toSerialize["file_url"] = o.FileUrl
 	}
+	if !IsNil(o.DownloaderConfig) {
+		toSerialize["downloader_config"] = o.DownloaderConfig
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -341,6 +378,7 @@ func (o *RpmPackage) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "file")
 		delete(additionalProperties, "upload")
 		delete(additionalProperties, "file_url")
+		delete(additionalProperties, "downloader_config")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -36,7 +36,7 @@ type TaskResponse struct {
 	// The logging correlation id associated with this task
 	LoggingCid string `json:"logging_cid"`
 	// User who dispatched this task.
-	CreatedBy *string `json:"created_by,omitempty"`
+	CreatedBy NullableString `json:"created_by,omitempty"`
 	// Timestamp of when this task was identified ready for pickup.
 	UnblockedAt *time.Time `json:"unblocked_at,omitempty"`
 	// Timestamp of when this task started execution.
@@ -45,8 +45,8 @@ type TaskResponse struct {
 	FinishedAt *time.Time `json:"finished_at,omitempty"`
 	// A JSON Object of a fatal error encountered during the execution of this task.
 	Error *map[string]string `json:"error,omitempty"`
-	// The worker associated with this task. This field is empty if a worker is not yet assigned.
-	Worker *string `json:"worker,omitempty"`
+	// DEPRECATED - Always null
+	Worker NullableString `json:"worker,omitempty"`
 	// The parent task that spawned this task.
 	ParentTask *string `json:"parent_task,omitempty"`
 	// Any tasks spawned by this task.
@@ -58,6 +58,8 @@ type TaskResponse struct {
 	CreatedResources []string `json:"created_resources,omitempty"`
 	// A list of resources required by that task.
 	ReservedResourcesRecord []string `json:"reserved_resources_record,omitempty"`
+	// The result of this task.
+	Result interface{} `json:"result,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -290,36 +292,46 @@ func (o *TaskResponse) SetLoggingCid(v string) {
 	o.LoggingCid = v
 }
 
-// GetCreatedBy returns the CreatedBy field value if set, zero value otherwise.
+// GetCreatedBy returns the CreatedBy field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TaskResponse) GetCreatedBy() string {
-	if o == nil || IsNil(o.CreatedBy) {
+	if o == nil || IsNil(o.CreatedBy.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.CreatedBy
+	return *o.CreatedBy.Get()
 }
 
 // GetCreatedByOk returns a tuple with the CreatedBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TaskResponse) GetCreatedByOk() (*string, bool) {
-	if o == nil || IsNil(o.CreatedBy) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CreatedBy, true
+	return o.CreatedBy.Get(), o.CreatedBy.IsSet()
 }
 
 // HasCreatedBy returns a boolean if a field has been set.
 func (o *TaskResponse) HasCreatedBy() bool {
-	if o != nil && !IsNil(o.CreatedBy) {
+	if o != nil && o.CreatedBy.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedBy gets a reference to the given string and assigns it to the CreatedBy field.
+// SetCreatedBy gets a reference to the given NullableString and assigns it to the CreatedBy field.
 func (o *TaskResponse) SetCreatedBy(v string) {
-	o.CreatedBy = &v
+	o.CreatedBy.Set(&v)
+}
+// SetCreatedByNil sets the value for CreatedBy to be an explicit nil
+func (o *TaskResponse) SetCreatedByNil() {
+	o.CreatedBy.Set(nil)
+}
+
+// UnsetCreatedBy ensures that no value is present for CreatedBy, not even an explicit nil
+func (o *TaskResponse) UnsetCreatedBy() {
+	o.CreatedBy.Unset()
 }
 
 // GetUnblockedAt returns the UnblockedAt field value if set, zero value otherwise.
@@ -450,36 +462,46 @@ func (o *TaskResponse) SetError(v map[string]string) {
 	o.Error = &v
 }
 
-// GetWorker returns the Worker field value if set, zero value otherwise.
+// GetWorker returns the Worker field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TaskResponse) GetWorker() string {
-	if o == nil || IsNil(o.Worker) {
+	if o == nil || IsNil(o.Worker.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Worker
+	return *o.Worker.Get()
 }
 
 // GetWorkerOk returns a tuple with the Worker field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TaskResponse) GetWorkerOk() (*string, bool) {
-	if o == nil || IsNil(o.Worker) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Worker, true
+	return o.Worker.Get(), o.Worker.IsSet()
 }
 
 // HasWorker returns a boolean if a field has been set.
 func (o *TaskResponse) HasWorker() bool {
-	if o != nil && !IsNil(o.Worker) {
+	if o != nil && o.Worker.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetWorker gets a reference to the given string and assigns it to the Worker field.
+// SetWorker gets a reference to the given NullableString and assigns it to the Worker field.
 func (o *TaskResponse) SetWorker(v string) {
-	o.Worker = &v
+	o.Worker.Set(&v)
+}
+// SetWorkerNil sets the value for Worker to be an explicit nil
+func (o *TaskResponse) SetWorkerNil() {
+	o.Worker.Set(nil)
+}
+
+// UnsetWorker ensures that no value is present for Worker, not even an explicit nil
+func (o *TaskResponse) UnsetWorker() {
+	o.Worker.Unset()
 }
 
 // GetParentTask returns the ParentTask field value if set, zero value otherwise.
@@ -674,6 +696,39 @@ func (o *TaskResponse) SetReservedResourcesRecord(v []string) {
 	o.ReservedResourcesRecord = v
 }
 
+// GetResult returns the Result field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TaskResponse) GetResult() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TaskResponse) GetResultOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Result) {
+		return nil, false
+	}
+	return &o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *TaskResponse) HasResult() bool {
+	if o != nil && !IsNil(o.Result) {
+		return true
+	}
+
+	return false
+}
+
+// SetResult gets a reference to the given interface{} and assigns it to the Result field.
+func (o *TaskResponse) SetResult(v interface{}) {
+	o.Result = v
+}
+
 func (o TaskResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -701,8 +756,8 @@ func (o TaskResponse) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["name"] = o.Name
 	toSerialize["logging_cid"] = o.LoggingCid
-	if !IsNil(o.CreatedBy) {
-		toSerialize["created_by"] = o.CreatedBy
+	if o.CreatedBy.IsSet() {
+		toSerialize["created_by"] = o.CreatedBy.Get()
 	}
 	if !IsNil(o.UnblockedAt) {
 		toSerialize["unblocked_at"] = o.UnblockedAt
@@ -716,8 +771,8 @@ func (o TaskResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
-	if !IsNil(o.Worker) {
-		toSerialize["worker"] = o.Worker
+	if o.Worker.IsSet() {
+		toSerialize["worker"] = o.Worker.Get()
 	}
 	if !IsNil(o.ParentTask) {
 		toSerialize["parent_task"] = o.ParentTask
@@ -736,6 +791,9 @@ func (o TaskResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ReservedResourcesRecord) {
 		toSerialize["reserved_resources_record"] = o.ReservedResourcesRecord
+	}
+	if o.Result != nil {
+		toSerialize["result"] = o.Result
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -800,6 +858,7 @@ func (o *TaskResponse) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "progress_reports")
 		delete(additionalProperties, "created_resources")
 		delete(additionalProperties, "reserved_resources_record")
+		delete(additionalProperties, "result")
 		o.AdditionalProperties = additionalProperties
 	}
 

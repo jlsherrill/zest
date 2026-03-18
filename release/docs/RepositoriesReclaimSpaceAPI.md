@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## RepositoriesReclaimSpaceReclaim
 
-> AsyncOperationResponse RepositoriesReclaimSpaceReclaim(ctx, pulpDomain).ReclaimSpace(reclaimSpace).Execute()
+> AsyncOperationResponse RepositoriesReclaimSpaceReclaim(ctx, pulpDomain).ReclaimSpace(reclaimSpace).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 
 
@@ -25,16 +25,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
 	reclaimSpace := *openapiclient.NewReclaimSpace([]interface{}{nil}) // ReclaimSpace | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.RepositoriesReclaimSpaceAPI.RepositoriesReclaimSpaceReclaim(context.Background(), pulpDomain).ReclaimSpace(reclaimSpace).Execute()
+	resp, r, err := apiClient.RepositoriesReclaimSpaceAPI.RepositoriesReclaimSpaceReclaim(context.Background(), pulpDomain).ReclaimSpace(reclaimSpace).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `RepositoriesReclaimSpaceAPI.RepositoriesReclaimSpaceReclaim``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -61,6 +62,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **reclaimSpace** | [**ReclaimSpace**](ReclaimSpace.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 

@@ -31,10 +31,17 @@ type RemotesUlnAPIRemotesRpmUlnAddRoleRequest struct {
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnAddRoleRequest) NestedRole(nestedRole NestedRole) RemotesUlnAPIRemotesRpmUlnAddRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -76,7 +83,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnAddRoleExecute(r RemotesUlnAPIRemote
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}add_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -101,6 +108,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnAddRoleExecute(r RemotesUlnAPIRemote
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -146,10 +156,17 @@ type RemotesUlnAPIRemotesRpmUlnCreateRequest struct {
 	ApiService *RemotesUlnAPIService
 	pulpDomain string
 	rpmUlnRemote *RpmUlnRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnCreateRequest) RpmUlnRemote(rpmUlnRemote RpmUlnRemote) RemotesUlnAPIRemotesRpmUlnCreateRequest {
 	r.rpmUlnRemote = &rpmUlnRemote
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -191,7 +208,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnCreateExecute(r RemotesUlnAPIRemotes
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/rpm/uln/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -216,6 +233,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnCreateExecute(r RemotesUlnAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.rpmUlnRemote
@@ -260,6 +280,13 @@ type RemotesUlnAPIRemotesRpmUlnDeleteRequest struct {
 	ctx context.Context
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -300,7 +327,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnDeleteExecute(r RemotesUlnAPIRemotes
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -322,6 +349,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnDeleteExecute(r RemotesUlnAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -364,6 +394,7 @@ type RemotesUlnAPIRemotesRpmUlnListRequest struct {
 	ctx context.Context
 	ApiService *RemotesUlnAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -390,6 +421,12 @@ type RemotesUlnAPIRemotesRpmUlnListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnListRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -586,7 +623,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnListExecute(r RemotesUlnAPIRemotesRp
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/remotes/rpm/uln/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -703,6 +740,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnListExecute(r RemotesUlnAPIRemotesRp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -744,8 +784,15 @@ type RemotesUlnAPIRemotesRpmUlnListRolesRequest struct {
 	ctx context.Context
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -798,7 +845,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnListRolesExecute(r RemotesUlnAPIRemo
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -843,6 +890,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnListRolesExecute(r RemotesUlnAPIRemo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -884,8 +934,15 @@ type RemotesUlnAPIRemotesRpmUlnMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -938,7 +995,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnMyPermissionsExecute(r RemotesUlnAPI
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -983,6 +1040,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnMyPermissionsExecute(r RemotesUlnAPI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1025,6 +1085,7 @@ type RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest struct {
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
 	patchedrpmUlnRemote *PatchedrpmUlnRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) PatchedrpmUlnRemote(patchedrpmUlnRemote PatchedrpmUlnRemote) RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest {
@@ -1032,14 +1093,20 @@ func (r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) PatchedrpmUlnRemote(patc
 	return r
 }
 
-func (r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) Execute() (*RpmUlnRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesRpmUlnPartialUpdateExecute(r)
 }
 
 /*
 RemotesRpmUlnPartialUpdate Update an uln remote
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rpmUlnRemoteHref
@@ -1054,13 +1121,13 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnPartialUpdate(ctx context.Context, r
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesUlnAPIService) RemotesRpmUlnPartialUpdateExecute(r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return RpmUlnRemoteResponse
+func (a *RemotesUlnAPIService) RemotesRpmUlnPartialUpdateExecute(r RemotesUlnAPIRemotesRpmUlnPartialUpdateRequest) (*RpmUlnRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *RpmUlnRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesUlnAPIService.RemotesRpmUlnPartialUpdate")
@@ -1070,7 +1137,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnPartialUpdateExecute(r RemotesUlnAPI
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1095,6 +1162,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnPartialUpdateExecute(r RemotesUlnAPI
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedrpmUlnRemote
@@ -1139,8 +1209,15 @@ type RemotesUlnAPIRemotesRpmUlnReadRequest struct {
 	ctx context.Context
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1193,7 +1270,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnReadExecute(r RemotesUlnAPIRemotesRp
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1238,6 +1315,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnReadExecute(r RemotesUlnAPIRemotesRp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1280,10 +1360,17 @@ type RemotesUlnAPIRemotesRpmUlnRemoveRoleRequest struct {
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnRemoveRoleRequest) NestedRole(nestedRole NestedRole) RemotesUlnAPIRemotesRpmUlnRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1325,7 +1412,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnRemoveRoleExecute(r RemotesUlnAPIRem
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1350,6 +1437,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnRemoveRoleExecute(r RemotesUlnAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
@@ -1395,10 +1485,17 @@ type RemotesUlnAPIRemotesRpmUlnSetLabelRequest struct {
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnSetLabelRequest) SetLabel(setLabel SetLabel) RemotesUlnAPIRemotesRpmUlnSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1440,7 +1537,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnSetLabelExecute(r RemotesUlnAPIRemot
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1465,6 +1562,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnSetLabelExecute(r RemotesUlnAPIRemot
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -1510,10 +1610,17 @@ type RemotesUlnAPIRemotesRpmUlnUnsetLabelRequest struct {
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) RemotesUlnAPIRemotesRpmUlnUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -1555,7 +1662,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnUnsetLabelExecute(r RemotesUlnAPIRem
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1580,6 +1687,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnUnsetLabelExecute(r RemotesUlnAPIRem
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel
@@ -1625,6 +1735,7 @@ type RemotesUlnAPIRemotesRpmUlnUpdateRequest struct {
 	ApiService *RemotesUlnAPIService
 	rpmUlnRemoteHref string
 	rpmUlnRemote *RpmUlnRemote
+	xTaskDiagnostics *[]string
 }
 
 func (r RemotesUlnAPIRemotesRpmUlnUpdateRequest) RpmUlnRemote(rpmUlnRemote RpmUlnRemote) RemotesUlnAPIRemotesRpmUlnUpdateRequest {
@@ -1632,14 +1743,20 @@ func (r RemotesUlnAPIRemotesRpmUlnUpdateRequest) RpmUlnRemote(rpmUlnRemote RpmUl
 	return r
 }
 
-func (r RemotesUlnAPIRemotesRpmUlnUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r RemotesUlnAPIRemotesRpmUlnUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) RemotesUlnAPIRemotesRpmUlnUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r RemotesUlnAPIRemotesRpmUlnUpdateRequest) Execute() (*RpmUlnRemoteResponse, *http.Response, error) {
 	return r.ApiService.RemotesRpmUlnUpdateExecute(r)
 }
 
 /*
 RemotesRpmUlnUpdate Update an uln remote
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rpmUlnRemoteHref
@@ -1654,13 +1771,13 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnUpdate(ctx context.Context, rpmUlnRe
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *RemotesUlnAPIService) RemotesRpmUlnUpdateExecute(r RemotesUlnAPIRemotesRpmUlnUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return RpmUlnRemoteResponse
+func (a *RemotesUlnAPIService) RemotesRpmUlnUpdateExecute(r RemotesUlnAPIRemotesRpmUlnUpdateRequest) (*RpmUlnRemoteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *RpmUlnRemoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RemotesUlnAPIService.RemotesRpmUlnUpdate")
@@ -1670,7 +1787,7 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnUpdateExecute(r RemotesUlnAPIRemotes
 
 	localVarPath := localBasePath + "/{rpm_uln_remote_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_uln_remote_href"+"}", url.PathEscape(parameterValueToString(r.rpmUlnRemoteHref, "rpmUlnRemoteHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1695,6 +1812,9 @@ func (a *RemotesUlnAPIService) RemotesRpmUlnUpdateExecute(r RemotesUlnAPIRemotes
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.rpmUlnRemote

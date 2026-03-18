@@ -19,7 +19,7 @@ import (
 // checks if the NpmNpmRepository type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &NpmNpmRepository{}
 
-// NpmNpmRepository A Serializer for NpmRepository.Add any new fields if defined on NpmRepository.Similar to the example above, in PackageSerializer.Additional validators can be added to the parent validators listFor example::class Meta:    validators = core_serializers.RepositorySerializer.Meta.validators + [myValidator1, ...]
+// NpmNpmRepository A Serializer for NpmRepository.Add any new fields if defined on NpmRepository.Similar to the example above, in NpmPackageSerializer.Additional validators can be added to the parent validators listFor example::class Meta:    validators = core_serializers.RepositorySerializer.Meta.validators + [myValidator1, ...]
 type NpmNpmRepository struct {
 	PulpLabels *map[string]string `json:"pulp_labels,omitempty"`
 	// A unique name for this repository.

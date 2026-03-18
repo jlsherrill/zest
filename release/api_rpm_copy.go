@@ -29,10 +29,17 @@ type RpmCopyAPICopyContentRequest struct {
 	ApiService *RpmCopyAPIService
 	pulpDomain string
 	copy *Copy
+	xTaskDiagnostics *[]string
 }
 
 func (r RpmCopyAPICopyContentRequest) Copy(copy Copy) RpmCopyAPICopyContentRequest {
 	r.copy = &copy
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r RpmCopyAPICopyContentRequest) XTaskDiagnostics(xTaskDiagnostics []string) RpmCopyAPICopyContentRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -74,7 +81,7 @@ func (a *RpmCopyAPIService) CopyContentExecute(r RpmCopyAPICopyContentRequest) (
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/rpm/copy/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -99,6 +106,9 @@ func (a *RpmCopyAPIService) CopyContentExecute(r RpmCopyAPICopyContentRequest) (
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.copy

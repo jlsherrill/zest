@@ -29,6 +29,7 @@ type ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesListRequest struct {
 	ctx context.Context
 	ApiService *ContentRepoMetadataFilesAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	offset *int32
 	ordering *[]string
@@ -43,6 +44,12 @@ type ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesListRequest struct {
 	repositoryVersionRemoved *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -167,7 +174,7 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesListExec
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/rpm/repo_metadata_files/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -248,6 +255,9 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesListExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -289,8 +299,15 @@ type ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesReadRequest struct {
 	ctx context.Context
 	ApiService *ContentRepoMetadataFilesAPIService
 	rpmRepoMetadataFileHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -343,7 +360,7 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesReadExec
 
 	localVarPath := localBasePath + "/{rpm_repo_metadata_file_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_repo_metadata_file_href"+"}", url.PathEscape(parameterValueToString(r.rpmRepoMetadataFileHref, "rpmRepoMetadataFileHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -388,6 +405,9 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesReadExec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -430,10 +450,17 @@ type ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesSetLabelRequest struc
 	ApiService *ContentRepoMetadataFilesAPIService
 	rpmRepoMetadataFileHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesSetLabelRequest) SetLabel(setLabel SetLabel) ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -475,7 +502,7 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesSetLabel
 
 	localVarPath := localBasePath + "/{rpm_repo_metadata_file_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_repo_metadata_file_href"+"}", url.PathEscape(parameterValueToString(r.rpmRepoMetadataFileHref, "rpmRepoMetadataFileHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -500,6 +527,9 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesSetLabel
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -545,10 +575,17 @@ type ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesUnsetLabelRequest str
 	ApiService *ContentRepoMetadataFilesAPIService
 	rpmRepoMetadataFileHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentRepoMetadataFilesAPIContentRpmRepoMetadataFilesUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -590,7 +627,7 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesUnsetLab
 
 	localVarPath := localBasePath + "/{rpm_repo_metadata_file_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"rpm_repo_metadata_file_href"+"}", url.PathEscape(parameterValueToString(r.rpmRepoMetadataFileHref, "rpmRepoMetadataFileHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -615,6 +652,9 @@ func (a *ContentRepoMetadataFilesAPIService) ContentRpmRepoMetadataFilesUnsetLab
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

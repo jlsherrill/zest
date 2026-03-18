@@ -29,6 +29,7 @@ type ContentBlobsAPIContentContainerBlobsListRequest struct {
 	ctx context.Context
 	ApiService *ContentBlobsAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	digest *string
 	digestIn *[]string
 	limit *int32
@@ -45,6 +46,12 @@ type ContentBlobsAPIContentContainerBlobsListRequest struct {
 	repositoryVersionRemoved *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentBlobsAPIContentContainerBlobsListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentBlobsAPIContentContainerBlobsListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where digest matches value
@@ -181,7 +188,7 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsListExecute(r ContentBlobs
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/content/container/blobs/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -268,6 +275,9 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsListExecute(r ContentBlobs
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -309,8 +319,15 @@ type ContentBlobsAPIContentContainerBlobsReadRequest struct {
 	ctx context.Context
 	ApiService *ContentBlobsAPIService
 	containerBlobHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ContentBlobsAPIContentContainerBlobsReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentBlobsAPIContentContainerBlobsReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -363,7 +380,7 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsReadExecute(r ContentBlobs
 
 	localVarPath := localBasePath + "/{container_blob_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_blob_href"+"}", url.PathEscape(parameterValueToString(r.containerBlobHref, "containerBlobHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -408,6 +425,9 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsReadExecute(r ContentBlobs
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -450,10 +470,17 @@ type ContentBlobsAPIContentContainerBlobsSetLabelRequest struct {
 	ApiService *ContentBlobsAPIService
 	containerBlobHref string
 	setLabel *SetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentBlobsAPIContentContainerBlobsSetLabelRequest) SetLabel(setLabel SetLabel) ContentBlobsAPIContentContainerBlobsSetLabelRequest {
 	r.setLabel = &setLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentBlobsAPIContentContainerBlobsSetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentBlobsAPIContentContainerBlobsSetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -495,7 +522,7 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsSetLabelExecute(r ContentB
 
 	localVarPath := localBasePath + "/{container_blob_href}set_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_blob_href"+"}", url.PathEscape(parameterValueToString(r.containerBlobHref, "containerBlobHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -520,6 +547,9 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsSetLabelExecute(r ContentB
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.setLabel
@@ -565,10 +595,17 @@ type ContentBlobsAPIContentContainerBlobsUnsetLabelRequest struct {
 	ApiService *ContentBlobsAPIService
 	containerBlobHref string
 	unsetLabel *UnsetLabel
+	xTaskDiagnostics *[]string
 }
 
 func (r ContentBlobsAPIContentContainerBlobsUnsetLabelRequest) UnsetLabel(unsetLabel UnsetLabel) ContentBlobsAPIContentContainerBlobsUnsetLabelRequest {
 	r.unsetLabel = &unsetLabel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ContentBlobsAPIContentContainerBlobsUnsetLabelRequest) XTaskDiagnostics(xTaskDiagnostics []string) ContentBlobsAPIContentContainerBlobsUnsetLabelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -610,7 +647,7 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsUnsetLabelExecute(r Conten
 
 	localVarPath := localBasePath + "/{container_blob_href}unset_label/"
 	localVarPath = strings.Replace(localVarPath, "{"+"container_blob_href"+"}", url.PathEscape(parameterValueToString(r.containerBlobHref, "containerBlobHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -635,6 +672,9 @@ func (a *ContentBlobsAPIService) ContentContainerBlobsUnsetLabelExecute(r Conten
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.unsetLabel

@@ -30,10 +30,17 @@ type ExportersFilesystemAPIExportersCoreFilesystemCreateRequest struct {
 	ApiService *ExportersFilesystemAPIService
 	pulpDomain string
 	filesystemExporter *FilesystemExporter
+	xTaskDiagnostics *[]string
 }
 
 func (r ExportersFilesystemAPIExportersCoreFilesystemCreateRequest) FilesystemExporter(filesystemExporter FilesystemExporter) ExportersFilesystemAPIExportersCoreFilesystemCreateRequest {
 	r.filesystemExporter = &filesystemExporter
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r ExportersFilesystemAPIExportersCoreFilesystemCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ExportersFilesystemAPIExportersCoreFilesystemCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemCreateExecute(r E
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/exporters/core/filesystem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemCreateExecute(r E
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.filesystemExporter
@@ -144,6 +154,13 @@ type ExportersFilesystemAPIExportersCoreFilesystemDeleteRequest struct {
 	ctx context.Context
 	ApiService *ExportersFilesystemAPIService
 	filesystemExporterHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ExportersFilesystemAPIExportersCoreFilesystemDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) ExportersFilesystemAPIExportersCoreFilesystemDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r ExportersFilesystemAPIExportersCoreFilesystemDeleteRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
@@ -184,7 +201,7 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemDeleteExecute(r E
 
 	localVarPath := localBasePath + "/{filesystem_exporter_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"filesystem_exporter_href"+"}", url.PathEscape(parameterValueToString(r.filesystemExporterHref, "filesystemExporterHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -206,6 +223,9 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemDeleteExecute(r E
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -248,6 +268,7 @@ type ExportersFilesystemAPIExportersCoreFilesystemListRequest struct {
 	ctx context.Context
 	ApiService *ExportersFilesystemAPIService
 	pulpDomain string
+	xTaskDiagnostics *[]string
 	limit *int32
 	name *string
 	nameContains *string
@@ -266,6 +287,12 @@ type ExportersFilesystemAPIExportersCoreFilesystemListRequest struct {
 	q *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ExportersFilesystemAPIExportersCoreFilesystemListRequest) XTaskDiagnostics(xTaskDiagnostics []string) ExportersFilesystemAPIExportersCoreFilesystemListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Number of results to return per page.
@@ -414,7 +441,7 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemListExecute(r Exp
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/exporters/core/filesystem/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -507,6 +534,9 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemListExecute(r Exp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -549,6 +579,7 @@ type ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest struct {
 	ApiService *ExportersFilesystemAPIService
 	filesystemExporterHref string
 	patchedFilesystemExporter *PatchedFilesystemExporter
+	xTaskDiagnostics *[]string
 }
 
 func (r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) PatchedFilesystemExporter(patchedFilesystemExporter PatchedFilesystemExporter) ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest {
@@ -556,14 +587,20 @@ func (r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) Patch
 	return r
 }
 
-func (r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) Execute() (*FilesystemExporterResponse, *http.Response, error) {
 	return r.ApiService.ExportersCoreFilesystemPartialUpdateExecute(r)
 }
 
 /*
 ExportersCoreFilesystemPartialUpdate Update a filesystem exporter
 
-Trigger an asynchronous partial update task
+Update the entity partially and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param filesystemExporterHref
@@ -578,13 +615,13 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemPartialUpdate(ctx
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemPartialUpdateExecute(r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FilesystemExporterResponse
+func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemPartialUpdateExecute(r ExportersFilesystemAPIExportersCoreFilesystemPartialUpdateRequest) (*FilesystemExporterResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FilesystemExporterResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExportersFilesystemAPIService.ExportersCoreFilesystemPartialUpdate")
@@ -594,7 +631,7 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemPartialUpdateExec
 
 	localVarPath := localBasePath + "/{filesystem_exporter_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"filesystem_exporter_href"+"}", url.PathEscape(parameterValueToString(r.filesystemExporterHref, "filesystemExporterHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -619,6 +656,9 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemPartialUpdateExec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.patchedFilesystemExporter
@@ -663,8 +703,15 @@ type ExportersFilesystemAPIExportersCoreFilesystemReadRequest struct {
 	ctx context.Context
 	ApiService *ExportersFilesystemAPIService
 	filesystemExporterHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r ExportersFilesystemAPIExportersCoreFilesystemReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) ExportersFilesystemAPIExportersCoreFilesystemReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -717,7 +764,7 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemReadExecute(r Exp
 
 	localVarPath := localBasePath + "/{filesystem_exporter_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"filesystem_exporter_href"+"}", url.PathEscape(parameterValueToString(r.filesystemExporterHref, "filesystemExporterHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -762,6 +809,9 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemReadExecute(r Exp
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -804,6 +854,7 @@ type ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest struct {
 	ApiService *ExportersFilesystemAPIService
 	filesystemExporterHref string
 	filesystemExporter *FilesystemExporter
+	xTaskDiagnostics *[]string
 }
 
 func (r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) FilesystemExporter(filesystemExporter FilesystemExporter) ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest {
@@ -811,14 +862,20 @@ func (r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) FilesystemEx
 	return r
 }
 
-func (r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) Execute() (*AsyncOperationResponse, *http.Response, error) {
+// List of profilers to use on tasks.
+func (r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) XTaskDiagnostics(xTaskDiagnostics []string) ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) Execute() (*FilesystemExporterResponse, *http.Response, error) {
 	return r.ApiService.ExportersCoreFilesystemUpdateExecute(r)
 }
 
 /*
 ExportersCoreFilesystemUpdate Update a filesystem exporter
 
-Trigger an asynchronous update task
+Update the entity and trigger an asynchronous task if necessary
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param filesystemExporterHref
@@ -833,13 +890,13 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemUpdate(ctx contex
 }
 
 // Execute executes the request
-//  @return AsyncOperationResponse
-func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemUpdateExecute(r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) (*AsyncOperationResponse, *http.Response, error) {
+//  @return FilesystemExporterResponse
+func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemUpdateExecute(r ExportersFilesystemAPIExportersCoreFilesystemUpdateRequest) (*FilesystemExporterResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AsyncOperationResponse
+		localVarReturnValue  *FilesystemExporterResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ExportersFilesystemAPIService.ExportersCoreFilesystemUpdate")
@@ -849,7 +906,7 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemUpdateExecute(r E
 
 	localVarPath := localBasePath + "/{filesystem_exporter_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"filesystem_exporter_href"+"}", url.PathEscape(parameterValueToString(r.filesystemExporterHref, "filesystemExporterHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -874,6 +931,9 @@ func (a *ExportersFilesystemAPIService) ExportersCoreFilesystemUpdateExecute(r E
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.filesystemExporter

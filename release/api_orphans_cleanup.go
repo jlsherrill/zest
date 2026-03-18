@@ -29,10 +29,17 @@ type OrphansCleanupAPIOrphansCleanupCleanupRequest struct {
 	ApiService *OrphansCleanupAPIService
 	pulpDomain string
 	orphansCleanup *OrphansCleanup
+	xTaskDiagnostics *[]string
 }
 
 func (r OrphansCleanupAPIOrphansCleanupCleanupRequest) OrphansCleanup(orphansCleanup OrphansCleanup) OrphansCleanupAPIOrphansCleanupCleanupRequest {
 	r.orphansCleanup = &orphansCleanup
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r OrphansCleanupAPIOrphansCleanupCleanupRequest) XTaskDiagnostics(xTaskDiagnostics []string) OrphansCleanupAPIOrphansCleanupCleanupRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -74,7 +81,7 @@ func (a *OrphansCleanupAPIService) OrphansCleanupCleanupExecute(r OrphansCleanup
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/orphans/cleanup/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -99,6 +106,9 @@ func (a *OrphansCleanupAPIService) OrphansCleanupCleanupExecute(r OrphansCleanup
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.orphansCleanup

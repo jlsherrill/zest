@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 ## DistributionsContainerPullThroughAddRole
 
-> NestedRoleResponse DistributionsContainerPullThroughAddRole(ctx, containerContainerPullThroughDistributionHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse DistributionsContainerPullThroughAddRole(ctx, containerContainerPullThroughDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Add a role
 
@@ -36,16 +36,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughAddRole(context.Background(), containerContainerPullThroughDistributionHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughAddRole(context.Background(), containerContainerPullThroughDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -72,6 +73,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -93,7 +95,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughCreate
 
-> AsyncOperationResponse DistributionsContainerPullThroughCreate(ctx, pulpDomain).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).Execute()
+> AsyncOperationResponse DistributionsContainerPullThroughCreate(ctx, pulpDomain).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Create a container pull through distribution
 
@@ -108,16 +110,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
-	containerContainerPullThroughDistribution := *openapiclient.NewContainerContainerPullThroughDistribution("Name_example", "BasePath_example", "Remote_example") // ContainerContainerPullThroughDistribution | 
+	containerContainerPullThroughDistribution := *openapiclient.NewContainerContainerPullThroughDistribution("BasePath_example", "Name_example", "Remote_example") // ContainerContainerPullThroughDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughCreate(context.Background(), pulpDomain).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughCreate(context.Background(), pulpDomain).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -144,6 +147,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **containerContainerPullThroughDistribution** | [**ContainerContainerPullThroughDistribution**](ContainerContainerPullThroughDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -165,7 +169,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughDelete
 
-> AsyncOperationResponse DistributionsContainerPullThroughDelete(ctx, containerContainerPullThroughDistributionHref).Execute()
+> AsyncOperationResponse DistributionsContainerPullThroughDelete(ctx, containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Delete a container pull through distribution
 
@@ -180,15 +184,16 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughDelete(context.Background(), containerContainerPullThroughDistributionHref).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughDelete(context.Background(), containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -214,6 +219,7 @@ Other parameters are passed through a pointer to a apiDistributionsContainerPull
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -235,7 +241,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughList
 
-> PaginatedcontainerContainerPullThroughDistributionResponseList DistributionsContainerPullThroughList(ctx, pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+> PaginatedcontainerContainerPullThroughDistributionResponseList DistributionsContainerPullThroughList(ctx, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List container pull through distributions
 
@@ -250,11 +256,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	basePath := "basePath_example" // string | Filter results where base_path matches value (optional)
 	basePathContains := "basePathContains_example" // string | Filter results where base_path contains value (optional)
 	basePathIcontains := "basePathIcontains_example" // string | Filter results where base_path contains value (optional)
@@ -285,7 +292,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughList(context.Background(), pulpDomain).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughList(context.Background(), pulpDomain).XTaskDiagnostics(xTaskDiagnostics).BasePath(basePath).BasePathContains(basePathContains).BasePathIcontains(basePathIcontains).BasePathIn(basePathIn).Checkpoint(checkpoint).Limit(limit).Name(name).NameContains(nameContains).NameIcontains(nameIcontains).NameIexact(nameIexact).NameIn(nameIn).NameIregex(nameIregex).NameIstartswith(nameIstartswith).NameRegex(nameRegex).NameStartswith(nameStartswith).Offset(offset).Ordering(ordering).PrnIn(prnIn).PulpHrefIn(pulpHrefIn).PulpIdIn(pulpIdIn).PulpLabelSelect(pulpLabelSelect).Q(q).Repository(repository).RepositoryIn(repositoryIn).WithContent(withContent).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -311,6 +318,7 @@ Other parameters are passed through a pointer to a apiDistributionsContainerPull
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **basePath** | **string** | Filter results where base_path matches value | 
  **basePathContains** | **string** | Filter results where base_path contains value | 
  **basePathIcontains** | **string** | Filter results where base_path contains value | 
@@ -359,7 +367,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughListRoles
 
-> ObjectRolesResponse DistributionsContainerPullThroughListRoles(ctx, containerContainerPullThroughDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ObjectRolesResponse DistributionsContainerPullThroughListRoles(ctx, containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List roles
 
@@ -374,17 +382,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughListRoles(context.Background(), containerContainerPullThroughDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughListRoles(context.Background(), containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughListRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -410,6 +419,7 @@ Other parameters are passed through a pointer to a apiDistributionsContainerPull
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -433,7 +443,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughMyPermissions
 
-> MyPermissionsResponse DistributionsContainerPullThroughMyPermissions(ctx, containerContainerPullThroughDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> MyPermissionsResponse DistributionsContainerPullThroughMyPermissions(ctx, containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 List user permissions
 
@@ -448,17 +458,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughMyPermissions(context.Background(), containerContainerPullThroughDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughMyPermissions(context.Background(), containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughMyPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -484,6 +495,7 @@ Other parameters are passed through a pointer to a apiDistributionsContainerPull
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -507,7 +519,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughPartialUpdate
 
-> AsyncOperationResponse DistributionsContainerPullThroughPartialUpdate(ctx, containerContainerPullThroughDistributionHref).PatchedcontainerContainerPullThroughDistribution(patchedcontainerContainerPullThroughDistribution).Execute()
+> ContainerContainerPullThroughDistributionResponse DistributionsContainerPullThroughPartialUpdate(ctx, containerContainerPullThroughDistributionHref).PatchedcontainerContainerPullThroughDistribution(patchedcontainerContainerPullThroughDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a container pull through distribution
 
@@ -522,21 +534,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
 	patchedcontainerContainerPullThroughDistribution := *openapiclient.NewPatchedcontainerContainerPullThroughDistribution() // PatchedcontainerContainerPullThroughDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughPartialUpdate(context.Background(), containerContainerPullThroughDistributionHref).PatchedcontainerContainerPullThroughDistribution(patchedcontainerContainerPullThroughDistribution).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughPartialUpdate(context.Background(), containerContainerPullThroughDistributionHref).PatchedcontainerContainerPullThroughDistribution(patchedcontainerContainerPullThroughDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughPartialUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsContainerPullThroughPartialUpdate`: AsyncOperationResponse
+	// response from `DistributionsContainerPullThroughPartialUpdate`: ContainerContainerPullThroughDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsPullThroughAPI.DistributionsContainerPullThroughPartialUpdate`: %v\n", resp)
 }
 ```
@@ -558,10 +571,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **patchedcontainerContainerPullThroughDistribution** | [**PatchedcontainerContainerPullThroughDistribution**](PatchedcontainerContainerPullThroughDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**ContainerContainerPullThroughDistributionResponse**](ContainerContainerPullThroughDistributionResponse.md)
 
 ### Authorization
 
@@ -579,7 +593,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughRead
 
-> ContainerContainerPullThroughDistributionResponse DistributionsContainerPullThroughRead(ctx, containerContainerPullThroughDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+> ContainerContainerPullThroughDistributionResponse DistributionsContainerPullThroughRead(ctx, containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Inspect a container pull through distribution
 
@@ -594,17 +608,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughRead(context.Background(), containerContainerPullThroughDistributionHref).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughRead(context.Background(), containerContainerPullThroughDistributionHref).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -630,6 +645,7 @@ Other parameters are passed through a pointer to a apiDistributionsContainerPull
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 
@@ -653,7 +669,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughRemoveRole
 
-> NestedRoleResponse DistributionsContainerPullThroughRemoveRole(ctx, containerContainerPullThroughDistributionHref).NestedRole(nestedRole).Execute()
+> NestedRoleResponse DistributionsContainerPullThroughRemoveRole(ctx, containerContainerPullThroughDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Remove a role
 
@@ -668,16 +684,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
 	nestedRole := *openapiclient.NewNestedRole("Role_example") // NestedRole | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughRemoveRole(context.Background(), containerContainerPullThroughDistributionHref).NestedRole(nestedRole).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughRemoveRole(context.Background(), containerContainerPullThroughDistributionHref).NestedRole(nestedRole).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -704,6 +721,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **nestedRole** | [**NestedRole**](NestedRole.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -725,7 +743,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughSetLabel
 
-> SetLabelResponse DistributionsContainerPullThroughSetLabel(ctx, containerContainerPullThroughDistributionHref).SetLabel(setLabel).Execute()
+> SetLabelResponse DistributionsContainerPullThroughSetLabel(ctx, containerContainerPullThroughDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Set a label
 
@@ -740,16 +758,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
 	setLabel := *openapiclient.NewSetLabel("Key_example", "Value_example") // SetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughSetLabel(context.Background(), containerContainerPullThroughDistributionHref).SetLabel(setLabel).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughSetLabel(context.Background(), containerContainerPullThroughDistributionHref).SetLabel(setLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughSetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -776,6 +795,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **setLabel** | [**SetLabel**](SetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -797,7 +817,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughUnsetLabel
 
-> UnsetLabelResponse DistributionsContainerPullThroughUnsetLabel(ctx, containerContainerPullThroughDistributionHref).UnsetLabel(unsetLabel).Execute()
+> UnsetLabelResponse DistributionsContainerPullThroughUnsetLabel(ctx, containerContainerPullThroughDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Unset a label
 
@@ -812,16 +832,17 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
 	unsetLabel := *openapiclient.NewUnsetLabel("Key_example") // UnsetLabel | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughUnsetLabel(context.Background(), containerContainerPullThroughDistributionHref).UnsetLabel(unsetLabel).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughUnsetLabel(context.Background(), containerContainerPullThroughDistributionHref).UnsetLabel(unsetLabel).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughUnsetLabel``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -848,6 +869,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **unsetLabel** | [**UnsetLabel**](UnsetLabel.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
@@ -869,7 +891,7 @@ Name | Type | Description  | Notes
 
 ## DistributionsContainerPullThroughUpdate
 
-> AsyncOperationResponse DistributionsContainerPullThroughUpdate(ctx, containerContainerPullThroughDistributionHref).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).Execute()
+> ContainerContainerPullThroughDistributionResponse DistributionsContainerPullThroughUpdate(ctx, containerContainerPullThroughDistributionHref).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 
 Update a container pull through distribution
 
@@ -884,21 +906,22 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	containerContainerPullThroughDistributionHref := "containerContainerPullThroughDistributionHref_example" // string | 
-	containerContainerPullThroughDistribution := *openapiclient.NewContainerContainerPullThroughDistribution("Name_example", "BasePath_example", "Remote_example") // ContainerContainerPullThroughDistribution | 
+	containerContainerPullThroughDistribution := *openapiclient.NewContainerContainerPullThroughDistribution("BasePath_example", "Name_example", "Remote_example") // ContainerContainerPullThroughDistribution | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughUpdate(context.Background(), containerContainerPullThroughDistributionHref).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).Execute()
+	resp, r, err := apiClient.DistributionsPullThroughAPI.DistributionsContainerPullThroughUpdate(context.Background(), containerContainerPullThroughDistributionHref).ContainerContainerPullThroughDistribution(containerContainerPullThroughDistribution).XTaskDiagnostics(xTaskDiagnostics).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DistributionsPullThroughAPI.DistributionsContainerPullThroughUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DistributionsContainerPullThroughUpdate`: AsyncOperationResponse
+	// response from `DistributionsContainerPullThroughUpdate`: ContainerContainerPullThroughDistributionResponse
 	fmt.Fprintf(os.Stdout, "Response from `DistributionsPullThroughAPI.DistributionsContainerPullThroughUpdate`: %v\n", resp)
 }
 ```
@@ -920,10 +943,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **containerContainerPullThroughDistribution** | [**ContainerContainerPullThroughDistribution**](ContainerContainerPullThroughDistribution.md) |  | 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
 
 ### Return type
 
-[**AsyncOperationResponse**](AsyncOperationResponse.md)
+[**ContainerContainerPullThroughDistributionResponse**](ContainerContainerPullThroughDistributionResponse.md)
 
 ### Authorization
 

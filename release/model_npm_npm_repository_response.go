@@ -20,7 +20,7 @@ import (
 // checks if the NpmNpmRepositoryResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &NpmNpmRepositoryResponse{}
 
-// NpmNpmRepositoryResponse A Serializer for NpmRepository.Add any new fields if defined on NpmRepository.Similar to the example above, in PackageSerializer.Additional validators can be added to the parent validators listFor example::class Meta:    validators = core_serializers.RepositorySerializer.Meta.validators + [myValidator1, ...]
+// NpmNpmRepositoryResponse A Serializer for NpmRepository.Add any new fields if defined on NpmRepository.Similar to the example above, in NpmPackageSerializer.Additional validators can be added to the parent validators listFor example::class Meta:    validators = core_serializers.RepositorySerializer.Meta.validators + [myValidator1, ...]
 type NpmNpmRepositoryResponse struct {
 	PulpHref *string `json:"pulp_href,omitempty"`
 	// The Pulp Resource Name (PRN).

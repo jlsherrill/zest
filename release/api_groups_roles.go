@@ -30,10 +30,17 @@ type GroupsRolesAPIGroupsRolesCreateRequest struct {
 	ApiService *GroupsRolesAPIService
 	groupHref string
 	groupRole *GroupRole
+	xTaskDiagnostics *[]string
 }
 
 func (r GroupsRolesAPIGroupsRolesCreateRequest) GroupRole(groupRole GroupRole) GroupsRolesAPIGroupsRolesCreateRequest {
 	r.groupRole = &groupRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r GroupsRolesAPIGroupsRolesCreateRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsRolesAPIGroupsRolesCreateRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -75,7 +82,7 @@ func (a *GroupsRolesAPIService) GroupsRolesCreateExecute(r GroupsRolesAPIGroupsR
 
 	localVarPath := localBasePath + "/{group_href}roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -100,6 +107,9 @@ func (a *GroupsRolesAPIService) GroupsRolesCreateExecute(r GroupsRolesAPIGroupsR
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.groupRole
@@ -144,6 +154,13 @@ type GroupsRolesAPIGroupsRolesDeleteRequest struct {
 	ctx context.Context
 	ApiService *GroupsRolesAPIService
 	groupsGroupRoleHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsRolesAPIGroupsRolesDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsRolesAPIGroupsRolesDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 func (r GroupsRolesAPIGroupsRolesDeleteRequest) Execute() (*http.Response, error) {
@@ -182,7 +199,7 @@ func (a *GroupsRolesAPIService) GroupsRolesDeleteExecute(r GroupsRolesAPIGroupsR
 
 	localVarPath := localBasePath + "/{groups_group_role_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"groups_group_role_href"+"}", url.PathEscape(parameterValueToString(r.groupsGroupRoleHref, "groupsGroupRoleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -204,6 +221,9 @@ func (a *GroupsRolesAPIService) GroupsRolesDeleteExecute(r GroupsRolesAPIGroupsR
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -237,6 +257,7 @@ type GroupsRolesAPIGroupsRolesListRequest struct {
 	ctx context.Context
 	ApiService *GroupsRolesAPIService
 	groupHref string
+	xTaskDiagnostics *[]string
 	contentObject *string
 	domain *string
 	limit *int32
@@ -253,6 +274,12 @@ type GroupsRolesAPIGroupsRolesListRequest struct {
 	roleStartswith *string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsRolesAPIGroupsRolesListRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsRolesAPIGroupsRolesListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // content_object
@@ -385,7 +412,7 @@ func (a *GroupsRolesAPIService) GroupsRolesListExecute(r GroupsRolesAPIGroupsRol
 
 	localVarPath := localBasePath + "/{group_href}roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"group_href"+"}", url.PathEscape(parameterValueToString(r.groupHref, "groupHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -472,6 +499,9 @@ func (a *GroupsRolesAPIService) GroupsRolesListExecute(r GroupsRolesAPIGroupsRol
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -513,8 +543,15 @@ type GroupsRolesAPIGroupsRolesReadRequest struct {
 	ctx context.Context
 	ApiService *GroupsRolesAPIService
 	groupsGroupRoleHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r GroupsRolesAPIGroupsRolesReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) GroupsRolesAPIGroupsRolesReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -567,7 +604,7 @@ func (a *GroupsRolesAPIService) GroupsRolesReadExecute(r GroupsRolesAPIGroupsRol
 
 	localVarPath := localBasePath + "/{groups_group_role_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"groups_group_role_href"+"}", url.PathEscape(parameterValueToString(r.groupsGroupRoleHref, "groupsGroupRoleHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -611,6 +648,9 @@ func (a *GroupsRolesAPIService) GroupsRolesReadExecute(r GroupsRolesAPIGroupsRol
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

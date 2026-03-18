@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ApiPulpPypiRead**](ApiPypiAPI.md#ApiPulpPypiRead) | **Get** /api/pulp/pypi/{pulp_domain}/{path}/ | Get index summary
+[**ApiPypiRead**](ApiPypiAPI.md#ApiPypiRead) | **Get** /api/pypi/{pulp_domain}/{path}/ | Get index summary
 
 
 
-## ApiPulpPypiRead
+## ApiPypiRead
 
-> SummaryResponse ApiPulpPypiRead(ctx, path, pulpDomain).Fields(fields).ExcludeFields(excludeFields).Execute()
+> SummaryResponse ApiPypiRead(ctx, path, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 
 Get index summary
 
@@ -25,24 +25,25 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/content-services/zest/release/v2026"
+	openapiclient "github.com/content-services/zest/release/v2024"
 )
 
 func main() {
 	path := "path_example" // string | 
 	pulpDomain := "pulpDomain_example" // string | 
+	xTaskDiagnostics := []string{"Inner_example"} // []string | List of profilers to use on tasks. (optional)
 	fields := []string{"Inner_example"} // []string | A list of fields to include in the response. (optional)
 	excludeFields := []string{"Inner_example"} // []string | A list of fields to exclude from the response. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ApiPypiAPI.ApiPulpPypiRead(context.Background(), path, pulpDomain).Fields(fields).ExcludeFields(excludeFields).Execute()
+	resp, r, err := apiClient.ApiPypiAPI.ApiPypiRead(context.Background(), path, pulpDomain).XTaskDiagnostics(xTaskDiagnostics).Fields(fields).ExcludeFields(excludeFields).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ApiPypiAPI.ApiPulpPypiRead``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ApiPypiAPI.ApiPypiRead``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ApiPulpPypiRead`: SummaryResponse
-	fmt.Fprintf(os.Stdout, "Response from `ApiPypiAPI.ApiPulpPypiRead`: %v\n", resp)
+	// response from `ApiPypiRead`: SummaryResponse
+	fmt.Fprintf(os.Stdout, "Response from `ApiPypiAPI.ApiPypiRead`: %v\n", resp)
 }
 ```
 
@@ -57,13 +58,14 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiApiPulpPypiReadRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiApiPypiReadRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **xTaskDiagnostics** | **[]string** | List of profilers to use on tasks. | 
  **fields** | **[]string** | A list of fields to include in the response. | 
  **excludeFields** | **[]string** | A list of fields to exclude from the response. | 
 

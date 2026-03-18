@@ -26,342 +26,10 @@ import (
 // TasksAPIService TasksAPI service
 type TasksAPIService service
 
-type TasksAPITasksAddRoleRequest struct {
+type TasksAPIAdminTasksRequest struct {
 	ctx context.Context
 	ApiService *TasksAPIService
-	taskHref string
-	nestedRole *NestedRole
-}
-
-func (r TasksAPITasksAddRoleRequest) NestedRole(nestedRole NestedRole) TasksAPITasksAddRoleRequest {
-	r.nestedRole = &nestedRole
-	return r
-}
-
-func (r TasksAPITasksAddRoleRequest) Execute() (*NestedRoleResponse, *http.Response, error) {
-	return r.ApiService.TasksAddRoleExecute(r)
-}
-
-/*
-TasksAddRole Add a role
-
-Add a role for this object to users/groups.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param taskHref
- @return TasksAPITasksAddRoleRequest
-*/
-func (a *TasksAPIService) TasksAddRole(ctx context.Context, taskHref string) TasksAPITasksAddRoleRequest {
-	return TasksAPITasksAddRoleRequest{
-		ApiService: a,
-		ctx: ctx,
-		taskHref: taskHref,
-	}
-}
-
-// Execute executes the request
-//  @return NestedRoleResponse
-func (a *TasksAPIService) TasksAddRoleExecute(r TasksAPITasksAddRoleRequest) (*NestedRoleResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *NestedRoleResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksAddRole")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/{task_href}add_role/"
-	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.nestedRole == nil {
-		return localVarReturnValue, nil, reportError("nestedRole is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded", "multipart/form-data"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.nestedRole
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type TasksAPITasksCancelRequest struct {
-	ctx context.Context
-	ApiService *TasksAPIService
-	taskHref string
-	patchedTaskCancel *PatchedTaskCancel
-}
-
-func (r TasksAPITasksCancelRequest) PatchedTaskCancel(patchedTaskCancel PatchedTaskCancel) TasksAPITasksCancelRequest {
-	r.patchedTaskCancel = &patchedTaskCancel
-	return r
-}
-
-func (r TasksAPITasksCancelRequest) Execute() (*TaskResponse, *http.Response, error) {
-	return r.ApiService.TasksCancelExecute(r)
-}
-
-/*
-TasksCancel Cancel a task
-
-This operation cancels a task.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param taskHref
- @return TasksAPITasksCancelRequest
-*/
-func (a *TasksAPIService) TasksCancel(ctx context.Context, taskHref string) TasksAPITasksCancelRequest {
-	return TasksAPITasksCancelRequest{
-		ApiService: a,
-		ctx: ctx,
-		taskHref: taskHref,
-	}
-}
-
-// Execute executes the request
-//  @return TaskResponse
-func (a *TasksAPIService) TasksCancelExecute(r TasksAPITasksCancelRequest) (*TaskResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *TaskResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksCancel")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/{task_href}"
-	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.patchedTaskCancel == nil {
-		return localVarReturnValue, nil, reportError("patchedTaskCancel is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded", "multipart/form-data"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.patchedTaskCancel
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v TaskResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type TasksAPITasksDeleteRequest struct {
-	ctx context.Context
-	ApiService *TasksAPIService
-	taskHref string
-}
-
-func (r TasksAPITasksDeleteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.TasksDeleteExecute(r)
-}
-
-/*
-TasksDelete Delete a task
-
-A customized named ModelViewSet that knows how to register itself with the Pulp API router.This viewset is discoverable by its name."Normal" Django Models and Master/Detail models are supported by the ``register_with`` method.Attributes:    lookup_field (str): The name of the field by which an object should be looked up, in        addition to any parent lookups if this ViewSet is nested. Defaults to 'pk'    endpoint_name (str): The name of the final path segment that should identify the ViewSet's        collection endpoint.    nest_prefix (str): Optional prefix under which this ViewSet should be nested. This must        correspond to the "parent_prefix" of a router with rest_framework_nested.NestedMixin.        None indicates this ViewSet should not be nested.    parent_lookup_kwargs (dict): Optional mapping of key names that would appear in self.kwargs        to django model filter expressions that can be used with the corresponding value from        self.kwargs, used only by a nested ViewSet to filter based on the parent object's        identity.    schema (DefaultSchema): The schema class to use by default in a viewset.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param taskHref
- @return TasksAPITasksDeleteRequest
-*/
-func (a *TasksAPIService) TasksDelete(ctx context.Context, taskHref string) TasksAPITasksDeleteRequest {
-	return TasksAPITasksDeleteRequest{
-		ApiService: a,
-		ctx: ctx,
-		taskHref: taskHref,
-	}
-}
-
-// Execute executes the request
-func (a *TasksAPIService) TasksDeleteExecute(r TasksAPITasksDeleteRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksDelete")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/{task_href}"
-	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type TasksAPITasksListRequest struct {
-	ctx context.Context
-	ApiService *TasksAPIService
+	xTaskDiagnostics *[]string
 	childTasks *string
 	createdResources *string
 	exclusiveResources *string
@@ -417,10 +85,1069 @@ type TasksAPITasksListRequest struct {
 	unblockedAtLte *time.Time
 	unblockedAtRange *[]time.Time
 	worker *string
-	workerIn *[]string
-	workerIsnull *bool
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPIAdminTasksRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPIAdminTasksRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+// Filter results where child_tasks matches value
+func (r TasksAPIAdminTasksRequest) ChildTasks(childTasks string) TasksAPIAdminTasksRequest {
+	r.childTasks = &childTasks
+	return r
+}
+
+func (r TasksAPIAdminTasksRequest) CreatedResources(createdResources string) TasksAPIAdminTasksRequest {
+	r.createdResources = &createdResources
+	return r
+}
+
+func (r TasksAPIAdminTasksRequest) ExclusiveResources(exclusiveResources string) TasksAPIAdminTasksRequest {
+	r.exclusiveResources = &exclusiveResources
+	return r
+}
+
+// Multiple values may be separated by commas.
+func (r TasksAPIAdminTasksRequest) ExclusiveResourcesIn(exclusiveResourcesIn []string) TasksAPIAdminTasksRequest {
+	r.exclusiveResourcesIn = &exclusiveResourcesIn
+	return r
+}
+
+// Filter results where finished_at matches value
+func (r TasksAPIAdminTasksRequest) FinishedAt(finishedAt time.Time) TasksAPIAdminTasksRequest {
+	r.finishedAt = &finishedAt
+	return r
+}
+
+// Filter results where finished_at is greater than value
+func (r TasksAPIAdminTasksRequest) FinishedAtGt(finishedAtGt time.Time) TasksAPIAdminTasksRequest {
+	r.finishedAtGt = &finishedAtGt
+	return r
+}
+
+// Filter results where finished_at is greater than or equal to value
+func (r TasksAPIAdminTasksRequest) FinishedAtGte(finishedAtGte time.Time) TasksAPIAdminTasksRequest {
+	r.finishedAtGte = &finishedAtGte
+	return r
+}
+
+// Filter results where finished_at has a null value
+func (r TasksAPIAdminTasksRequest) FinishedAtIsnull(finishedAtIsnull bool) TasksAPIAdminTasksRequest {
+	r.finishedAtIsnull = &finishedAtIsnull
+	return r
+}
+
+// Filter results where finished_at is less than value
+func (r TasksAPIAdminTasksRequest) FinishedAtLt(finishedAtLt time.Time) TasksAPIAdminTasksRequest {
+	r.finishedAtLt = &finishedAtLt
+	return r
+}
+
+// Filter results where finished_at is less than or equal to value
+func (r TasksAPIAdminTasksRequest) FinishedAtLte(finishedAtLte time.Time) TasksAPIAdminTasksRequest {
+	r.finishedAtLte = &finishedAtLte
+	return r
+}
+
+// Filter results where finished_at is between two comma separated values
+func (r TasksAPIAdminTasksRequest) FinishedAtRange(finishedAtRange []time.Time) TasksAPIAdminTasksRequest {
+	r.finishedAtRange = &finishedAtRange
+	return r
+}
+
+// Number of results to return per page.
+func (r TasksAPIAdminTasksRequest) Limit(limit int32) TasksAPIAdminTasksRequest {
+	r.limit = &limit
+	return r
+}
+
+// Filter results where logging_cid matches value
+func (r TasksAPIAdminTasksRequest) LoggingCid(loggingCid string) TasksAPIAdminTasksRequest {
+	r.loggingCid = &loggingCid
+	return r
+}
+
+// Filter results where logging_cid contains value
+func (r TasksAPIAdminTasksRequest) LoggingCidContains(loggingCidContains string) TasksAPIAdminTasksRequest {
+	r.loggingCidContains = &loggingCidContains
+	return r
+}
+
+// Filter results where name matches value
+func (r TasksAPIAdminTasksRequest) Name(name string) TasksAPIAdminTasksRequest {
+	r.name = &name
+	return r
+}
+
+// Filter results where name contains value
+func (r TasksAPIAdminTasksRequest) NameContains(nameContains string) TasksAPIAdminTasksRequest {
+	r.nameContains = &nameContains
+	return r
+}
+
+// Filter results where name is in a comma-separated list of values
+func (r TasksAPIAdminTasksRequest) NameIn(nameIn []string) TasksAPIAdminTasksRequest {
+	r.nameIn = &nameIn
+	return r
+}
+
+// Filter results where name not equal to value
+func (r TasksAPIAdminTasksRequest) NameNe(nameNe string) TasksAPIAdminTasksRequest {
+	r.nameNe = &nameNe
+	return r
+}
+
+// The initial index from which to return the results.
+func (r TasksAPIAdminTasksRequest) Offset(offset int32) TasksAPIAdminTasksRequest {
+	r.offset = &offset
+	return r
+}
+
+// Ordering* &#x60;pulp_id&#x60; - Pulp id* &#x60;-pulp_id&#x60; - Pulp id (descending)* &#x60;pulp_created&#x60; - Pulp created* &#x60;-pulp_created&#x60; - Pulp created (descending)* &#x60;pulp_last_updated&#x60; - Pulp last updated* &#x60;-pulp_last_updated&#x60; - Pulp last updated (descending)* &#x60;state&#x60; - State* &#x60;-state&#x60; - State (descending)* &#x60;name&#x60; - Name* &#x60;-name&#x60; - Name (descending)* &#x60;logging_cid&#x60; - Logging cid* &#x60;-logging_cid&#x60; - Logging cid (descending)* &#x60;unblocked_at&#x60; - Unblocked at* &#x60;-unblocked_at&#x60; - Unblocked at (descending)* &#x60;started_at&#x60; - Started at* &#x60;-started_at&#x60; - Started at (descending)* &#x60;finished_at&#x60; - Finished at* &#x60;-finished_at&#x60; - Finished at (descending)* &#x60;error&#x60; - Error* &#x60;-error&#x60; - Error (descending)* &#x60;enc_args&#x60; - Enc args* &#x60;-enc_args&#x60; - Enc args (descending)* &#x60;enc_kwargs&#x60; - Enc kwargs* &#x60;-enc_kwargs&#x60; - Enc kwargs (descending)* &#x60;reserved_resources_record&#x60; - Reserved resources record* &#x60;-reserved_resources_record&#x60; - Reserved resources record (descending)* &#x60;versions&#x60; - Versions* &#x60;-versions&#x60; - Versions (descending)* &#x60;profile_options&#x60; - Profile options* &#x60;-profile_options&#x60; - Profile options (descending)* &#x60;immediate&#x60; - Immediate* &#x60;-immediate&#x60; - Immediate (descending)* &#x60;deferred&#x60; - Deferred* &#x60;-deferred&#x60; - Deferred (descending)* &#x60;result&#x60; - Result* &#x60;-result&#x60; - Result (descending)* &#x60;pk&#x60; - Pk* &#x60;-pk&#x60; - Pk (descending)
+func (r TasksAPIAdminTasksRequest) Ordering(ordering []string) TasksAPIAdminTasksRequest {
+	r.ordering = &ordering
+	return r
+}
+
+// Filter results where parent_task matches value
+func (r TasksAPIAdminTasksRequest) ParentTask(parentTask string) TasksAPIAdminTasksRequest {
+	r.parentTask = &parentTask
+	return r
+}
+
+// Multiple values may be separated by commas.
+func (r TasksAPIAdminTasksRequest) PrnIn(prnIn []string) TasksAPIAdminTasksRequest {
+	r.prnIn = &prnIn
+	return r
+}
+
+// Filter results where pulp_created matches value
+func (r TasksAPIAdminTasksRequest) PulpCreated(pulpCreated time.Time) TasksAPIAdminTasksRequest {
+	r.pulpCreated = &pulpCreated
+	return r
+}
+
+// Filter results where pulp_created is greater than value
+func (r TasksAPIAdminTasksRequest) PulpCreatedGt(pulpCreatedGt time.Time) TasksAPIAdminTasksRequest {
+	r.pulpCreatedGt = &pulpCreatedGt
+	return r
+}
+
+// Filter results where pulp_created is greater than or equal to value
+func (r TasksAPIAdminTasksRequest) PulpCreatedGte(pulpCreatedGte time.Time) TasksAPIAdminTasksRequest {
+	r.pulpCreatedGte = &pulpCreatedGte
+	return r
+}
+
+// Filter results where pulp_created has a null value
+func (r TasksAPIAdminTasksRequest) PulpCreatedIsnull(pulpCreatedIsnull bool) TasksAPIAdminTasksRequest {
+	r.pulpCreatedIsnull = &pulpCreatedIsnull
+	return r
+}
+
+// Filter results where pulp_created is less than value
+func (r TasksAPIAdminTasksRequest) PulpCreatedLt(pulpCreatedLt time.Time) TasksAPIAdminTasksRequest {
+	r.pulpCreatedLt = &pulpCreatedLt
+	return r
+}
+
+// Filter results where pulp_created is less than or equal to value
+func (r TasksAPIAdminTasksRequest) PulpCreatedLte(pulpCreatedLte time.Time) TasksAPIAdminTasksRequest {
+	r.pulpCreatedLte = &pulpCreatedLte
+	return r
+}
+
+// Filter results where pulp_created is between two comma separated values
+func (r TasksAPIAdminTasksRequest) PulpCreatedRange(pulpCreatedRange []time.Time) TasksAPIAdminTasksRequest {
+	r.pulpCreatedRange = &pulpCreatedRange
+	return r
+}
+
+// Multiple values may be separated by commas.
+func (r TasksAPIAdminTasksRequest) PulpHrefIn(pulpHrefIn []string) TasksAPIAdminTasksRequest {
+	r.pulpHrefIn = &pulpHrefIn
+	return r
+}
+
+// Multiple values may be separated by commas.
+func (r TasksAPIAdminTasksRequest) PulpIdIn(pulpIdIn []string) TasksAPIAdminTasksRequest {
+	r.pulpIdIn = &pulpIdIn
+	return r
+}
+
+// Filter results by using NOT, AND and OR operations on other filters
+func (r TasksAPIAdminTasksRequest) Q(q string) TasksAPIAdminTasksRequest {
+	r.q = &q
+	return r
+}
+
+func (r TasksAPIAdminTasksRequest) ReservedResources(reservedResources string) TasksAPIAdminTasksRequest {
+	r.reservedResources = &reservedResources
+	return r
+}
+
+// Multiple values may be separated by commas.
+func (r TasksAPIAdminTasksRequest) ReservedResourcesIn(reservedResourcesIn []string) TasksAPIAdminTasksRequest {
+	r.reservedResourcesIn = &reservedResourcesIn
+	return r
+}
+
+func (r TasksAPIAdminTasksRequest) SharedResources(sharedResources string) TasksAPIAdminTasksRequest {
+	r.sharedResources = &sharedResources
+	return r
+}
+
+// Multiple values may be separated by commas.
+func (r TasksAPIAdminTasksRequest) SharedResourcesIn(sharedResourcesIn []string) TasksAPIAdminTasksRequest {
+	r.sharedResourcesIn = &sharedResourcesIn
+	return r
+}
+
+// Filter results where started_at matches value
+func (r TasksAPIAdminTasksRequest) StartedAt(startedAt time.Time) TasksAPIAdminTasksRequest {
+	r.startedAt = &startedAt
+	return r
+}
+
+// Filter results where started_at is greater than value
+func (r TasksAPIAdminTasksRequest) StartedAtGt(startedAtGt time.Time) TasksAPIAdminTasksRequest {
+	r.startedAtGt = &startedAtGt
+	return r
+}
+
+// Filter results where started_at is greater than or equal to value
+func (r TasksAPIAdminTasksRequest) StartedAtGte(startedAtGte time.Time) TasksAPIAdminTasksRequest {
+	r.startedAtGte = &startedAtGte
+	return r
+}
+
+// Filter results where started_at has a null value
+func (r TasksAPIAdminTasksRequest) StartedAtIsnull(startedAtIsnull bool) TasksAPIAdminTasksRequest {
+	r.startedAtIsnull = &startedAtIsnull
+	return r
+}
+
+// Filter results where started_at is less than value
+func (r TasksAPIAdminTasksRequest) StartedAtLt(startedAtLt time.Time) TasksAPIAdminTasksRequest {
+	r.startedAtLt = &startedAtLt
+	return r
+}
+
+// Filter results where started_at is less than or equal to value
+func (r TasksAPIAdminTasksRequest) StartedAtLte(startedAtLte time.Time) TasksAPIAdminTasksRequest {
+	r.startedAtLte = &startedAtLte
+	return r
+}
+
+// Filter results where started_at is between two comma separated values
+func (r TasksAPIAdminTasksRequest) StartedAtRange(startedAtRange []time.Time) TasksAPIAdminTasksRequest {
+	r.startedAtRange = &startedAtRange
+	return r
+}
+
+// Filter results where state matches value* &#x60;waiting&#x60; - Waiting* &#x60;skipped&#x60; - Skipped* &#x60;running&#x60; - Running* &#x60;completed&#x60; - Completed* &#x60;failed&#x60; - Failed* &#x60;canceled&#x60; - Canceled* &#x60;canceling&#x60; - Canceling
+func (r TasksAPIAdminTasksRequest) State(state string) TasksAPIAdminTasksRequest {
+	r.state = &state
+	return r
+}
+
+// Filter results where state is in a comma-separated list of values
+func (r TasksAPIAdminTasksRequest) StateIn(stateIn []string) TasksAPIAdminTasksRequest {
+	r.stateIn = &stateIn
+	return r
+}
+
+// Filter results where state not equal to value
+func (r TasksAPIAdminTasksRequest) StateNe(stateNe string) TasksAPIAdminTasksRequest {
+	r.stateNe = &stateNe
+	return r
+}
+
+// Filter results where task_group matches value
+func (r TasksAPIAdminTasksRequest) TaskGroup(taskGroup string) TasksAPIAdminTasksRequest {
+	r.taskGroup = &taskGroup
+	return r
+}
+
+// Filter results where unblocked_at matches value
+func (r TasksAPIAdminTasksRequest) UnblockedAt(unblockedAt time.Time) TasksAPIAdminTasksRequest {
+	r.unblockedAt = &unblockedAt
+	return r
+}
+
+// Filter results where unblocked_at is greater than value
+func (r TasksAPIAdminTasksRequest) UnblockedAtGt(unblockedAtGt time.Time) TasksAPIAdminTasksRequest {
+	r.unblockedAtGt = &unblockedAtGt
+	return r
+}
+
+// Filter results where unblocked_at is greater than or equal to value
+func (r TasksAPIAdminTasksRequest) UnblockedAtGte(unblockedAtGte time.Time) TasksAPIAdminTasksRequest {
+	r.unblockedAtGte = &unblockedAtGte
+	return r
+}
+
+// Filter results where unblocked_at has a null value
+func (r TasksAPIAdminTasksRequest) UnblockedAtIsnull(unblockedAtIsnull bool) TasksAPIAdminTasksRequest {
+	r.unblockedAtIsnull = &unblockedAtIsnull
+	return r
+}
+
+// Filter results where unblocked_at is less than value
+func (r TasksAPIAdminTasksRequest) UnblockedAtLt(unblockedAtLt time.Time) TasksAPIAdminTasksRequest {
+	r.unblockedAtLt = &unblockedAtLt
+	return r
+}
+
+// Filter results where unblocked_at is less than or equal to value
+func (r TasksAPIAdminTasksRequest) UnblockedAtLte(unblockedAtLte time.Time) TasksAPIAdminTasksRequest {
+	r.unblockedAtLte = &unblockedAtLte
+	return r
+}
+
+// Filter results where unblocked_at is between two comma separated values
+func (r TasksAPIAdminTasksRequest) UnblockedAtRange(unblockedAtRange []time.Time) TasksAPIAdminTasksRequest {
+	r.unblockedAtRange = &unblockedAtRange
+	return r
+}
+
+func (r TasksAPIAdminTasksRequest) Worker(worker string) TasksAPIAdminTasksRequest {
+	r.worker = &worker
+	return r
+}
+
+// A list of fields to include in the response.
+func (r TasksAPIAdminTasksRequest) Fields(fields []string) TasksAPIAdminTasksRequest {
+	r.fields = &fields
+	return r
+}
+
+// A list of fields to exclude from the response.
+func (r TasksAPIAdminTasksRequest) ExcludeFields(excludeFields []string) TasksAPIAdminTasksRequest {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r TasksAPIAdminTasksRequest) Execute() (*PaginatedTaskResponseList, *http.Response, error) {
+	return r.ApiService.AdminTasksExecute(r)
+}
+
+/*
+AdminTasks Method for AdminTasks
+
+A customized named ModelViewSet that knows how to register itself with the Pulp API router.This viewset is discoverable by its name."Normal" Django Models and Master/Detail models are supported by the ``register_with`` method.Attributes:    lookup_field (str): The name of the field by which an object should be looked up, in        addition to any parent lookups if this ViewSet is nested. Defaults to 'pk'    endpoint_name (str): The name of the final path segment that should identify the ViewSet's        collection endpoint.    nest_prefix (str): Optional prefix under which this ViewSet should be nested. This must        correspond to the "parent_prefix" of a router with rest_framework_nested.NestedMixin.        None indicates this ViewSet should not be nested.    parent_lookup_kwargs (dict): Optional mapping of key names that would appear in self.kwargs        to django model filter expressions that can be used with the corresponding value from        self.kwargs, used only by a nested ViewSet to filter based on the parent object's        identity.    schema (DefaultSchema): The schema class to use by default in a viewset.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return TasksAPIAdminTasksRequest
+*/
+func (a *TasksAPIService) AdminTasks(ctx context.Context) TasksAPIAdminTasksRequest {
+	return TasksAPIAdminTasksRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return PaginatedTaskResponseList
+func (a *TasksAPIService) AdminTasksExecute(r TasksAPIAdminTasksRequest) (*PaginatedTaskResponseList, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PaginatedTaskResponseList
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.AdminTasks")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/pulp/admin/tasks/"
+	localVarPath, _ = url.PathUnescape(localVarPath)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.childTasks != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "child_tasks", r.childTasks, "form", "")
+	}
+	if r.createdResources != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_resources", r.createdResources, "form", "")
+	}
+	if r.exclusiveResources != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "exclusive_resources", r.exclusiveResources, "form", "")
+	}
+	if r.exclusiveResourcesIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "exclusive_resources__in", r.exclusiveResourcesIn, "form", "csv")
+	}
+	if r.finishedAt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at", r.finishedAt, "form", "")
+	}
+	if r.finishedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__gt", r.finishedAtGt, "form", "")
+	}
+	if r.finishedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__gte", r.finishedAtGte, "form", "")
+	}
+	if r.finishedAtIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__isnull", r.finishedAtIsnull, "form", "")
+	}
+	if r.finishedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__lt", r.finishedAtLt, "form", "")
+	}
+	if r.finishedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__lte", r.finishedAtLte, "form", "")
+	}
+	if r.finishedAtRange != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__range", r.finishedAtRange, "form", "csv")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.loggingCid != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "logging_cid", r.loggingCid, "form", "")
+	}
+	if r.loggingCidContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "logging_cid__contains", r.loggingCidContains, "form", "")
+	}
+	if r.name != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "form", "")
+	}
+	if r.nameContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__contains", r.nameContains, "form", "")
+	}
+	if r.nameIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__in", r.nameIn, "form", "csv")
+	}
+	if r.nameNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__ne", r.nameNe, "form", "")
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	}
+	if r.ordering != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ordering", r.ordering, "form", "csv")
+	}
+	if r.parentTask != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_task", r.parentTask, "form", "")
+	}
+	if r.prnIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "prn__in", r.prnIn, "form", "csv")
+	}
+	if r.pulpCreated != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created", r.pulpCreated, "form", "")
+	}
+	if r.pulpCreatedGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__gt", r.pulpCreatedGt, "form", "")
+	}
+	if r.pulpCreatedGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__gte", r.pulpCreatedGte, "form", "")
+	}
+	if r.pulpCreatedIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__isnull", r.pulpCreatedIsnull, "form", "")
+	}
+	if r.pulpCreatedLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__lt", r.pulpCreatedLt, "form", "")
+	}
+	if r.pulpCreatedLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__lte", r.pulpCreatedLte, "form", "")
+	}
+	if r.pulpCreatedRange != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__range", r.pulpCreatedRange, "form", "csv")
+	}
+	if r.pulpHrefIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_href__in", r.pulpHrefIn, "form", "csv")
+	}
+	if r.pulpIdIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_id__in", r.pulpIdIn, "form", "csv")
+	}
+	if r.q != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
+	}
+	if r.reservedResources != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "reserved_resources", r.reservedResources, "form", "")
+	}
+	if r.reservedResourcesIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "reserved_resources__in", r.reservedResourcesIn, "form", "csv")
+	}
+	if r.sharedResources != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "shared_resources", r.sharedResources, "form", "")
+	}
+	if r.sharedResourcesIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "shared_resources__in", r.sharedResourcesIn, "form", "csv")
+	}
+	if r.startedAt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at", r.startedAt, "form", "")
+	}
+	if r.startedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gt", r.startedAtGt, "form", "")
+	}
+	if r.startedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gte", r.startedAtGte, "form", "")
+	}
+	if r.startedAtIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__isnull", r.startedAtIsnull, "form", "")
+	}
+	if r.startedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lt", r.startedAtLt, "form", "")
+	}
+	if r.startedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lte", r.startedAtLte, "form", "")
+	}
+	if r.startedAtRange != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__range", r.startedAtRange, "form", "csv")
+	}
+	if r.state != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "state", r.state, "form", "")
+	}
+	if r.stateIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "state__in", r.stateIn, "form", "csv")
+	}
+	if r.stateNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "state__ne", r.stateNe, "form", "")
+	}
+	if r.taskGroup != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "task_group", r.taskGroup, "form", "")
+	}
+	if r.unblockedAt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at", r.unblockedAt, "form", "")
+	}
+	if r.unblockedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__gt", r.unblockedAtGt, "form", "")
+	}
+	if r.unblockedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__gte", r.unblockedAtGte, "form", "")
+	}
+	if r.unblockedAtIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__isnull", r.unblockedAtIsnull, "form", "")
+	}
+	if r.unblockedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__lt", r.unblockedAtLt, "form", "")
+	}
+	if r.unblockedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__lte", r.unblockedAtLte, "form", "")
+	}
+	if r.unblockedAtRange != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__range", r.unblockedAtRange, "form", "csv")
+	}
+	if r.worker != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "worker", r.worker, "form", "")
+	}
+	if r.fields != nil {
+		t := *r.fields
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+                               parameterAddToHeaderOrQuery(localVarQueryParams, "fields", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "fields", t, "form", "multi")
+		}
+	}
+	if r.excludeFields != nil {
+		t := *r.excludeFields
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+                               parameterAddToHeaderOrQuery(localVarQueryParams, "exclude_fields", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "exclude_fields", t, "form", "multi")
+		}
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type TasksAPITasksAddRoleRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	taskHref string
+	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
+}
+
+func (r TasksAPITasksAddRoleRequest) NestedRole(nestedRole NestedRole) TasksAPITasksAddRoleRequest {
+	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksAddRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksAddRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r TasksAPITasksAddRoleRequest) Execute() (*NestedRoleResponse, *http.Response, error) {
+	return r.ApiService.TasksAddRoleExecute(r)
+}
+
+/*
+TasksAddRole Add a role
+
+Add a role for this object to users/groups.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskHref
+ @return TasksAPITasksAddRoleRequest
+*/
+func (a *TasksAPIService) TasksAddRole(ctx context.Context, taskHref string) TasksAPITasksAddRoleRequest {
+	return TasksAPITasksAddRoleRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskHref: taskHref,
+	}
+}
+
+// Execute executes the request
+//  @return NestedRoleResponse
+func (a *TasksAPIService) TasksAddRoleExecute(r TasksAPITasksAddRoleRequest) (*NestedRoleResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *NestedRoleResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksAddRole")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/{task_href}add_role/"
+	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.nestedRole == nil {
+		return localVarReturnValue, nil, reportError("nestedRole is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded", "multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
+	// body params
+	localVarPostBody = r.nestedRole
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type TasksAPITasksCancelRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	taskHref string
+	patchedTaskCancel *PatchedTaskCancel
+	xTaskDiagnostics *[]string
+}
+
+func (r TasksAPITasksCancelRequest) PatchedTaskCancel(patchedTaskCancel PatchedTaskCancel) TasksAPITasksCancelRequest {
+	r.patchedTaskCancel = &patchedTaskCancel
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksCancelRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksCancelRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r TasksAPITasksCancelRequest) Execute() (*TaskResponse, *http.Response, error) {
+	return r.ApiService.TasksCancelExecute(r)
+}
+
+/*
+TasksCancel Cancel a task
+
+This operation cancels a task.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskHref
+ @return TasksAPITasksCancelRequest
+*/
+func (a *TasksAPIService) TasksCancel(ctx context.Context, taskHref string) TasksAPITasksCancelRequest {
+	return TasksAPITasksCancelRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskHref: taskHref,
+	}
+}
+
+// Execute executes the request
+//  @return TaskResponse
+func (a *TasksAPIService) TasksCancelExecute(r TasksAPITasksCancelRequest) (*TaskResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TaskResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksCancel")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/{task_href}"
+	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.patchedTaskCancel == nil {
+		return localVarReturnValue, nil, reportError("patchedTaskCancel is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json", "application/x-www-form-urlencoded", "multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
+	// body params
+	localVarPostBody = r.patchedTaskCancel
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v TaskResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type TasksAPITasksDeleteRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	taskHref string
+	xTaskDiagnostics *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksDeleteRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksDeleteRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
+}
+
+func (r TasksAPITasksDeleteRequest) Execute() (*http.Response, error) {
+	return r.ApiService.TasksDeleteExecute(r)
+}
+
+/*
+TasksDelete Delete a task
+
+A customized named ModelViewSet that knows how to register itself with the Pulp API router.This viewset is discoverable by its name."Normal" Django Models and Master/Detail models are supported by the ``register_with`` method.Attributes:    lookup_field (str): The name of the field by which an object should be looked up, in        addition to any parent lookups if this ViewSet is nested. Defaults to 'pk'    endpoint_name (str): The name of the final path segment that should identify the ViewSet's        collection endpoint.    nest_prefix (str): Optional prefix under which this ViewSet should be nested. This must        correspond to the "parent_prefix" of a router with rest_framework_nested.NestedMixin.        None indicates this ViewSet should not be nested.    parent_lookup_kwargs (dict): Optional mapping of key names that would appear in self.kwargs        to django model filter expressions that can be used with the corresponding value from        self.kwargs, used only by a nested ViewSet to filter based on the parent object's        identity.    schema (DefaultSchema): The schema class to use by default in a viewset.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskHref
+ @return TasksAPITasksDeleteRequest
+*/
+func (a *TasksAPIService) TasksDelete(ctx context.Context, taskHref string) TasksAPITasksDeleteRequest {
+	return TasksAPITasksDeleteRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskHref: taskHref,
+	}
+}
+
+// Execute executes the request
+func (a *TasksAPIService) TasksDeleteExecute(r TasksAPITasksDeleteRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksDelete")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/{task_href}"
+	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type TasksAPITasksListRequest struct {
+	ctx context.Context
+	ApiService *TasksAPIService
+	pulpDomain string
+	xTaskDiagnostics *[]string
+	childTasks *string
+	createdResources *string
+	exclusiveResources *string
+	exclusiveResourcesIn *[]string
+	finishedAt *time.Time
+	finishedAtGt *time.Time
+	finishedAtGte *time.Time
+	finishedAtIsnull *bool
+	finishedAtLt *time.Time
+	finishedAtLte *time.Time
+	finishedAtRange *[]time.Time
+	limit *int32
+	loggingCid *string
+	loggingCidContains *string
+	name *string
+	nameContains *string
+	nameIn *[]string
+	nameNe *string
+	offset *int32
+	ordering *[]string
+	parentTask *string
+	prnIn *[]string
+	pulpCreated *time.Time
+	pulpCreatedGt *time.Time
+	pulpCreatedGte *time.Time
+	pulpCreatedIsnull *bool
+	pulpCreatedLt *time.Time
+	pulpCreatedLte *time.Time
+	pulpCreatedRange *[]time.Time
+	pulpHrefIn *[]string
+	pulpIdIn *[]string
+	q *string
+	reservedResources *string
+	reservedResourcesIn *[]string
+	sharedResources *string
+	sharedResourcesIn *[]string
+	startedAt *time.Time
+	startedAtGt *time.Time
+	startedAtGte *time.Time
+	startedAtIsnull *bool
+	startedAtLt *time.Time
+	startedAtLte *time.Time
+	startedAtRange *[]time.Time
+	state *string
+	stateIn *[]string
+	stateNe *string
+	taskGroup *string
+	unblockedAt *time.Time
+	unblockedAtGt *time.Time
+	unblockedAtGte *time.Time
+	unblockedAtIsnull *bool
+	unblockedAtLt *time.Time
+	unblockedAtLte *time.Time
+	unblockedAtRange *[]time.Time
+	worker *string
+	fields *[]string
+	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksListRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksListRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // Filter results where child_tasks matches value
@@ -535,7 +1262,7 @@ func (r TasksAPITasksListRequest) Offset(offset int32) TasksAPITasksListRequest 
 	return r
 }
 
-// Ordering* &#x60;pulp_id&#x60; - Pulp id* &#x60;-pulp_id&#x60; - Pulp id (descending)* &#x60;pulp_created&#x60; - Pulp created* &#x60;-pulp_created&#x60; - Pulp created (descending)* &#x60;pulp_last_updated&#x60; - Pulp last updated* &#x60;-pulp_last_updated&#x60; - Pulp last updated (descending)* &#x60;state&#x60; - State* &#x60;-state&#x60; - State (descending)* &#x60;name&#x60; - Name* &#x60;-name&#x60; - Name (descending)* &#x60;logging_cid&#x60; - Logging cid* &#x60;-logging_cid&#x60; - Logging cid (descending)* &#x60;unblocked_at&#x60; - Unblocked at* &#x60;-unblocked_at&#x60; - Unblocked at (descending)* &#x60;started_at&#x60; - Started at* &#x60;-started_at&#x60; - Started at (descending)* &#x60;finished_at&#x60; - Finished at* &#x60;-finished_at&#x60; - Finished at (descending)* &#x60;error&#x60; - Error* &#x60;-error&#x60; - Error (descending)* &#x60;enc_args&#x60; - Enc args* &#x60;-enc_args&#x60; - Enc args (descending)* &#x60;enc_kwargs&#x60; - Enc kwargs* &#x60;-enc_kwargs&#x60; - Enc kwargs (descending)* &#x60;reserved_resources_record&#x60; - Reserved resources record* &#x60;-reserved_resources_record&#x60; - Reserved resources record (descending)* &#x60;versions&#x60; - Versions* &#x60;-versions&#x60; - Versions (descending)* &#x60;immediate&#x60; - Immediate* &#x60;-immediate&#x60; - Immediate (descending)* &#x60;deferred&#x60; - Deferred* &#x60;-deferred&#x60; - Deferred (descending)* &#x60;pk&#x60; - Pk* &#x60;-pk&#x60; - Pk (descending)
+// Ordering* &#x60;pulp_id&#x60; - Pulp id* &#x60;-pulp_id&#x60; - Pulp id (descending)* &#x60;pulp_created&#x60; - Pulp created* &#x60;-pulp_created&#x60; - Pulp created (descending)* &#x60;pulp_last_updated&#x60; - Pulp last updated* &#x60;-pulp_last_updated&#x60; - Pulp last updated (descending)* &#x60;state&#x60; - State* &#x60;-state&#x60; - State (descending)* &#x60;name&#x60; - Name* &#x60;-name&#x60; - Name (descending)* &#x60;logging_cid&#x60; - Logging cid* &#x60;-logging_cid&#x60; - Logging cid (descending)* &#x60;unblocked_at&#x60; - Unblocked at* &#x60;-unblocked_at&#x60; - Unblocked at (descending)* &#x60;started_at&#x60; - Started at* &#x60;-started_at&#x60; - Started at (descending)* &#x60;finished_at&#x60; - Finished at* &#x60;-finished_at&#x60; - Finished at (descending)* &#x60;error&#x60; - Error* &#x60;-error&#x60; - Error (descending)* &#x60;enc_args&#x60; - Enc args* &#x60;-enc_args&#x60; - Enc args (descending)* &#x60;enc_kwargs&#x60; - Enc kwargs* &#x60;-enc_kwargs&#x60; - Enc kwargs (descending)* &#x60;reserved_resources_record&#x60; - Reserved resources record* &#x60;-reserved_resources_record&#x60; - Reserved resources record (descending)* &#x60;versions&#x60; - Versions* &#x60;-versions&#x60; - Versions (descending)* &#x60;profile_options&#x60; - Profile options* &#x60;-profile_options&#x60; - Profile options (descending)* &#x60;immediate&#x60; - Immediate* &#x60;-immediate&#x60; - Immediate (descending)* &#x60;deferred&#x60; - Deferred* &#x60;-deferred&#x60; - Deferred (descending)* &#x60;result&#x60; - Result* &#x60;-result&#x60; - Result (descending)* &#x60;pk&#x60; - Pk* &#x60;-pk&#x60; - Pk (descending)
 func (r TasksAPITasksListRequest) Ordering(ordering []string) TasksAPITasksListRequest {
 	r.ordering = &ordering
 	return r
@@ -743,21 +1470,8 @@ func (r TasksAPITasksListRequest) UnblockedAtRange(unblockedAtRange []time.Time)
 	return r
 }
 
-// Filter results where worker matches value
 func (r TasksAPITasksListRequest) Worker(worker string) TasksAPITasksListRequest {
 	r.worker = &worker
-	return r
-}
-
-// Filter results where worker is in a comma-separated list of values
-func (r TasksAPITasksListRequest) WorkerIn(workerIn []string) TasksAPITasksListRequest {
-	r.workerIn = &workerIn
-	return r
-}
-
-// Filter results where worker has a null value
-func (r TasksAPITasksListRequest) WorkerIsnull(workerIsnull bool) TasksAPITasksListRequest {
-	r.workerIsnull = &workerIsnull
 	return r
 }
 
@@ -783,12 +1497,14 @@ TasksList List tasks
 A customized named ModelViewSet that knows how to register itself with the Pulp API router.This viewset is discoverable by its name."Normal" Django Models and Master/Detail models are supported by the ``register_with`` method.Attributes:    lookup_field (str): The name of the field by which an object should be looked up, in        addition to any parent lookups if this ViewSet is nested. Defaults to 'pk'    endpoint_name (str): The name of the final path segment that should identify the ViewSet's        collection endpoint.    nest_prefix (str): Optional prefix under which this ViewSet should be nested. This must        correspond to the "parent_prefix" of a router with rest_framework_nested.NestedMixin.        None indicates this ViewSet should not be nested.    parent_lookup_kwargs (dict): Optional mapping of key names that would appear in self.kwargs        to django model filter expressions that can be used with the corresponding value from        self.kwargs, used only by a nested ViewSet to filter based on the parent object's        identity.    schema (DefaultSchema): The schema class to use by default in a viewset.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pulpDomain
  @return TasksAPITasksListRequest
 */
-func (a *TasksAPIService) TasksList(ctx context.Context) TasksAPITasksListRequest {
+func (a *TasksAPIService) TasksList(ctx context.Context, pulpDomain string) TasksAPITasksListRequest {
 	return TasksAPITasksListRequest{
 		ApiService: a,
 		ctx: ctx,
+		pulpDomain: pulpDomain,
 	}
 }
 
@@ -807,712 +1523,9 @@ func (a *TasksAPIService) TasksListExecute(r TasksAPITasksListRequest) (*Paginat
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/pulp/admin/tasks/"
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.childTasks != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "child_tasks", r.childTasks, "form", "")
-	}
-	if r.createdResources != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_resources", r.createdResources, "form", "")
-	}
-	if r.exclusiveResources != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "exclusive_resources", r.exclusiveResources, "form", "")
-	}
-	if r.exclusiveResourcesIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "exclusive_resources__in", r.exclusiveResourcesIn, "form", "csv")
-	}
-	if r.finishedAt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at", r.finishedAt, "form", "")
-	}
-	if r.finishedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__gt", r.finishedAtGt, "form", "")
-	}
-	if r.finishedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__gte", r.finishedAtGte, "form", "")
-	}
-	if r.finishedAtIsnull != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__isnull", r.finishedAtIsnull, "form", "")
-	}
-	if r.finishedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__lt", r.finishedAtLt, "form", "")
-	}
-	if r.finishedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__lte", r.finishedAtLte, "form", "")
-	}
-	if r.finishedAtRange != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "finished_at__range", r.finishedAtRange, "form", "csv")
-	}
-	if r.limit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
-	}
-	if r.loggingCid != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "logging_cid", r.loggingCid, "form", "")
-	}
-	if r.loggingCidContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "logging_cid__contains", r.loggingCidContains, "form", "")
-	}
-	if r.name != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "form", "")
-	}
-	if r.nameContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name__contains", r.nameContains, "form", "")
-	}
-	if r.nameIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name__in", r.nameIn, "form", "csv")
-	}
-	if r.nameNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name__ne", r.nameNe, "form", "")
-	}
-	if r.offset != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
-	}
-	if r.ordering != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ordering", r.ordering, "form", "csv")
-	}
-	if r.parentTask != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_task", r.parentTask, "form", "")
-	}
-	if r.prnIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "prn__in", r.prnIn, "form", "csv")
-	}
-	if r.pulpCreated != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created", r.pulpCreated, "form", "")
-	}
-	if r.pulpCreatedGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__gt", r.pulpCreatedGt, "form", "")
-	}
-	if r.pulpCreatedGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__gte", r.pulpCreatedGte, "form", "")
-	}
-	if r.pulpCreatedIsnull != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__isnull", r.pulpCreatedIsnull, "form", "")
-	}
-	if r.pulpCreatedLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__lt", r.pulpCreatedLt, "form", "")
-	}
-	if r.pulpCreatedLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__lte", r.pulpCreatedLte, "form", "")
-	}
-	if r.pulpCreatedRange != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_created__range", r.pulpCreatedRange, "form", "csv")
-	}
-	if r.pulpHrefIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_href__in", r.pulpHrefIn, "form", "csv")
-	}
-	if r.pulpIdIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pulp_id__in", r.pulpIdIn, "form", "csv")
-	}
-	if r.q != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
-	}
-	if r.reservedResources != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reserved_resources", r.reservedResources, "form", "")
-	}
-	if r.reservedResourcesIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reserved_resources__in", r.reservedResourcesIn, "form", "csv")
-	}
-	if r.sharedResources != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "shared_resources", r.sharedResources, "form", "")
-	}
-	if r.sharedResourcesIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "shared_resources__in", r.sharedResourcesIn, "form", "csv")
-	}
-	if r.startedAt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at", r.startedAt, "form", "")
-	}
-	if r.startedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gt", r.startedAtGt, "form", "")
-	}
-	if r.startedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gte", r.startedAtGte, "form", "")
-	}
-	if r.startedAtIsnull != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__isnull", r.startedAtIsnull, "form", "")
-	}
-	if r.startedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lt", r.startedAtLt, "form", "")
-	}
-	if r.startedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lte", r.startedAtLte, "form", "")
-	}
-	if r.startedAtRange != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__range", r.startedAtRange, "form", "csv")
-	}
-	if r.state != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "state", r.state, "form", "")
-	}
-	if r.stateIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "state__in", r.stateIn, "form", "csv")
-	}
-	if r.stateNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "state__ne", r.stateNe, "form", "")
-	}
-	if r.taskGroup != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "task_group", r.taskGroup, "form", "")
-	}
-	if r.unblockedAt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at", r.unblockedAt, "form", "")
-	}
-	if r.unblockedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__gt", r.unblockedAtGt, "form", "")
-	}
-	if r.unblockedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__gte", r.unblockedAtGte, "form", "")
-	}
-	if r.unblockedAtIsnull != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__isnull", r.unblockedAtIsnull, "form", "")
-	}
-	if r.unblockedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__lt", r.unblockedAtLt, "form", "")
-	}
-	if r.unblockedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__lte", r.unblockedAtLte, "form", "")
-	}
-	if r.unblockedAtRange != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "unblocked_at__range", r.unblockedAtRange, "form", "csv")
-	}
-	if r.worker != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "worker", r.worker, "form", "")
-	}
-	if r.workerIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "worker__in", r.workerIn, "form", "csv")
-	}
-	if r.workerIsnull != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "worker__isnull", r.workerIsnull, "form", "")
-	}
-	if r.fields != nil {
-		t := *r.fields
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-                               parameterAddToHeaderOrQuery(localVarQueryParams, "fields", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "fields", t, "form", "multi")
-		}
-	}
-	if r.excludeFields != nil {
-		t := *r.excludeFields
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-                               parameterAddToHeaderOrQuery(localVarQueryParams, "exclude_fields", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "exclude_fields", t, "form", "multi")
-		}
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type TasksAPITasksList2Request struct {
-	ctx context.Context
-	ApiService *TasksAPIService
-	pulpDomain string
-	childTasks *string
-	createdResources *string
-	exclusiveResources *string
-	exclusiveResourcesIn *[]string
-	finishedAt *time.Time
-	finishedAtGt *time.Time
-	finishedAtGte *time.Time
-	finishedAtIsnull *bool
-	finishedAtLt *time.Time
-	finishedAtLte *time.Time
-	finishedAtRange *[]time.Time
-	limit *int32
-	loggingCid *string
-	loggingCidContains *string
-	name *string
-	nameContains *string
-	nameIn *[]string
-	nameNe *string
-	offset *int32
-	ordering *[]string
-	parentTask *string
-	prnIn *[]string
-	pulpCreated *time.Time
-	pulpCreatedGt *time.Time
-	pulpCreatedGte *time.Time
-	pulpCreatedIsnull *bool
-	pulpCreatedLt *time.Time
-	pulpCreatedLte *time.Time
-	pulpCreatedRange *[]time.Time
-	pulpHrefIn *[]string
-	pulpIdIn *[]string
-	q *string
-	reservedResources *string
-	reservedResourcesIn *[]string
-	sharedResources *string
-	sharedResourcesIn *[]string
-	startedAt *time.Time
-	startedAtGt *time.Time
-	startedAtGte *time.Time
-	startedAtIsnull *bool
-	startedAtLt *time.Time
-	startedAtLte *time.Time
-	startedAtRange *[]time.Time
-	state *string
-	stateIn *[]string
-	stateNe *string
-	taskGroup *string
-	unblockedAt *time.Time
-	unblockedAtGt *time.Time
-	unblockedAtGte *time.Time
-	unblockedAtIsnull *bool
-	unblockedAtLt *time.Time
-	unblockedAtLte *time.Time
-	unblockedAtRange *[]time.Time
-	worker *string
-	workerIn *[]string
-	workerIsnull *bool
-	fields *[]string
-	excludeFields *[]string
-}
-
-// Filter results where child_tasks matches value
-func (r TasksAPITasksList2Request) ChildTasks(childTasks string) TasksAPITasksList2Request {
-	r.childTasks = &childTasks
-	return r
-}
-
-func (r TasksAPITasksList2Request) CreatedResources(createdResources string) TasksAPITasksList2Request {
-	r.createdResources = &createdResources
-	return r
-}
-
-func (r TasksAPITasksList2Request) ExclusiveResources(exclusiveResources string) TasksAPITasksList2Request {
-	r.exclusiveResources = &exclusiveResources
-	return r
-}
-
-// Multiple values may be separated by commas.
-func (r TasksAPITasksList2Request) ExclusiveResourcesIn(exclusiveResourcesIn []string) TasksAPITasksList2Request {
-	r.exclusiveResourcesIn = &exclusiveResourcesIn
-	return r
-}
-
-// Filter results where finished_at matches value
-func (r TasksAPITasksList2Request) FinishedAt(finishedAt time.Time) TasksAPITasksList2Request {
-	r.finishedAt = &finishedAt
-	return r
-}
-
-// Filter results where finished_at is greater than value
-func (r TasksAPITasksList2Request) FinishedAtGt(finishedAtGt time.Time) TasksAPITasksList2Request {
-	r.finishedAtGt = &finishedAtGt
-	return r
-}
-
-// Filter results where finished_at is greater than or equal to value
-func (r TasksAPITasksList2Request) FinishedAtGte(finishedAtGte time.Time) TasksAPITasksList2Request {
-	r.finishedAtGte = &finishedAtGte
-	return r
-}
-
-// Filter results where finished_at has a null value
-func (r TasksAPITasksList2Request) FinishedAtIsnull(finishedAtIsnull bool) TasksAPITasksList2Request {
-	r.finishedAtIsnull = &finishedAtIsnull
-	return r
-}
-
-// Filter results where finished_at is less than value
-func (r TasksAPITasksList2Request) FinishedAtLt(finishedAtLt time.Time) TasksAPITasksList2Request {
-	r.finishedAtLt = &finishedAtLt
-	return r
-}
-
-// Filter results where finished_at is less than or equal to value
-func (r TasksAPITasksList2Request) FinishedAtLte(finishedAtLte time.Time) TasksAPITasksList2Request {
-	r.finishedAtLte = &finishedAtLte
-	return r
-}
-
-// Filter results where finished_at is between two comma separated values
-func (r TasksAPITasksList2Request) FinishedAtRange(finishedAtRange []time.Time) TasksAPITasksList2Request {
-	r.finishedAtRange = &finishedAtRange
-	return r
-}
-
-// Number of results to return per page.
-func (r TasksAPITasksList2Request) Limit(limit int32) TasksAPITasksList2Request {
-	r.limit = &limit
-	return r
-}
-
-// Filter results where logging_cid matches value
-func (r TasksAPITasksList2Request) LoggingCid(loggingCid string) TasksAPITasksList2Request {
-	r.loggingCid = &loggingCid
-	return r
-}
-
-// Filter results where logging_cid contains value
-func (r TasksAPITasksList2Request) LoggingCidContains(loggingCidContains string) TasksAPITasksList2Request {
-	r.loggingCidContains = &loggingCidContains
-	return r
-}
-
-// Filter results where name matches value
-func (r TasksAPITasksList2Request) Name(name string) TasksAPITasksList2Request {
-	r.name = &name
-	return r
-}
-
-// Filter results where name contains value
-func (r TasksAPITasksList2Request) NameContains(nameContains string) TasksAPITasksList2Request {
-	r.nameContains = &nameContains
-	return r
-}
-
-// Filter results where name is in a comma-separated list of values
-func (r TasksAPITasksList2Request) NameIn(nameIn []string) TasksAPITasksList2Request {
-	r.nameIn = &nameIn
-	return r
-}
-
-// Filter results where name not equal to value
-func (r TasksAPITasksList2Request) NameNe(nameNe string) TasksAPITasksList2Request {
-	r.nameNe = &nameNe
-	return r
-}
-
-// The initial index from which to return the results.
-func (r TasksAPITasksList2Request) Offset(offset int32) TasksAPITasksList2Request {
-	r.offset = &offset
-	return r
-}
-
-// Ordering* &#x60;pulp_id&#x60; - Pulp id* &#x60;-pulp_id&#x60; - Pulp id (descending)* &#x60;pulp_created&#x60; - Pulp created* &#x60;-pulp_created&#x60; - Pulp created (descending)* &#x60;pulp_last_updated&#x60; - Pulp last updated* &#x60;-pulp_last_updated&#x60; - Pulp last updated (descending)* &#x60;state&#x60; - State* &#x60;-state&#x60; - State (descending)* &#x60;name&#x60; - Name* &#x60;-name&#x60; - Name (descending)* &#x60;logging_cid&#x60; - Logging cid* &#x60;-logging_cid&#x60; - Logging cid (descending)* &#x60;unblocked_at&#x60; - Unblocked at* &#x60;-unblocked_at&#x60; - Unblocked at (descending)* &#x60;started_at&#x60; - Started at* &#x60;-started_at&#x60; - Started at (descending)* &#x60;finished_at&#x60; - Finished at* &#x60;-finished_at&#x60; - Finished at (descending)* &#x60;error&#x60; - Error* &#x60;-error&#x60; - Error (descending)* &#x60;enc_args&#x60; - Enc args* &#x60;-enc_args&#x60; - Enc args (descending)* &#x60;enc_kwargs&#x60; - Enc kwargs* &#x60;-enc_kwargs&#x60; - Enc kwargs (descending)* &#x60;reserved_resources_record&#x60; - Reserved resources record* &#x60;-reserved_resources_record&#x60; - Reserved resources record (descending)* &#x60;versions&#x60; - Versions* &#x60;-versions&#x60; - Versions (descending)* &#x60;immediate&#x60; - Immediate* &#x60;-immediate&#x60; - Immediate (descending)* &#x60;deferred&#x60; - Deferred* &#x60;-deferred&#x60; - Deferred (descending)* &#x60;pk&#x60; - Pk* &#x60;-pk&#x60; - Pk (descending)
-func (r TasksAPITasksList2Request) Ordering(ordering []string) TasksAPITasksList2Request {
-	r.ordering = &ordering
-	return r
-}
-
-// Filter results where parent_task matches value
-func (r TasksAPITasksList2Request) ParentTask(parentTask string) TasksAPITasksList2Request {
-	r.parentTask = &parentTask
-	return r
-}
-
-// Multiple values may be separated by commas.
-func (r TasksAPITasksList2Request) PrnIn(prnIn []string) TasksAPITasksList2Request {
-	r.prnIn = &prnIn
-	return r
-}
-
-// Filter results where pulp_created matches value
-func (r TasksAPITasksList2Request) PulpCreated(pulpCreated time.Time) TasksAPITasksList2Request {
-	r.pulpCreated = &pulpCreated
-	return r
-}
-
-// Filter results where pulp_created is greater than value
-func (r TasksAPITasksList2Request) PulpCreatedGt(pulpCreatedGt time.Time) TasksAPITasksList2Request {
-	r.pulpCreatedGt = &pulpCreatedGt
-	return r
-}
-
-// Filter results where pulp_created is greater than or equal to value
-func (r TasksAPITasksList2Request) PulpCreatedGte(pulpCreatedGte time.Time) TasksAPITasksList2Request {
-	r.pulpCreatedGte = &pulpCreatedGte
-	return r
-}
-
-// Filter results where pulp_created has a null value
-func (r TasksAPITasksList2Request) PulpCreatedIsnull(pulpCreatedIsnull bool) TasksAPITasksList2Request {
-	r.pulpCreatedIsnull = &pulpCreatedIsnull
-	return r
-}
-
-// Filter results where pulp_created is less than value
-func (r TasksAPITasksList2Request) PulpCreatedLt(pulpCreatedLt time.Time) TasksAPITasksList2Request {
-	r.pulpCreatedLt = &pulpCreatedLt
-	return r
-}
-
-// Filter results where pulp_created is less than or equal to value
-func (r TasksAPITasksList2Request) PulpCreatedLte(pulpCreatedLte time.Time) TasksAPITasksList2Request {
-	r.pulpCreatedLte = &pulpCreatedLte
-	return r
-}
-
-// Filter results where pulp_created is between two comma separated values
-func (r TasksAPITasksList2Request) PulpCreatedRange(pulpCreatedRange []time.Time) TasksAPITasksList2Request {
-	r.pulpCreatedRange = &pulpCreatedRange
-	return r
-}
-
-// Multiple values may be separated by commas.
-func (r TasksAPITasksList2Request) PulpHrefIn(pulpHrefIn []string) TasksAPITasksList2Request {
-	r.pulpHrefIn = &pulpHrefIn
-	return r
-}
-
-// Multiple values may be separated by commas.
-func (r TasksAPITasksList2Request) PulpIdIn(pulpIdIn []string) TasksAPITasksList2Request {
-	r.pulpIdIn = &pulpIdIn
-	return r
-}
-
-// Filter results by using NOT, AND and OR operations on other filters
-func (r TasksAPITasksList2Request) Q(q string) TasksAPITasksList2Request {
-	r.q = &q
-	return r
-}
-
-func (r TasksAPITasksList2Request) ReservedResources(reservedResources string) TasksAPITasksList2Request {
-	r.reservedResources = &reservedResources
-	return r
-}
-
-// Multiple values may be separated by commas.
-func (r TasksAPITasksList2Request) ReservedResourcesIn(reservedResourcesIn []string) TasksAPITasksList2Request {
-	r.reservedResourcesIn = &reservedResourcesIn
-	return r
-}
-
-func (r TasksAPITasksList2Request) SharedResources(sharedResources string) TasksAPITasksList2Request {
-	r.sharedResources = &sharedResources
-	return r
-}
-
-// Multiple values may be separated by commas.
-func (r TasksAPITasksList2Request) SharedResourcesIn(sharedResourcesIn []string) TasksAPITasksList2Request {
-	r.sharedResourcesIn = &sharedResourcesIn
-	return r
-}
-
-// Filter results where started_at matches value
-func (r TasksAPITasksList2Request) StartedAt(startedAt time.Time) TasksAPITasksList2Request {
-	r.startedAt = &startedAt
-	return r
-}
-
-// Filter results where started_at is greater than value
-func (r TasksAPITasksList2Request) StartedAtGt(startedAtGt time.Time) TasksAPITasksList2Request {
-	r.startedAtGt = &startedAtGt
-	return r
-}
-
-// Filter results where started_at is greater than or equal to value
-func (r TasksAPITasksList2Request) StartedAtGte(startedAtGte time.Time) TasksAPITasksList2Request {
-	r.startedAtGte = &startedAtGte
-	return r
-}
-
-// Filter results where started_at has a null value
-func (r TasksAPITasksList2Request) StartedAtIsnull(startedAtIsnull bool) TasksAPITasksList2Request {
-	r.startedAtIsnull = &startedAtIsnull
-	return r
-}
-
-// Filter results where started_at is less than value
-func (r TasksAPITasksList2Request) StartedAtLt(startedAtLt time.Time) TasksAPITasksList2Request {
-	r.startedAtLt = &startedAtLt
-	return r
-}
-
-// Filter results where started_at is less than or equal to value
-func (r TasksAPITasksList2Request) StartedAtLte(startedAtLte time.Time) TasksAPITasksList2Request {
-	r.startedAtLte = &startedAtLte
-	return r
-}
-
-// Filter results where started_at is between two comma separated values
-func (r TasksAPITasksList2Request) StartedAtRange(startedAtRange []time.Time) TasksAPITasksList2Request {
-	r.startedAtRange = &startedAtRange
-	return r
-}
-
-// Filter results where state matches value* &#x60;waiting&#x60; - Waiting* &#x60;skipped&#x60; - Skipped* &#x60;running&#x60; - Running* &#x60;completed&#x60; - Completed* &#x60;failed&#x60; - Failed* &#x60;canceled&#x60; - Canceled* &#x60;canceling&#x60; - Canceling
-func (r TasksAPITasksList2Request) State(state string) TasksAPITasksList2Request {
-	r.state = &state
-	return r
-}
-
-// Filter results where state is in a comma-separated list of values
-func (r TasksAPITasksList2Request) StateIn(stateIn []string) TasksAPITasksList2Request {
-	r.stateIn = &stateIn
-	return r
-}
-
-// Filter results where state not equal to value
-func (r TasksAPITasksList2Request) StateNe(stateNe string) TasksAPITasksList2Request {
-	r.stateNe = &stateNe
-	return r
-}
-
-// Filter results where task_group matches value
-func (r TasksAPITasksList2Request) TaskGroup(taskGroup string) TasksAPITasksList2Request {
-	r.taskGroup = &taskGroup
-	return r
-}
-
-// Filter results where unblocked_at matches value
-func (r TasksAPITasksList2Request) UnblockedAt(unblockedAt time.Time) TasksAPITasksList2Request {
-	r.unblockedAt = &unblockedAt
-	return r
-}
-
-// Filter results where unblocked_at is greater than value
-func (r TasksAPITasksList2Request) UnblockedAtGt(unblockedAtGt time.Time) TasksAPITasksList2Request {
-	r.unblockedAtGt = &unblockedAtGt
-	return r
-}
-
-// Filter results where unblocked_at is greater than or equal to value
-func (r TasksAPITasksList2Request) UnblockedAtGte(unblockedAtGte time.Time) TasksAPITasksList2Request {
-	r.unblockedAtGte = &unblockedAtGte
-	return r
-}
-
-// Filter results where unblocked_at has a null value
-func (r TasksAPITasksList2Request) UnblockedAtIsnull(unblockedAtIsnull bool) TasksAPITasksList2Request {
-	r.unblockedAtIsnull = &unblockedAtIsnull
-	return r
-}
-
-// Filter results where unblocked_at is less than value
-func (r TasksAPITasksList2Request) UnblockedAtLt(unblockedAtLt time.Time) TasksAPITasksList2Request {
-	r.unblockedAtLt = &unblockedAtLt
-	return r
-}
-
-// Filter results where unblocked_at is less than or equal to value
-func (r TasksAPITasksList2Request) UnblockedAtLte(unblockedAtLte time.Time) TasksAPITasksList2Request {
-	r.unblockedAtLte = &unblockedAtLte
-	return r
-}
-
-// Filter results where unblocked_at is between two comma separated values
-func (r TasksAPITasksList2Request) UnblockedAtRange(unblockedAtRange []time.Time) TasksAPITasksList2Request {
-	r.unblockedAtRange = &unblockedAtRange
-	return r
-}
-
-// Filter results where worker matches value
-func (r TasksAPITasksList2Request) Worker(worker string) TasksAPITasksList2Request {
-	r.worker = &worker
-	return r
-}
-
-// Filter results where worker is in a comma-separated list of values
-func (r TasksAPITasksList2Request) WorkerIn(workerIn []string) TasksAPITasksList2Request {
-	r.workerIn = &workerIn
-	return r
-}
-
-// Filter results where worker has a null value
-func (r TasksAPITasksList2Request) WorkerIsnull(workerIsnull bool) TasksAPITasksList2Request {
-	r.workerIsnull = &workerIsnull
-	return r
-}
-
-// A list of fields to include in the response.
-func (r TasksAPITasksList2Request) Fields(fields []string) TasksAPITasksList2Request {
-	r.fields = &fields
-	return r
-}
-
-// A list of fields to exclude from the response.
-func (r TasksAPITasksList2Request) ExcludeFields(excludeFields []string) TasksAPITasksList2Request {
-	r.excludeFields = &excludeFields
-	return r
-}
-
-func (r TasksAPITasksList2Request) Execute() (*PaginatedTaskResponseList, *http.Response, error) {
-	return r.ApiService.TasksList2Execute(r)
-}
-
-/*
-TasksList2 List tasks
-
-A customized named ModelViewSet that knows how to register itself with the Pulp API router.This viewset is discoverable by its name."Normal" Django Models and Master/Detail models are supported by the ``register_with`` method.Attributes:    lookup_field (str): The name of the field by which an object should be looked up, in        addition to any parent lookups if this ViewSet is nested. Defaults to 'pk'    endpoint_name (str): The name of the final path segment that should identify the ViewSet's        collection endpoint.    nest_prefix (str): Optional prefix under which this ViewSet should be nested. This must        correspond to the "parent_prefix" of a router with rest_framework_nested.NestedMixin.        None indicates this ViewSet should not be nested.    parent_lookup_kwargs (dict): Optional mapping of key names that would appear in self.kwargs        to django model filter expressions that can be used with the corresponding value from        self.kwargs, used only by a nested ViewSet to filter based on the parent object's        identity.    schema (DefaultSchema): The schema class to use by default in a viewset.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param pulpDomain
- @return TasksAPITasksList2Request
-*/
-func (a *TasksAPIService) TasksList2(ctx context.Context, pulpDomain string) TasksAPITasksList2Request {
-	return TasksAPITasksList2Request{
-		ApiService: a,
-		ctx: ctx,
-		pulpDomain: pulpDomain,
-	}
-}
-
-// Execute executes the request
-//  @return PaginatedTaskResponseList
-func (a *TasksAPIService) TasksList2Execute(r TasksAPITasksList2Request) (*PaginatedTaskResponseList, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *PaginatedTaskResponseList
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TasksAPIService.TasksList2")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/tasks/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1683,12 +1696,6 @@ func (a *TasksAPIService) TasksList2Execute(r TasksAPITasksList2Request) (*Pagin
 	if r.worker != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "worker", r.worker, "form", "")
 	}
-	if r.workerIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "worker__in", r.workerIn, "form", "csv")
-	}
-	if r.workerIsnull != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "worker__isnull", r.workerIsnull, "form", "")
-	}
 	if r.fields != nil {
 		t := *r.fields
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
@@ -1727,6 +1734,9 @@ func (a *TasksAPIService) TasksList2Execute(r TasksAPITasksList2Request) (*Pagin
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1769,8 +1779,15 @@ type TasksAPITasksListRolesRequest struct {
 	ctx context.Context
 	ApiService *TasksAPIService
 	taskHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksListRolesRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksListRolesRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1823,7 +1840,7 @@ func (a *TasksAPIService) TasksListRolesExecute(r TasksAPITasksListRolesRequest)
 
 	localVarPath := localBasePath + "/{task_href}list_roles/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1868,6 +1885,9 @@ func (a *TasksAPIService) TasksListRolesExecute(r TasksAPITasksListRolesRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1909,8 +1929,15 @@ type TasksAPITasksMyPermissionsRequest struct {
 	ctx context.Context
 	ApiService *TasksAPIService
 	taskHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksMyPermissionsRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksMyPermissionsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -1963,7 +1990,7 @@ func (a *TasksAPIService) TasksMyPermissionsExecute(r TasksAPITasksMyPermissions
 
 	localVarPath := localBasePath + "/{task_href}my_permissions/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2008,6 +2035,9 @@ func (a *TasksAPIService) TasksMyPermissionsExecute(r TasksAPITasksMyPermissions
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2049,8 +2079,15 @@ type TasksAPITasksProfileArtifactsRequest struct {
 	ctx context.Context
 	ApiService *TasksAPIService
 	taskHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksProfileArtifactsRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksProfileArtifactsRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -2103,7 +2140,7 @@ func (a *TasksAPIService) TasksProfileArtifactsExecute(r TasksAPITasksProfileArt
 
 	localVarPath := localBasePath + "/{task_href}profile_artifacts/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2148,6 +2185,9 @@ func (a *TasksAPIService) TasksProfileArtifactsExecute(r TasksAPITasksProfileArt
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2190,10 +2230,17 @@ type TasksAPITasksPurgeRequest struct {
 	ApiService *TasksAPIService
 	pulpDomain string
 	purge *Purge
+	xTaskDiagnostics *[]string
 }
 
 func (r TasksAPITasksPurgeRequest) Purge(purge Purge) TasksAPITasksPurgeRequest {
 	r.purge = &purge
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksPurgeRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksPurgeRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2235,7 +2282,7 @@ func (a *TasksAPIService) TasksPurgeExecute(r TasksAPITasksPurgeRequest) (*Async
 
 	localVarPath := localBasePath + "/api/pulp/{pulp_domain}/api/v3/tasks/purge/"
 	localVarPath = strings.Replace(localVarPath, "{"+"pulp_domain"+"}", url.PathEscape(parameterValueToString(r.pulpDomain, "pulpDomain")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2260,6 +2307,9 @@ func (a *TasksAPIService) TasksPurgeExecute(r TasksAPITasksPurgeRequest) (*Async
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.purge
@@ -2304,8 +2354,15 @@ type TasksAPITasksReadRequest struct {
 	ctx context.Context
 	ApiService *TasksAPIService
 	taskHref string
+	xTaskDiagnostics *[]string
 	fields *[]string
 	excludeFields *[]string
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksReadRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksReadRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
+	return r
 }
 
 // A list of fields to include in the response.
@@ -2358,7 +2415,7 @@ func (a *TasksAPIService) TasksReadExecute(r TasksAPITasksReadRequest) (*TaskRes
 
 	localVarPath := localBasePath + "/{task_href}"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2403,6 +2460,9 @@ func (a *TasksAPIService) TasksReadExecute(r TasksAPITasksReadRequest) (*TaskRes
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2445,10 +2505,17 @@ type TasksAPITasksRemoveRoleRequest struct {
 	ApiService *TasksAPIService
 	taskHref string
 	nestedRole *NestedRole
+	xTaskDiagnostics *[]string
 }
 
 func (r TasksAPITasksRemoveRoleRequest) NestedRole(nestedRole NestedRole) TasksAPITasksRemoveRoleRequest {
 	r.nestedRole = &nestedRole
+	return r
+}
+
+// List of profilers to use on tasks.
+func (r TasksAPITasksRemoveRoleRequest) XTaskDiagnostics(xTaskDiagnostics []string) TasksAPITasksRemoveRoleRequest {
+	r.xTaskDiagnostics = &xTaskDiagnostics
 	return r
 }
 
@@ -2490,7 +2557,7 @@ func (a *TasksAPIService) TasksRemoveRoleExecute(r TasksAPITasksRemoveRoleReques
 
 	localVarPath := localBasePath + "/{task_href}remove_role/"
 	localVarPath = strings.Replace(localVarPath, "{"+"task_href"+"}", url.PathEscape(parameterValueToString(r.taskHref, "taskHref")), -1)
-        localVarPath = strings.Replace(localVarPath, "/%2F", "/", -1)
+	localVarPath, _ = url.PathUnescape(localVarPath)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2515,6 +2582,9 @@ func (a *TasksAPIService) TasksRemoveRoleExecute(r TasksAPITasksRemoveRoleReques
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTaskDiagnostics != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Task-Diagnostics", r.xTaskDiagnostics, "simple", "csv")
 	}
 	// body params
 	localVarPostBody = r.nestedRole
